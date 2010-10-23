@@ -1,0 +1,1063 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<resource version="2.3.0.1" xmlns="http://www.wxwidgets.org/wxxrc">
+    <object class="wxApp" name="" subclass="WxwasteApp">
+    </object>
+    <object class="wxFrame" name="ID_MAIN_FRAME" subclass="MainFrame">
+        <style>wxDEFAULT_FRAME_STYLE|wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxTAB_TRAVERSAL</style>
+        <size>400,300</size>
+        <title>WASTE</title>
+        <object class="wxMenuBar" name="ID_MAIN_MENUBAR">
+            <object class="wxMenu">
+                <label>File</label>
+                <object class="wxMenuItem" name="ID_MENU_PREFS">
+                    <label>&amp;Preferences...</label>
+                </object>
+                <object class="wxMenuItem" name="ID_MENU_QUIT">
+                    <label>&amp;Quit</label>
+                </object>
+            </object>
+            <object class="wxMenu">
+                <label>View</label>
+                <object class="wxMenuItem" name="ID_MENU_NETSTAT">
+                    <label>&amp;Network Status...</label>
+                    <checkable>1</checkable>
+                </object>
+                <object class="wxMenuItem" name="ID_MENU_BROWSER">
+                    <label>&amp;Browser...</label>
+                    <checkable>1</checkable>
+                </object>
+                <object class="wxMenuItem" name="ID_MENU_XFERS">
+                    <label>&amp;Transfers...</label>
+                    <checkable>1</checkable>
+                </object>
+                <object class="wxMenuItem" name="ID_MENU_UPLOADS">
+                    <label>&amp;Uploads...</label>
+                    <checkable>1</checkable>
+                </object>
+                <object class="separator">
+                </object>
+                <object class="wxMenuItem" name="ID_MENU_JOINCHAT">
+                    <label>Create/&amp;Join Chat...</label>
+                </object>
+                <object class="wxMenu" name="ID_CHATS">
+                    <label>Chat Windows...</label>
+                </object>
+            </object>
+        </object>
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="ID_BITMAPBUTTON_NETSTAT">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/connect.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                        <border>5</border>
+                        <object class="wxStaticText" name="IDC_NETSTATUS">
+                            <label>:0</label>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="ID_BUTTON_BROWSER">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/search.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="ID_JOINCHAT">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/chat.ico.gif</bitmap>
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE</flag>
+                <border>5</border>
+                <object class="wxStaticText" name="wxID_STATIC">
+                    <style>wxALIGN_LEFT</style>
+                    <label>Users:</label>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <option>1</option>
+                <object class="wxTreeCtrl" name="IDC_USERS">
+                    <size>100,130</size>
+                    <style>wxTR_NO_BUTTONS|wxTR_NO_LINES|wxTR_FULL_ROW_HIGHLIGHT|wxTR_HIDE_ROOT|wxSUNKEN_BORDER</style>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxStaticLine" name="wxID_STATIC">
+                    <style>wxLI_HORIZONTAL</style>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE</flag>
+                <border>5</border>
+                <object class="wxStaticText" name="wxID_STATIC">
+                    <style>wxALIGN_LEFT</style>
+                    <label>Chats:</label>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxTreeCtrl" name="IDC_CHATROOMS">
+                    <size>100,60</size>
+                    <style>wxTR_NO_BUTTONS|wxTR_NO_LINES|wxTR_FULL_ROW_HIGHLIGHT|wxTR_HIDE_ROOT|wxTR_SINGLE|wxSUNKEN_BORDER</style>
+                </object>
+            </object>
+        </object>
+    </object>
+    <object class="wxDialog" name="ID_NETSTAT" subclass="WxNetStatDialog">
+        <style>wxDEFAULT_DIALOG_STYLE|wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU</style>
+        <size>400,300</size>
+        <title>Network Status</title>
+        <centered>1</centered>
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+                <flag>wxGROW|wxLEFT|wxRIGHT|wxTOP</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <option>9</option>
+                        <object class="wxComboBox" name="IDC_NEWCONNECTION">
+                            <style>wxCB_DROPDOWN</style>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_ADDCONNECTION">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/connect.ico.gif</bitmap>
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_LEFT|wxLEFT|wxRIGHT</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_CONNECTCATCH">
+                            <tooltip>Connect to selected host</tooltip>
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/connect.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_REMOVECONNECTION">
+                            <tooltip>Disconnect from selected host</tooltip>
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/stopdl.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_REMOVECATCH">
+                            <tooltip>Disconnect and remove selected host</tooltip>
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/disconnect.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                        <border>5</border>
+                        <object class="wxStaticText" name="wxID_STATIC">
+                            <label>Maintain</label>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxTextCtrl" name="IDC_NUMCONUP">
+                            <size>30,-1</size>
+                            <value>1</value>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                        <border>5</border>
+                        <object class="wxStaticText" name="wxID_STATIC">
+                            <label>connections</label>
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <option>9</option>
+                <object class="wxListCtrl" name="ID_NS_HOST_LISTCTRL">
+                    <size>400,170</size>
+                    <style>wxLC_REPORT|wxLC_SINGLE_SEL|wxSUNKEN_BORDER</style>
+                </object>
+            </object>
+        </object>
+    </object>
+    <object class="wxDialog" name="ID_BROWSER" subclass="WxBrowser">
+        <style>wxDEFAULT_DIALOG_STYLE|wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU</style>
+        <title>Browser</title>
+        <centered>1</centered>
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="ID_SRCH_USERLIST">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/allusers.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_GOPARENT">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/updir.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxBOTTOM</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_BACK">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/backward.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxGROW|wxRIGHT|wxTOP|wxBOTTOM</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_BACK2">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/more2.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxBOTTOM</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_FORWARD">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/forward.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxGROW|wxRIGHT|wxTOP|wxBOTTOM</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_FORWARD2">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/more2.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <option>9</option>
+                        <object class="wxComboBox" name="IDC_SEARCHTEXT">
+                            <style>wxCB_DROPDOWN</style>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_SEARCH">
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/search.ico.gif</bitmap>
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <option>1</option>
+                <object class="wxPanel" name="IDC_SEARCHRES_PANEL">
+                    <size>670,450</size>
+                    <style>wxNO_BORDER|wxTAB_TRAVERSAL</style>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                        <border>5</border>
+                        <object class="wxStaticText" name="wxID_STATIC">
+                            <label>Filter search results</label>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxTextCtrl" name="IDC_EDIT_FILTER">
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                        <border>5</border>
+                        <option>9</option>
+                        <object class="wxStaticText" name="ID_SEARCH_DATA">
+                            <fg>#929292</fg>
+                            <label>Ready</label>
+                        </object>
+                    </object>
+                </object>
+            </object>
+        </object>
+    </object>
+    <object class="wxDialog" name="ID_XFERS" subclass="WxXfers">
+        <style>wxDEFAULT_DIALOG_STYLE|wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU</style>
+        <size>550,300</size>
+        <title>Transfers</title>
+        <centered>1</centered>
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <option>1</option>
+                <object class="wxNotebook" name="ID_NOTEBOOK">
+                    <object class="notebookpage">
+                        <label>Downloads</label>
+                        <object class="wxPanel" name="ID_DL_PANEL">
+                            <style>wxSUNKEN_BORDER|wxTAB_TRAVERSAL</style>
+                            <object class="wxBoxSizer">
+                                <orient>wxVERTICAL</orient>
+                                <object class="sizeritem">
+                                    <flag>wxGROW|wxALL</flag>
+                                    <border>5</border>
+                                    <option>2</option>
+                                    <object class="wxListCtrl" name="IDD_XFERS">
+                                        <size>100,80</size>
+                                        <style>wxLC_REPORT</style>
+                                    </object>
+                                </object>
+                                <object class="sizeritem">
+                                    <flag>wxALIGN_LEFT|wxLEFT|wxRIGHT|wxTOP</flag>
+                                    <border>5</border>
+                                    <object class="wxBoxSizer">
+                                        <orient>wxHORIZONTAL</orient>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxChoice" name="IDC_AUTOCLEAR">
+                                                <content>
+                                                    <item>Do not clear completed downloads</item>
+                                                    <item>Clear when complete</item>
+                                                </content>
+                                                <selection>0</selection>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxChoice" name="IDC_AUTORESUME">
+                                                <content>
+                                                    <item>Auto-resume downloads</item>
+                                                    <item>Do not auto-resume</item>
+                                                </content>
+                                                <selection>0</selection>
+                                            </object>
+                                        </object>
+                                    </object>
+                                </object>
+                                <object class="sizeritem">
+                                    <flag>wxALIGN_LEFT|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+                                    <border>5</border>
+                                    <object class="wxBoxSizer">
+                                        <orient>wxHORIZONTAL</orient>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxBitmapButton" name="IDC_RESUME">
+                                                <tooltip>Resume selected download(s)</tooltip>
+                                                <style>wxBU_AUTODRAW</style>
+                                                <bitmap>res/dlnow.ico.gif</bitmap>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxBitmapButton" name="IDC_ABORTSEL">
+                                                <tooltip>Abort selected download(s)</tooltip>
+                                                <style>wxBU_AUTODRAW</style>
+                                                <bitmap>res/stopdl.ico.gif</bitmap>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxBitmapButton" name="IDC_CLEARCOMP">
+                                                <tooltip>Clear completed download(s)</tooltip>
+                                                <style>wxBU_AUTODRAW</style>
+                                                <bitmap>res/clear-completed2.ico.gif</bitmap>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxBitmapButton" name="IDC_CLEARCOMP3">
+                                                <tooltip>Clear inactive download(s)</tooltip>
+                                                <style>wxBU_AUTODRAW</style>
+                                                <bitmap>res/clear-inactive2.ico.gif</bitmap>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxBitmapButton" name="IDC_CLEARALL">
+                                                <tooltip>Clear all download(s)</tooltip>
+                                                <style>wxBU_AUTODRAW</style>
+                                                <bitmap>res/clear-all2.ico.gif</bitmap>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                                            <border>5</border>
+                                            <object class="wxStaticText" name="wxID_STATIC">
+                                                <label>Max simultaneous</label>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxTextCtrl" name="IDC_MAXSIMULDL">
+                                                <size>40,-1</size>
+                                                <tooltip>Max simultaneous downloads</tooltip>
+                                                <value>1</value>
+                                            </object>
+                                        </object>
+                                    </object>
+                                </object>
+                            </object>
+                        </object>
+                    </object>
+                    <object class="notebookpage">
+                        <label>Download Queue</label>
+                        <object class="wxPanel" name="ID_DLQUEUE_PANEL">
+                            <style>wxSUNKEN_BORDER|wxTAB_TRAVERSAL</style>
+                            <object class="wxBoxSizer">
+                                <orient>wxVERTICAL</orient>
+                                <object class="sizeritem">
+                                    <flag>wxGROW|wxALL</flag>
+                                    <border>5</border>
+                                    <option>2</option>
+                                    <object class="wxListCtrl" name="ID_RECVLISTQ">
+                                        <size>100,80</size>
+                                        <style>wxLC_REPORT</style>
+                                    </object>
+                                </object>
+                                <object class="sizeritem">
+                                    <flag>wxALIGN_LEFT|wxALL</flag>
+                                    <border>5</border>
+                                    <object class="wxBoxSizer">
+                                        <orient>wxHORIZONTAL</orient>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxBitmapButton" name="IDC_DLNOW">
+                                                <tooltip>Download item(s) immediately</tooltip>
+                                                <style>wxBU_AUTODRAW</style>
+                                                <bitmap>res/dlnow.ico.gif</bitmap>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxBitmapButton" name="IDC_MOVETOTOP">
+                                                <tooltip>Move item(s) to top of queue</tooltip>
+                                                <style>wxBU_AUTODRAW</style>
+                                                <bitmap>res/move2top.ico.gif</bitmap>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxBitmapButton" name="IDC_MOVETOBOTTOM">
+                                                <tooltip>Move item(s) to bottom of queue</tooltip>
+                                                <style>wxBU_AUTODRAW</style>
+                                                <bitmap>res/move2end.ico.gif</bitmap>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxBitmapButton" name="IDC_REMOVEQUEUE">
+                                                <tooltip>Remove item(s) from queue</tooltip>
+                                                <style>wxBU_AUTODRAW</style>
+                                                <bitmap>res/stopdl.ico.gif</bitmap>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                                            <border>5</border>
+                                            <object class="wxBitmapButton" name="IDC_CLEARQUEUE">
+                                                <tooltip>Clear queue</tooltip>
+                                                <style>wxBU_AUTODRAW</style>
+                                                <bitmap>res/clear-all2.ico.gif</bitmap>
+                                            </object>
+                                        </object>
+                                        <object class="sizeritem">
+                                            <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                                            <border>5</border>
+                                            <object class="wxStaticText" name="IDC_QUEUEITEMS">
+                                                <label>0 items in queue</label>
+                                            </object>
+                                        </object>
+                                    </object>
+                                </object>
+                            </object>
+                        </object>
+                    </object>
+                </object>
+            </object>
+        </object>
+    </object>
+    <object class="wxDialog" name="ID_UPLOADS" subclass="WxUploads">
+        <style>wxDEFAULT_DIALOG_STYLE|wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU</style>
+        <size>550,300</size>
+        <title>Uploads</title>
+        <centered>1</centered>
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <option>2</option>
+                <object class="wxListCtrl" name="IDD_UPLOADS">
+                    <size>100,80</size>
+                    <style>wxLC_REPORT</style>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_LEFT|wxALL</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_ABORTSEL">
+                            <tooltip>Abort selected upload(s)</tooltip>
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/stopdl.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_CLEARCOMP">
+                            <tooltip>Clear inactive upload(s)</tooltip>
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/clear-inactive2.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxBitmapButton" name="IDC_CLEARCOMP2">
+                            <tooltip>Clear all upload(s)</tooltip>
+                            <style>wxBU_AUTODRAW</style>
+                            <bitmap>res/clear-completed2.ico.gif</bitmap>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxChoice" name="IDC_AUTOCLEAR">
+                            <content>
+                                <item>Do not clear completed uploads</item>
+                                <item>Clear when complete</item>
+                            </content>
+                            <selection>0</selection>
+                        </object>
+                    </object>
+                </object>
+            </object>
+        </object>
+    </object>
+    <object class="wxMenu" name="IDM_USERLIST_POPUP">
+        <object class="wxMenuItem" name="IDM_CHAT_USER">
+            <label>Chat user</label>
+        </object>
+        <object class="wxMenuItem" name="IDM_WHOIS_USER">
+            <label>Whois user</label>
+        </object>
+        <object class="wxMenuItem" name="IDM_BROWSE_USER">
+            <label>Browse user</label>
+        </object>
+        <object class="wxMenuItem" name="IDM_SENDFILE_USER">
+            <label>Send file(s) to user</label>
+        </object>
+    </object>
+    <object class="wxMenu" name="IDM_SEARCHRES_POPUP">
+        <object class="wxMenuItem" name="ID_DOWNLOAD">
+            <label>Download</label>
+        </object>
+        <object class="wxMenuItem" name="ID_DLPARENT">
+            <label>Download parent</label>
+        </object>
+        <object class="wxMenuItem" name="ID_BROWSELOC">
+            <label>Browse parent</label>
+        </object>
+        <object class="wxMenuItem" name="ID_COPYLOC">
+            <label>Copy location</label>
+        </object>
+    </object>
+    <object class="wxMenu" name="IDM_SEARCHRES_FILE_POPUP">
+        <object class="wxMenuItem" name="ID_DOWNLOADFOLDER">
+            <label>Download</label>
+        </object>
+        <object class="wxMenuItem" name="ID_BROWSEFOLDER">
+            <label>Browse directory</label>
+        </object>
+        <object class="wxMenuItem" name="ID_COPYLOC">
+            <label>Copy location</label>
+        </object>
+    </object>
+    <object class="wxMenu" name="IDM_SEARCHRES_USER_POPUP">
+        <object class="wxMenuItem" name="ID_BROWSENODE">
+            <label>Browse user</label>
+        </object>
+        <object class="wxMenuItem" name="ID_PRIVMSGNODE">
+            <label>Chat user(s)</label>
+        </object>
+        <object class="wxMenuItem" name="IDM_SEARCHRES_USER_WHOIS">
+            <label>Whois user</label>
+        </object>
+        <object class="wxMenuItem" name="ID_SENDFILENODE">
+            <label>Send file(s) to user(s)</label>
+        </object>
+        <object class="wxMenuItem" name="ID_COPYLOC">
+            <label>Copy location</label>
+        </object>
+    </object>
+    <object class="wxDialog" name="ID_PREFS_DIALOG" subclass="WxPrefs">
+        <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU</style>
+        <size>400,300</size>
+        <title>Basic Preferences</title>
+        <centered>1</centered>
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE</flag>
+                <border>5</border>
+                <object class="wxStaticText" name="wxID_STATIC">
+                    <label>wxWASTE 1.5 beta 4 - http://waste.sf.net</label>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                        <border>5</border>
+                        <object class="wxStaticText" name="wxID_STATIC">
+                            <tooltip>Select your connection's speed.  If you select modem or ISDN, your node will not route traffic
+for other nodes and network stability may be affected.</tooltip>
+                            <label>Connection speed:</label>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP</flag>
+                        <border>5</border>
+                        <option>9</option>
+                        <object class="wxChoice" name="ID_CONN_SPEED">
+                            <content>
+                                <item>Modem</item>
+                                <item>ISDN</item>
+                                <item>Slow DSL/Cable</item>
+                                <item>T1/Fast DSL/Cable</item>
+                                <item>T3/LAN</item>
+                            </content>
+                            <selection>2</selection>
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxLEFT|wxRIGHT</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                        <border>5</border>
+                        <object class="wxStaticText" name="wxID_STATIC">
+                            <tooltip>Your nickname to use in WASTE.</tooltip>
+                            <label>Your nickname:</label>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <option>9</option>
+                        <object class="wxTextCtrl" name="ID_NICKNAME">
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxButton" name="ID_UPD_NICK">
+                            <label>Update nickname</label>
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxLEFT|wxRIGHT</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                        <border>5</border>
+                        <object class="wxStaticText" name="wxID_STATIC">
+                            <tooltip>Your real name.</tooltip>
+                            <label>Real name / user info:</label>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <option>9</option>
+                        <object class="wxTextCtrl" name="ID_USER_INFO">
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxADJUST_MINSIZE</flag>
+                        <border>5</border>
+                        <object class="wxStaticText" name="wxID_STATIC">
+                            <tooltip>Network name.  You can only connect to nodes with EXACTLY
+the same network name setting.</tooltip>
+                            <label>Network name / ID / passphrase:</label>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <option>9</option>
+                        <object class="wxTextCtrl" name="ID_NET_NAME">
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxButton" name="ID_GEN_PRIVKEY">
+                    <label>Generate new private key...</label>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxButton" name="ID_COPY_PUBKEY">
+                    <label>Copy my public key to the clipboard</label>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxGROW|wxALL</flag>
+                        <border>5</border>
+                        <option>1</option>
+                        <object class="wxButton" name="ID_VIEW_PUBKEYS">
+                            <label>View authorized public keys</label>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxGROW|wxALL</flag>
+                        <border>5</border>
+                        <option>1</option>
+                        <object class="wxButton" name="ID_ADD_PUB_KEYS">
+                            <label>Add public key(s)...</label>
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxButton" name="ID_BROADCAST_PUBKEY">
+                    <label>Broadcast my public key on network now</label>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxLEFT|wxRIGHT</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL|wxADJUST_MINSIZE</flag>
+                        <border>5</border>
+                        <object class="wxStaticText" name="wxID_STATIC">
+                            <tooltip>A directory where downloaded files will be saved.</tooltip>
+                            <label>Path to save downloaded files:</label>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <option>9</option>
+                        <object class="wxTextCtrl" name="ID_DOWNLOAD_PATH">
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxButton" name="ID_BROWSE_DL_PATH">
+                            <label>Browse...</label>
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_LEFT|wxLEFT|wxRIGHT|wxTOP|wxADJUST_MINSIZE</flag>
+                <border>5</border>
+                <object class="wxStaticText" name="wxID_STATIC">
+                    <tooltip>The list of directories to share to other users.</tooltip>
+                    <label>Directories to share: (separate multiple dirs with ";")</label>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxLEFT|wxRIGHT|wxBOTTOM</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <option>9</option>
+                        <object class="wxTextCtrl" name="ID_SHARE_PATH">
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <object class="wxButton" name="ID_ADD_SHARE_PATH">
+                            <label>Add...</label>
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>5</border>
+                <object class="wxButton" name="ID_CLOSE_PREFS">
+                    <size>200,-1</size>
+                    <label>Close</label>
+                </object>
+            </object>
+        </object>
+    </object>
+    <object class="wxDialog" name="ID_PUBKEYVIEWER" subclass="WxPubkeyViewer">
+        <style>wxDEFAULT_DIALOG_STYLE|wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU</style>
+        <size>400,450</size>
+        <title>Public Keys</title>
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <option>9</option>
+                <object class="wxTextCtrl" name="ID_KEYS_TEXT">
+                    <size>500,400</size>
+                    <style>wxTE_MULTILINE|wxTE_READONLY</style>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>5</border>
+                <object class="wxButton" name="ID_CLOSE">
+                    <label>Close</label>
+                </object>
+            </object>
+        </object>
+    </object>
+    <object class="wxDialog" name="ID_CHAT_DLG" subclass="WxChat">
+        <style>wxDEFAULT_DIALOG_STYLE|wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU</style>
+        <size>400,300</size>
+        <title>Chat</title>
+        <centered>1</centered>
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <option>3</option>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxGROW|wxLEFT|wxRIGHT|wxTOP</flag>
+                        <border>5</border>
+                        <option>3</option>
+                        <object class="wxTextCtrl" name="IDC_CHATTEXT">
+                            <style>wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH|wxTE_WORDWRAP</style>
+                        </object>
+                    </object>
+                    <object class="sizeritem">
+                        <flag>wxGROW|wxLEFT|wxRIGHT|wxTOP</flag>
+                        <border>5</border>
+                        <option>1</option>
+                        <object class="wxTreeCtrl" name="IDC_TREE_CHATROOM">
+                            <size>80,-1</size>
+                            <style>wxTR_NO_BUTTONS|wxTR_NO_LINES|wxTR_HIDE_ROOT|wxTR_SINGLE|wxSUNKEN_BORDER</style>
+                        </object>
+                    </object>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxTextCtrl" name="IDC_CHATEDIT">
+                    <style>wxTE_PROCESS_ENTER</style>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_LEFT|wxLEFT|wxRIGHT|wxADJUST_MINSIZE</flag>
+                <border>5</border>
+                <object class="wxStaticText" name="IDC_STATUS">
+                    <fg>#9E9E9E</fg>
+                </object>
+            </object>
+        </object>
+    </object>
+    <object class="wxMenu" name="IDM_UPLOADS_MENU">
+        <object class="wxMenuItem" name="IDM_ABORT_UPLOAD">
+            <label>Abort upload(s)</label>
+        </object>
+    </object>
+    <object class="wxDialog" name="ID_KEYGEN_DLG" subclass="WxKeyGenRandomnessDialog">
+        <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU</style>
+        <size>400,500</size>
+        <title>WASTE Key Generator</title>
+        <centered>1</centered>
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+                <flag>wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE</flag>
+                <border>5</border>
+                <object class="wxStaticText" name="wxID_STATIC">
+                    <label>Giving random number generator more randomness, please move
+the mouse around randomly within this window.</label>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE</flag>
+                <border>5</border>
+                <object class="wxStaticText" name="wxID_STATIC">
+                    <size>-1,66</size>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>20</border>
+                <option>1</option>
+                <object class="wxGauge" name="ID_KG_PROGRESS">
+                    <size>400,-1</size>
+                    <style>wxGA_HORIZONTAL|wxGA_PROGRESSBAR</style>
+                    <value>1</value>
+                    <range>64</range>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL|wxADJUST_MINSIZE</flag>
+                <border>5</border>
+                <object class="wxStaticText" name="wxID_STATIC">
+                    <size>-1,111</size>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxGROW|wxALL</flag>
+                <border>5</border>
+                <object class="wxBoxSizer">
+                    <orient>wxHORIZONTAL</orient>
+                    <object class="sizeritem">
+                        <flag>wxALIGN_CENTER_VERTICAL|wxALL</flag>
+                        <border>5</border>
+                        <option>1</option>
+                        <object class="wxButton" name="ID_CANCEL">
+                            <label>Cancel</label>
+                        </object>
+                    </object>
+                </object>
+            </object>
+        </object>
+    </object>
+    <object class="wxMenu" name="IDM_DL_POPUP">
+        <object class="wxMenuItem" name="IDM_CLEANUP_DLS">
+            <label>Cleanup download folder...</label>
+        </object>
+        <object class="wxMenuItem" name="ID_CLEANUP_SEL">
+            <label>Cleanup selected file(s)</label>
+        </object>
+        <object class="wxMenuItem" name="ID_ABORT_DL">
+            <label>Abort selected download(s)</label>
+        </object>
+        <object class="wxMenuItem" name="ID_RESUME_DL">
+            <label>Resume selected download(s)</label>
+        </object>
+    </object>
+    <object class="wxMenu" name="IDM_DLQ_POPUP">
+        <object class="wxMenuItem" name="IDM_DLNOW">
+            <label>Download item(s) now</label>
+        </object>
+        <object class="wxMenuItem" name="IDM_TO_TOP">
+            <label>Move item(s) to top of queue</label>
+        </object>
+        <object class="wxMenuItem" name="IDM_TO_BOT">
+            <label>Move item(s) to bottom of queue</label>
+        </object>
+        <object class="wxMenuItem" name="IDM_REMOVE">
+            <label>Remove item(s) from queue</label>
+        </object>
+    </object>
+</resource>

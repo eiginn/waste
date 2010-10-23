@@ -1,0 +1,27 @@
+wxWASTE builds on GCC or ICC. It has been tested on Linux, and should build on
+*BSD, and other POSIX systems.
+
+Short Guide:
+------------
+
+Type the following commands to build WASTE:
+
+./configure
+make
+
+WASTE will be compiled to an executable named 'waste'.
+
+Long Guide:
+-----------
+
+If, for whatever reason, you wish to rebuild the configure script, a script is
+provided to execute the autotools programs required. To do this, run the
+following commands:
+
+./autogen.sh
+./configure
+make
+
+WASTE will be compiled to an executable named 'waste'.
+
+Enjoy.

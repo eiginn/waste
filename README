@@ -1,0 +1,6 @@
+wxWASTE 1.5 Beta 4
+------------------
+
+wxWASTE is a quite-and-dirty cross-platform verison of WASTE relying on the
+wxWidgets toolkit. To compile, see COMPILING. For information on the GNU GPL
+license, see LICENSE.
