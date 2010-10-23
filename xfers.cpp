@@ -335,7 +335,7 @@ void XferSend::run(C_MessageQueueList *mql)
 
 		if (g_extrainf) sprintf(s+strlen(s)," %d/%d/%d (%d)",m_max_chunksent+1,m_chunks_sent_total,m_filelen_chunks,chunks_to_send_len);
 
-		int idx=g_lvsend.FindItemByParam((int)this);
+		int idx=g_lvsend.FindItemByParam((size_t)this);
 		if (idx!=-1) g_lvsend.SetItemText(idx,3,s);
 	}
 #endif
@@ -458,7 +458,7 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 	#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 		/* this section updates the 'Downloads' tab when the transfers start
 		*/
-		g_lvrecv.InsertItem(0,filename,(int)this);
+		g_lvrecv.InsertItem(0,filename,(size_t)this);
 		g_lvrecv.SetItemText(0,2,"Connecting");
 		g_lvrecv.SetItemText(0,1,sizestr);
 		g_lvrecv.SetItemText(0,3,guididx);
@@ -655,7 +655,7 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 		m_err="File already exists";
 
 		#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-			int idx=g_lvrecv.FindItemByParam((int)this);
+			int idx=g_lvrecv.FindItemByParam((size_t)this);
 			if (idx!=-1) {
 				g_lvrecv.SetItemText(idx,3,"");
 				// Holy god damned shit! Do we really refer runtime data in Listviews? omg!!!
@@ -761,7 +761,7 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 						{
 							safe_strncpy(m_nick,nick,sizeof(m_nick));
 							#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-								int idx=g_lvrecv.FindItemByParam((int)this);
+								int idx=g_lvrecv.FindItemByParam((size_t)this);
 								if (idx!=-1) {
 									g_lvrecv.SetItemText(idx,4,nick);
 								};
@@ -1116,7 +1116,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 		if (bNewUsername) {
 			safe_strncpy(m_nick,lasthdr->get_nick(),sizeof(m_nick));
 			#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-				int idx=g_lvrecv.FindItemByParam((int)this);
+				int idx=g_lvrecv.FindItemByParam((size_t)this);
 				if (idx!=-1) {
 					char s[32];
 					FormatSizeStr64(s,fs_l,fs_h);
@@ -1318,7 +1318,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 						};
 						/* this section updates the 'Downloads' tab  after the download
 						has completed.. prints filename, status, and location. */
-						int idx=g_lvrecv.FindItemByParam((int)this);
+						int idx=g_lvrecv.FindItemByParam((size_t)this);
 						if (idx!=-1) {
 							g_lvrecv.SetItemText(idx,2,s);
 							g_lvrecv.SetItemText(idx,3,"");
@@ -1358,7 +1358,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 						m_chunk_cnt,m_total_chunks_recvd,m_chunk_total,m_adaptive_chunksize);
 					}
 
-					int idx=g_lvrecv.FindItemByParam((int)this);
+					int idx=g_lvrecv.FindItemByParam((size_t)this);
 					if (idx!=-1) g_lvrecv.SetItemText(idx,2,s);
 				#endif
 			};
