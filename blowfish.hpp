@@ -25,7 +25,7 @@ Current class and templates written by Md5Chap
 #ifndef _BLOWFISH_H
 #define _BLOWFISH_H
 
-//#include "intdefs.hpp"
+#include "intdefs.hpp"
 
 struct _BLOWFISH_CTX
 {
