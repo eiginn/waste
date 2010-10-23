@@ -425,7 +425,10 @@ int ACStringToStruct(const char *t, ACitem *i)
 	else if (*t == 'D') i->allow=0;
 	else return 0;
 	t++;
-	char *p=strstr(t,"/");
+	const char *pT=strstr(t,"/");
+	char pA[strlen(pT) + 1];
+	strcpy(pA, pT);
+	char *p = pA;
 	if (!p || !p[1]) return 0;
 	i->maskbits=(char)(atoi(++p)&0xff);
 	if (*p < '0' || *p > '9') return 0;
