@@ -42,8 +42,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define MESSAGE_SEARCH              (64)
 #define MESSAGE_SEARCH_REPLY        (64|1)
 #define MESSAGE_SEARCH_USERLIST     (68)
-#define MESSAGE_FILE_REQUEST        (72)
-#define MESSAGE_FILE_REQUEST_REPLY  (72|1)
+
+#ifdef _DEFINE_CHUNKZ
+	#define MESSAGE_FILE_REQUEST        (200)
+	#define MESSAGE_FILE_REQUEST_REPLY  (200|1)
+#else //_DEFINE_CHUNKZ
+	#define MESSAGE_FILE_REQUEST		(72)
+	#define MESSAGE_FILE_REQUEST_REPLY	(72|1)
+#endif //_DEFINE_CHUNKZ
+
 #define MESSAGE_LOCAL_SATURATE      (254)
 //we have room for another few billion types of messages, phew.
 

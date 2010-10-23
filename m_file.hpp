@@ -24,7 +24,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "shbuf.hpp"
 #include "util.hpp"
 
-#define FILE_CHUNKSIZE 4096
+#ifdef _DEFINE_CHUNKZ
+	#define FILE_CHUNKSIZE 16384
+#else //_DEFINE_CHUNKZ
+	#define FILE_CHUNKSIZE 4096
+#endif //_DEFINE_CHUNKZ
 #define FILE_MAX_CHUNKS_PER_REQ 64
 
 class C_FileSendRequest

@@ -204,7 +204,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define	CONFIG_keepupnet_DEFAULT				0
 
 #define	CONFIG_keydistflags						"keydistflags"
-#define	CONFIG_keydistflags_DEFAULT				4|2 // no 1 -> don't autoallow
+#define	CONFIG_keydistflags_DEFAULT				1 // 1 -> use autoallow (wxWaste doesnt have the "allow key?"-dialog yet)
 
 #define	CONFIG_storepass						"storepass"
 #define	CONFIG_keypass							"keypass"
