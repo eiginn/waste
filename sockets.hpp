@@ -32,7 +32,7 @@ ADDED Md5Chap - This should not even be in platform, there should
 #ifdef _WIN32
 
 #define ERRNO (WSAGetLastError())
-#define SET_SOCK_BLOCK(s,block) { unsigned long __i=block?0:1; ioctlsocket(s,FIONBIO,&__i); }
+#define SET_SOCK_BLOCK(s,block) { uint32_t __i=block?0:1; ioctlsocket(s,FIONBIO,&__i); }
 #define EWOULDBLOCK WSAEWOULDBLOCK
 #define EINPROGRESS WSAEWOULDBLOCK
 

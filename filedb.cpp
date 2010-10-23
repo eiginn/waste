@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	#define DB_LH_REALLOC(x,y) HeapReAlloc(hHeap,0,x,y)
 	#define DB_LH_FREE(x) HeapFree(hHeap,0,x)
 	#define DB_LH_STRDUP(x) priv__strdup(hHeap,x)
-	static char *priv__strdup(HANDLE hHeap, char *str)
+	static char *priv__strdup(HANDLE hHeap, const char *str)
 	{
 		char *t=(char *) DB_LH_ALLOC(strlen(str)+1);
 		strcpy(t,str);
@@ -68,7 +68,8 @@ C_FileDB::C_FileDB()
 void C_FileDB::UpdateExtList(const char *extlist)
 {
 	char *p=m_ext_list;
-	char *p2,*p3=m_ext_list+sizeof(m_ext_list)-2;
+	char *p2;
+	const char *p3=m_ext_list+sizeof(m_ext_list)-2;
 	while (*extlist) {
 		while (*extlist == ';' || *extlist == ' ') extlist++;
 		p2=p;
@@ -103,7 +104,7 @@ void C_FileDB::Scan(const char *pathlist)
 	clearDBs();
 
 	safe_strncpy(path_buf,pathlist,sizeof(path_buf));
-	unsigned int len=strlen(path_buf);
+	uint32_t len=strlen(path_buf);
 	if (len==sizeof(path_buf)-1) {
 		char *p=path_buf+len-1;
 		while ((p>path_buf)&&(*p!=';')) p--;
@@ -176,7 +177,7 @@ C_FileDB::~C_FileDB()
 	#endif
 }
 
-void C_FileDB::parselist(char *out, char *in)
+void C_FileDB::parselist(char *out, const char *in)
 {
 	int nt=10;
 	int inquotes=0, neednull=0;
@@ -210,7 +211,7 @@ void C_FileDB::parselist(char *out, char *in)
 	*out++=0;
 }
 
-int C_FileDB::in_string(char *string, char *substring)
+int C_FileDB::in_string(const char *string, const char *substring)
 {
 	//HACK init but unref
 	//char *os=string;
@@ -236,7 +237,7 @@ int C_FileDB::in_string(char *string, char *substring)
 	return 0;
 }
 
-int C_FileDB::substr_search(char *bigtext1, char *bigtext2, char *littletext_list)
+int C_FileDB::substr_search(const char *bigtext1, const char *bigtext2, const char *littletext_list)
 {
 	while (*littletext_list) {
 		if (!in_string(bigtext1,littletext_list) && !in_string(bigtext2,littletext_list)) return 0;
@@ -246,7 +247,7 @@ int C_FileDB::substr_search(char *bigtext1, char *bigtext2, char *littletext_lis
 	return 1;
 }
 
-void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *mqueuesend, T_Message *srcmessage, void (*gm)(T_Message *message, C_MessageQueueList *_this, C_Connection *cn))
+void C_FileDB::Search(const char *ss, C_MessageSearchReply *repl, C_MessageQueueList *mqueuesend, T_Message *srcmessage, void (*gm)(T_Message *message, C_MessageQueueList *_this, C_Connection *cn))
 {
 	char _searchstring[1024],*searchstring=_searchstring;
 	safe_strncpy(searchstring,ss,sizeof(_searchstring));
@@ -276,7 +277,7 @@ void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *
 				};
 			};
 			repl->add_item(-1,machinename,(char*)USER_STRING,m_database_used, GetNumMB(), GetLatestTime());
-			T_Message msg={0,};
+			T_Message msg={{0},};
 			if (srcmessage) msg.message_guid=srcmessage->message_guid;
 			else msg.message_guid=g_searchcache[0]->search_id;
 			msg.data=repl->Make();
@@ -328,7 +329,7 @@ void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *
 			if (sslen) for (x = 0; x < m_database_used; x ++) {
 				char buf[2048];
 				char *d=m_dir_index[m_database[x].dir_index].dirname;
-				unsigned int l=m_dir_index[m_database[x].dir_index].base_len+1;
+				uint32_t l=m_dir_index[m_database[x].dir_index].base_len+1;
 
 				int a=l-2;
 				while (a>0 && d[a]!='/' && d[a]!='\\') a--;
@@ -348,7 +349,7 @@ void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *
 					f++;
 
 					if (!repl->would_fit(f,m_database[x].meta)) {
-						T_Message msg={0,};
+						T_Message msg={{0},};
 						if (srcmessage) msg.message_guid=srcmessage->message_guid;
 						else msg.message_guid=g_searchcache[0]->search_id;
 						msg.data=repl->Make();
@@ -374,12 +375,12 @@ void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *
 			*p=0;
 			int sslen=p-searchstring;
 
-			unsigned int dbsize_errcnt=0;
+			uint32_t dbsize_errcnt=0;
 
 			for (x = 0; x < m_database_used; x ++) {
 				char buf[2048];
 				char *d=m_dir_index[m_database[x].dir_index].dirname;
-				unsigned int l=m_dir_index[m_database[x].dir_index].base_len+1;
+				uint32_t l=m_dir_index[m_database[x].dir_index].base_len+1;
 
 				int a=l-2;
 				while (a>0 && d[a]!='/' && d[a]!='\\') a--;
@@ -408,7 +409,7 @@ void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *
 					if (stricmp(++f,last)) {
 						safe_strncpy(last,f,sizeof(last));
 						if (!repl->would_fit(f,is_dir?(char*)DIRECTORY_STRING:m_database[x].meta)) {
-							T_Message msg={0,};
+							T_Message msg={{0},};
 							if (srcmessage) msg.message_guid=srcmessage->message_guid;
 							else msg.message_guid=g_searchcache[0]->search_id;
 							msg.data=repl->Make();
@@ -425,7 +426,7 @@ void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *
 						};
 						int poosize=m_database[x].length_high;
 						if (is_dir) {
-							unsigned int o=dbsize_errcnt;
+							uint32_t o=dbsize_errcnt;
 							dbsize_errcnt += m_database[x].length_low & 0xFFFFF;
 							dbsize_errcnt &= 0xFFFFF;
 							poosize=(m_database[x].length_high * 4096)+(m_database[x].length_low>>20) + (dbsize_errcnt < o);
@@ -436,7 +437,7 @@ void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *
 						dbsize_errcnt=0;
 					}
 					else {
-						unsigned int o=dbsize_errcnt;
+						uint32_t o=dbsize_errcnt;
 						dbsize_errcnt += m_database[x].length_low & 0xFFFFF;
 						dbsize_errcnt &= 0xFFFFF;
 
@@ -446,7 +447,7 @@ void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *
 			};
 		};
 		if (repl->get_numitems()) {
-			T_Message msg={0,};
+			T_Message msg={{0},};
 			if (srcmessage) msg.message_guid=srcmessage->message_guid;
 			else msg.message_guid=g_searchcache[0]->search_id;
 
@@ -470,13 +471,13 @@ void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *
 
 	for (x = 0; x < m_database_used; x ++) {
 		char *d=m_dir_index[m_database[x].dir_index].dirname;
-		unsigned int l=m_dir_index[m_database[x].dir_index].base_len+1;
+		uint32_t l=m_dir_index[m_database[x].dir_index].base_len+1;
 		if (l >= strlen(d)) d=(char*)"";
 		else d+=l;
 		if (substr_search(m_database[x].file,d,ssout)) {
 			char buf[2048];
 			char *d=m_dir_index[m_database[x].dir_index].dirname;
-			unsigned int l=m_dir_index[m_database[x].dir_index].base_len+1;
+			uint32_t l=m_dir_index[m_database[x].dir_index].base_len+1;
 
 			int a=l-2;
 			while (a>0 && d[a]!='/' && d[a]!='\\') a--;
@@ -497,7 +498,7 @@ void C_FileDB::Search(char *ss, C_MessageSearchReply *repl, C_MessageQueueList *
 	};
 
 	if (repl->get_numitems()) {
-		T_Message msg={0,};
+		T_Message msg={{0},};
 		if (srcmessage) msg.message_guid=srcmessage->message_guid;
 		else msg.message_guid=g_searchcache[0]->search_id;
 		msg.data=repl->Make();
@@ -545,7 +546,7 @@ void C_FileDB::alloc_entry()
 	};
 }
 
-int C_FileDB::in_list(char *list, char *v)
+int C_FileDB::in_list(const char *list, const char *v)
 {
 	while (*list) {
 		if (!*v && !::strcmp(list,".")) return 1;
@@ -574,9 +575,9 @@ int C_FileDB::GetFile(int index, char *file, char *meta, int *length_low, int *l
 }
 
 #ifdef _WIN32
-	void C_FileDB::UnixTimeToFileTime(FILETIME *ft, unsigned int t)
+	void C_FileDB::UnixTimeToFileTime(FILETIME *ft, uint32_t t)
 	{
-		SYSTEMTIME st={0,};
+		SYSTEMTIME st={{0},};
 		st.wYear=1970;
 		st.wDay=1;
 		st.wMonth=1;
@@ -584,10 +585,10 @@ int C_FileDB::GetFile(int index, char *file, char *meta, int *length_low, int *l
 		((ULARGE_INTEGER *)ft)->QuadPart += 10000000i64*(__int64)t;
 	}
 
-	unsigned int C_FileDB::FileTimeToUnixTime(FILETIME *ft)
+	uint32_t C_FileDB::FileTimeToUnixTime(FILETIME *ft)
 	{
 		FILETIME lt2;
-		SYSTEMTIME st={0,};
+		SYSTEMTIME st={{0},};
 		st.wYear=1970;
 		st.wDay=1;
 		st.wMonth=1;
@@ -597,7 +598,7 @@ int C_FileDB::GetFile(int index, char *file, char *meta, int *length_low, int *l
 		memcpy(&end,ft,sizeof(end));
 		end.QuadPart -= ((ULARGE_INTEGER *)&lt2)->QuadPart;
 		end.QuadPart /= 10000000; // 100ns -> seconds
-		return (unsigned int)end.QuadPart;
+		return (uint32_t)end.QuadPart;
 	}
 #endif
 
@@ -609,7 +610,7 @@ int C_FileDB::DoScan(int maxtime, C_FileDB *oldDB)
 	#else
 		struct dirent *d=NULL;
 	#endif
-	unsigned int endt=GetTickCount()+maxtime;
+	uint32_t endt=GetTickCount()+maxtime;
 	if (!m_scan_stack) return -1;
 
 	if (!m_database_used) { //first run
@@ -719,9 +720,9 @@ int C_FileDB::DoScan(int maxtime, C_FileDB *oldDB)
 										};
 
 										#ifdef _WIN32
-											char *p=::extension(d.cFileName);
+											const char *p=::extension(d.cFileName);
 										#else
-											char *p=::extension(d->d_name);
+											const char *p=::extension(d->d_name);
 										#endif
 
 										if (!ispending && ((stricmp(p,szWastestate)!=0)||(strlen(p)!=strlen(szWastestate))) && in_list(m_ext_list,p)) {
@@ -832,9 +833,9 @@ int C_FileDB::DoScan(int maxtime, C_FileDB *oldDB)
 
 											if (needmeta) {
 												#ifdef _WIN32
-													char *t=extension(d.cFileName);
+													const char *t=extension(d.cFileName);
 												#else
-													char *t=extension(d->d_name);
+													const char *t=extension(d->d_name);
 												#endif
 												int ismp3=!stricmp(t,"mp3") || !stricmp(t,"mp2") || !stricmp(t,"mp1");
 												int isjpg=!stricmp(t,"jpg") || !stricmp(t,"jpeg")|| !stricmp(t,"jfif");
@@ -1126,7 +1127,7 @@ static int GetXingHeader(XHEADDATA *X,  unsigned char *buf)
 			flen = filelen;
 			flen-=id3_skip;
 			while (r-- >= 0) {
-				unsigned int v = DataUIntSwap4(a);
+				uint32_t v = DataUIntSwap4(a);
 				int layer, bitrate, ID, IDex, sfreq,mode;
 				a++;
 				bitrate = (v>>12)&15;
@@ -1137,7 +1138,7 @@ static int GetXingHeader(XHEADDATA *X,  unsigned char *buf)
 				layer = (v>>17)&3;
 
 				if ((v >> (32-11)) == 0x7ff && bitrate != 15 && bitrate && layer && sfreq != 3 && (IDex || !ID)) {
-					char *modes[4]={"Stereo","Joint Stereo","2 Channel","Mono"};
+					const char *modes[4]={"Stereo","Joint Stereo","2 Channel","Mono"};
 
 					int br=(t_bitrate[ID][3-layer][bitrate]*1000);
 					if (!is_vbr) is_vbr_lens=(flen*8)/(br?br:1);
@@ -1176,7 +1177,7 @@ static int GetXingHeader(XHEADDATA *X,  unsigned char *buf)
 
 			FILE *fp=fopen(fn,"wb");
 			if (fp) {
-				unsigned int d=0xDBDBF11B;
+				uint32_t d=0xDBDBF11B;
 				fwrite(&d,1,4,fp);
 				d=4 + 4 + 4 + 4 + 4 + 4 + sizeof(db)*m_database_used + sizeof(di) * m_dir_index_used;
 				fwrite(&d,1,4,fp);
@@ -1245,13 +1246,13 @@ static int GetXingHeader(XHEADDATA *X,  unsigned char *buf)
 				fseek(fp,0,SEEK_END);
 				int flen=ftell(fp);
 				fseek(fp,0,SEEK_SET);
-				unsigned int d;
+				uint32_t d;
 
 				clearDBs();
 
 				if (fread(&d,1,4,fp) == 4 && d == 0xDBDBF11B) {
-					unsigned int len;
-					if (fread(&len,1,4,fp) == 4 && len+8 == (unsigned int)flen) {
+					uint32_t len;
+					if (fread(&len,1,4,fp) == 4 && len+8 == (uint32_t)flen) {
 						fread(&m_database_mb,1,4,fp);
 						fread(&m_database_xbytes,1,4,fp);
 						fread(&m_database_newesttime,1,4,fp);

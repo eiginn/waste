@@ -38,20 +38,20 @@ public:
 		ListView_SetExtendedListViewStyle(m_hwnd,LVS_EX_FULLROWSELECT);
 	};
 
-	void AddCol(char *text, int w);
+	void AddCol(const char *text, int w);
 	int GetCount() { return ListView_GetItemCount(m_hwnd); }
-	int GetParam(int p);
-	void DeleteItem(int n) { ListView_DeleteItem(m_hwnd,n); }
+	int GetParam(long p);
+	void DeleteItem(long n) { ListView_DeleteItem(m_hwnd,n); }
 	void Clear() { ListView_DeleteAllItems(m_hwnd); }
-	int GetSelected(int x) { return (ListView_GetItemState(m_hwnd, x, LVIS_SELECTED) & LVIS_SELECTED)?1:0; }
-	void SetSelected(int x) { ListView_SetItemState(m_hwnd,x,LVIS_SELECTED,LVIS_SELECTED); }
-	int InsertItem(int p, const char *text, int param);
+	int GetSelected(long x) { return (ListView_GetItemState(m_hwnd, x, LVIS_SELECTED) & LVIS_SELECTED)?1:0; }
+	void SetSelected(long x) { ListView_SetItemState(m_hwnd, x,LVIS_SELECTED,LVIS_SELECTED); }
+	int InsertItem(long p, const char *text, int param);
 	int InsertItemSorted(const char *text, int param, const char *sorttext);
-	void SetItemText(int p, int si, const char *text);
-	void SetItemParam(int p, int param);
+	void SetItemText(long p, int si, const char *text);
+	void SetItemParam(long p, int param);
 
-	void GetText(int p, int si, char *text, int maxlen) { ListView_GetItemText(m_hwnd, p, si, text, maxlen); }
-	int FindItemByParam(int param)
+	void GetText(long p, int si, char *text, int maxlen) { ListView_GetItemText(m_hwnd, p, si, text, maxlen); }
+	long FindItemByParam(long param)
 	{
 		LVFINDINFO fi={LVFI_PARAM,0,param};
 		return ListView_FindItem(m_hwnd,-1,&fi);
@@ -104,17 +104,17 @@ public:
 		m_hwnd=hwnd;
 	};
 
-	void AddCol(char *text, int w);
+	void AddCol(const char *text, int w);
 	int GetCount() { return m_hwnd->GetItemCount(); }
-	int GetParam(int p);
-	void DeleteItem(int n) { m_hwnd->DeleteItem((long) n); }
+	int GetParam(long p);
+	void DeleteItem(long n) { m_hwnd->DeleteItem(n); }
 	void Clear() { m_hwnd->DeleteAllItems(); }
-	int GetSelected(int x) { return (m_hwnd->GetItemState((long) x, wxLIST_STATE_SELECTED))?1:0; }
-	void SetSelected(int x) { m_hwnd->SetItemState((long) x,wxLIST_STATE_SELECTED,wxLIST_STATE_SELECTED); }
-	int InsertItem(int p, const char *text, int param);
+	int GetSelected(long x) { return (m_hwnd->GetItemState(x, wxLIST_STATE_SELECTED))?1:0; }
+	void SetSelected(long x) { m_hwnd->SetItemState(x, wxLIST_STATE_SELECTED,wxLIST_STATE_SELECTED); }
+	int InsertItem(long p, const char *text, int param);
 	int InsertItemSorted(const char *text, int param, const char *sorttext);
-	void SetItemText(int p, int si, const char *text);
-	void SetItemParam(int p, int param);
+	void SetItemText(long p, int si, const char *text);
+	void SetItemParam(long p, int param);
 
 	void GetText(int p, int si, char *text, int maxlen) {
 				wxListItem item;
@@ -128,9 +128,9 @@ public:
 				*text = '\0';
 				}
 		}
-	int FindItemByParam(int param)
+	long FindItemByParam(long param)
 	{
-		return m_hwnd->FindItem(-1,(long) param);
+		return m_hwnd->FindItem(-1, param);
 	};
 	void SetSortColumn(int col, int bNumeric=0)
 	{

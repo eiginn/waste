@@ -30,12 +30,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "rsa/r_random.hpp"
 #include "rsa/rsa.hpp"
 
-inline bool _bfInit::TestAll1(unsigned int mask)
+inline bool _bfInit::TestAll1(uint32_t mask)
 {
 	return (i&mask)==mask;
 }
 
-inline bool _bfInit::TestAll0(unsigned int mask)
+inline bool _bfInit::TestAll0(uint32_t mask)
 {
 	return (i&mask)==0;
 }
@@ -50,12 +50,12 @@ inline void _bfInit::Set(_bfInit::_flags f,bool value)
 	i=(i&(~f))|(value?f:0);
 }
 
-inline unsigned int _bfInit::GetI()
+inline uint32_t _bfInit::GetI()
 {
 	return i;
 }
 
-inline void _bfInit::SetI(unsigned int i)
+inline void _bfInit::SetI(uint32_t i)
 {
 	this->i=i;
 }
@@ -118,14 +118,14 @@ C_Connection::C_Connection(int s, struct sockaddr_in *loc)
 	if (loc) {
 		m_saddr=*loc;
 	} else {
-		m_saddr.sin_addr.s_addr = (unsigned long) 0L;
+		m_saddr.sin_addr.s_addr = (uint32_t) 0L;
 	}
 
 	m_cansend=false;
 }
 
 //outgoing
-C_Connection::C_Connection(char *hostname, unsigned short port, C_AsyncDNS *dns)
+C_Connection::C_Connection(char *hostname, uint16_t port, C_AsyncDNS *dns)
 {
 	m_iSendRandomPadding1=0;
 	m_iSendRandomPadding2=0;
@@ -265,7 +265,7 @@ void C_Connection::init_crypt_gotpkey() //got their public key
 	};
 
 	//encrypt using pubkey_B
-	unsigned int l=0;
+	uint32_t l=0;
 	if (
 		RSAPublicEncrypt(
 			packsend2.sPubCrypted,
@@ -285,7 +285,7 @@ void C_Connection::init_crypt_gotpkey() //got their public key
 	if (g_use_networkhash && g_networkhash_PSK) {
 		_InitialPacket2_PSK &p2psk=(_InitialPacket2_PSK&)packsend2;
 		memcpy(p2psk.sRand,packrecv1.sRand,sizeof(p2psk.sRand));
-		for (int i=0;i<(int) (sizeof(p2psk.sRand)/sizeof(int));i++) ((unsigned int*)(p2psk.sRand))[i]^=(~0);
+		for (int i=0;i<(int) (sizeof(p2psk.sRand)/sizeof(int));i++) ((uint32_t*)(p2psk.sRand))[i]^=(~0);
 		g_networkhash_PSK_fish.EncryptECB(p2psk.sPubCrypted, sizeof(p2psk.sPubCrypted));
 		g_networkhash_PSK_fish.EncryptECB(p2psk.sRand, sizeof(p2psk.sRand));
 		R_GenerateBytes((unsigned char*)&packsend2+sizeof(_InitialPacket2)+m_InitialPacket2Add,m_iSendRandomPadding2,&g_random);
@@ -305,7 +305,7 @@ void C_Connection::init_crypt_decodekey() //got their encrypted session key for 
 
 	unsigned char m_key[MAX_RSA_MODULUS_LEN];
 	_Keyinfo &localkeyinfo=*((_Keyinfo*)m_key);
-	unsigned int m_kl=0;
+	uint32_t m_kl=0;
 	int err=0;
 
 	//deobfuscate
@@ -316,7 +316,7 @@ void C_Connection::init_crypt_decodekey() //got their encrypted session key for 
 		m_fish_recv.DecryptPCBC(p2psk.sRand, sizeof(p2psk.sRand));
 		g_networkhash_PSK_fish.DecryptECB(p2psk.sPubCrypted, sizeof(p2psk.sPubCrypted));
 		g_networkhash_PSK_fish.DecryptECB(p2psk.sRand, sizeof(p2psk.sRand));
-		for (int i=0;i<(int) (sizeof(p2psk.sRand)/sizeof(int));i++) ((unsigned int*)(p2psk.sRand))[i]^=(~0);
+		for (int i=0;i<(int) (sizeof(p2psk.sRand)/sizeof(int));i++) ((uint32_t*)(p2psk.sRand))[i]^=(~0);
 		if (memcmp(p2psk.sRand, m_local_sRand, sizeof(localkeyinfo.sRand))) {
 			log_printf(ds_Error,"connection: stealth mode fast MAC failed!!! DOS-Attack warning!");
 			close(1);
@@ -394,7 +394,7 @@ void C_Connection::do_init()
 	int x;
 	m_satmode=0;
 	m_remote_maxsend=2048;
-	for (x = 0 ; (unsigned int) x < sizeof(bps_count)/sizeof(bps_count[0]);
+	for (x = 0 ; (uint32_t) x < sizeof(bps_count)/sizeof(bps_count[0]);
 					x++)
 		{
 		bps_count[x].recv_bytes=0;
@@ -409,6 +409,8 @@ void C_Connection::do_init()
 	m_send_len=m_send_pos=0;
 	m_send_bytes_total=0;
 	m_recv_bytes_total=0;
+	m_last_sendbps = 0;
+	m_last_recvbps = 0;
 	m_start_time=GetTickCount();
 	init_crypt();
 }
@@ -427,8 +429,8 @@ C_Connection::~C_Connection()
 
 void C_Connection::calc_bps(int *send, int *recv)
 {
-	unsigned int now=GetTickCount();
-	unsigned int timediff=now-bps_count[bps_count_pos].time_ms;
+	uint32_t now=GetTickCount();
+	uint32_t timediff=now-bps_count[bps_count_pos].time_ms;
 	if (timediff < 1) timediff=1;
 
 	#ifdef _WIN32
@@ -463,7 +465,7 @@ C_Connection::state C_Connection::run(int max_send_bytes, int max_recv_bytes)
 	int bytes_allowed_to_recv=(max_recv_bytes<0||max_recv_bytes>MAX_CONNECTION_RECVSIZE)?MAX_CONNECTION_RECVSIZE:max_recv_bytes;
 
 	#if 0
-		#ifndef _DEBUG
+		#ifndef _WASTEDEBUG
 			#error need this!!!
 		#endif
 	#else
@@ -481,7 +483,7 @@ C_Connection::state C_Connection::run(int max_send_bytes, int max_recv_bytes)
 	if (m_state == STATE_RESOLVING) {
 		if (!m_host[0]) return (m_state=STATE_ERROR);
 		if (m_saddr.sin_addr.s_addr == INADDR_NONE) {
-			int a=m_dns?m_dns->resolve(m_host,(unsigned long int *)&m_saddr.sin_addr.s_addr):-1;
+			int a=m_dns?m_dns->resolve(m_host,(uint32_t *)&m_saddr.sin_addr.s_addr):-1;
 			switch (a)
 			{
 			case 0:
@@ -694,7 +696,7 @@ void C_Connection::PushRandomCrap()
 {
 	unsigned char buf[4096];
 	#if 0
-		#ifndef _DEBUG
+		#ifndef _WASTEDEBUG
 			#error remove 1
 		#endif
 		memset(buf,0xff,m_iSendRandomPadding3&(~7));
@@ -713,7 +715,7 @@ bool C_Connection::PopRandomCrap()
 	};
 	recv_bytes(buf,m_iRecvRandomPadding3&(~7));
 	#if 0
-		#ifndef _DEBUG
+		#ifndef _WASTEDEBUG
 			#error remove 1
 		#endif
 		int i=0,l=m_iRecvRandomPadding3&(~7);
@@ -840,12 +842,12 @@ int C_Connection::recv_bytes(void *data, int maxlength)
 	return maxlength;
 }
 
-unsigned long C_Connection::get_interface()
+uint32_t C_Connection::get_interface()
 {
 	if (m_socket==-1) return 0;
 	sockaddr_in sin;
 	memset(&sin,0,sizeof(sin));
 	socklen_t len=16;
 	if (::getsockname(m_socket,(sockaddr *)&sin,&len)) return 0;
-	return (unsigned long) sin.sin_addr.s_addr;
+	return (uint32_t) sin.sin_addr.s_addr;
 }

@@ -21,7 +21,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _LICENSE_H_
 #define _LICENSE_H_
 
-extern "C" const unsigned int szGPL0[];
+#include "intdefs.hpp"
+
+extern "C" const uint32_t szGPL0[];
 extern "C" unsigned char const * const szGPL1[];
 
 #endif//_LICENSE_H_

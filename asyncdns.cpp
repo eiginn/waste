@@ -101,7 +101,7 @@ C_AsyncDNS::~C_AsyncDNS()
 	return 0;
 }
 
-int C_AsyncDNS::resolve(char *hostname, unsigned long *addr)
+int C_AsyncDNS::resolve(char *hostname, uint32_t *addr)
 {
 	//return 0 on success, 1 on wait, -1 on unresolvable
 	int x;

@@ -158,7 +158,7 @@ void C_MessageQueueList::run(int doRouting)
 		int s=con->run(sbps,rbps);
 
 		for (;;) {
-			T_Message msg={0,};
+			T_Message msg={{0},};
 			cm->run(1,-1);
 			if (cm->recv_message(&msg)) break;
 
@@ -209,7 +209,7 @@ void C_MessageQueueList::run(int doRouting)
 
 			#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 				if (m_lv) {
-					int i=m_lv->FindItemByParam((int)cm->get_con());
+					int i=m_lv->FindItemByParam((long)cm->get_con());
 					if (i != -1) {
 						char text[512];
 						m_lv->GetText(i,1,text,sizeof(text));
@@ -253,7 +253,7 @@ void C_MessageQueueList::run(int doRouting)
 	m_run_rr++;
 }
 
-int C_MessageQueueList::find_route(T_GUID *id, unsigned int msgtype)
+int C_MessageQueueList::find_route(T_GUID *id, uint32_t msgtype)
 {
 	int r;
 	if (m_local_route->is_route(id,msgtype)) return -1;

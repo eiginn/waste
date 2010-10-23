@@ -130,7 +130,7 @@ void C_MessageQueue::saturate(int satsize)
 {
 	//dbg_printf(ds_Debug,"sending a %d byte saturation message",40+satsize);
 	//add a message, saturation, baby
-	T_Message satmsg={0,};
+	T_Message satmsg={{0},};
 	satmsg.data=new C_SHBuf(satsize);
 	if (satmsg.data) {
 		R_GenerateBytes((unsigned char *)satmsg.data->Get(),satsize,&g_random);
@@ -156,7 +156,7 @@ void C_MessageQueue::run(int isrecv, int maxbytesend)
 		if (m_newmsg_pos==-1) {
 			if (m_con->recv_bytes_available() >= 40) {
 				#if 0
-					#ifndef _DEBUG
+					#ifndef _WASTEDEBUG
 						#error remove 1
 					#endif
 					dbg_printf(ds_Debug,"recv_bytes_available=%i",m_con->recv_bytes_available());
@@ -230,7 +230,7 @@ void C_MessageQueue::run(int isrecv, int maxbytesend)
 					m_con->send_bytes(&m_msg->message_md5,16);
 					IntData4(t,m_msg->message_type);
 					IntData1(t+4,m_msg->message_prio);
-					UIntData2(t+5,(unsigned short)(m_msg->message_length&0xffff));
+					UIntData2(t+5,(uint16_t)(m_msg->message_length&0xffff));
 					UIntData1(t+7,m_msg->message_ttl);
 					m_con->send_bytes(t,8);
 					m_con->send_bytes(&m_msg->message_guid,16);
@@ -269,7 +269,7 @@ void C_MessageQueue::run(int isrecv, int maxbytesend)
 
 #define __idcmp(x,y) memcmp((x),(y),16)
 
-void C_MessageQueue::add_route(T_GUID *id, unsigned int msgtype)
+void C_MessageQueue::add_route(T_GUID *id, uint32_t msgtype)
 {
 	int r;
 	int whichtab=msg2tab(msgtype);
@@ -332,7 +332,7 @@ int C_MessageQueue::find_route(T_GUID *id, int whichtab)
 	};
 }
 
-int C_MessageQueue::is_route(T_GUID *id, unsigned int msgtype)
+int C_MessageQueue::is_route(T_GUID *id, uint32_t msgtype)
 {
 	int whichtab=msg2tab(msgtype);
 	int r=find_route(id,whichtab);
@@ -376,7 +376,7 @@ void C_MessageQueue::removefirst()
 	};
 }
 
-int C_MessageQueue::msg2tab(unsigned int msg)
+int C_MessageQueue::msg2tab(uint32_t msg)
 {
 	if (msg == MESSAGE_PING) return ROUTETAB_PING;
 	if (msg == MESSAGE_FILE_REQUEST || msg == MESSAGE_FILE_REQUEST_REPLY) return ROUTETAB_FILE;

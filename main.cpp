@@ -1030,7 +1030,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR lpszC
 	SetProgramDirectory();
 
 	#if 0
-		#ifndef _DEBUG
+		#ifndef _WASTEDEBUG
 			#error remove 1
 		#endif
 		//HACK md5chap
@@ -1045,7 +1045,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR lpszC
 	InitCommonControls();
 	CoInitialize(0);
 	{ //load richedit DLL
-		WNDCLASS wc={0,};
+		WNDCLASS wc={{0},};
 		if (!LoadLibrary("RichEd20.dll")) LoadLibrary("RichEd32.dll");
 
 		//make richedit20a point to RICHEDIT
@@ -1059,7 +1059,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR lpszC
 	g_hSmallIcon = (HICON)LoadImage(g_hInst,MAKEINTRESOURCE(IDI_ICON1),IMAGE_ICON,16,16,0);
 
 	{
-		WNDCLASS wc={0,};
+		WNDCLASS wc={{0},};
 		GetClassInfo(NULL,"#32770",&wc);
 		wc.hIcon=LoadIcon(g_hInst,MAKEINTRESOURCE(IDI_ICON1));
 		RegisterClass(&wc);

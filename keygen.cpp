@@ -37,7 +37,7 @@ static R_RANDOM_STRUCT kg_random;
 static int kg_going;
 
 static time_t kg_start_time;
-static unsigned int kg_movebuf[7];
+static uint32_t kg_movebuf[7];
 static int kg_movebuf_cnt;
 
 #ifndef _DEFINE_WXUI
@@ -58,14 +58,14 @@ static void writeBFdata(
 						FILE *out,
 						CBlowfish *bl,
 						void *data,
-						unsigned int len,
+						uint32_t len,
 						int *lc
 						)
 {
-	unsigned int x;
-	unsigned long *p=(unsigned long *)data;
+	uint32_t x;
+	uint32_t *p=(uint32_t *)data;
 	for (x = 0; x < len; x += 8) {
-		unsigned long pp[2];
+		uint32_t pp[2];
 		pp[0]=*p++;
 		pp[1]=*p++;
 
@@ -91,7 +91,7 @@ int kg_writePrivateKey(char *fn, R_RSA_PRIVATE_KEY *key, R_RANDOM_STRUCT *rnd, c
 
 	fprintf(fp,"WASTE_PRIVATE_KEY 10 %d\n",key->bits);
 
-	unsigned long tl[2];
+	uint32_t tl[2];
 	R_GenerateBytes((unsigned char *)&tl,8,rnd);
 	for (x = 0; x < 8; x ++) {
 		fprintf(fp,"%02X",(tl[x/4]>>((x&3)*8))&0xff);
@@ -119,7 +119,7 @@ int kg_writePrivateKey(char *fn, R_RSA_PRIVATE_KEY *key, R_RANDOM_STRUCT *rnd, c
 	return 0;
 }
 
-void getting_randomness (unsigned int data) {
+void getting_randomness (uint32_t data) {
 
 #ifdef _DEFINE_WXUI
 
@@ -131,7 +131,7 @@ void getting_randomness (unsigned int data) {
 		kg_movebuf_cnt=0;
 		R_RandomUpdate(&kg_random,(unsigned char *)kg_movebuf,sizeof(kg_movebuf));
 
-		unsigned int bytesNeeded;
+		uint32_t bytesNeeded;
 		R_GetRandomBytesNeeded(&bytesNeeded, &kg_random);
 
 		keygen_dlg->m_kg_progress->SetValue(64-bytesNeeded/4);
@@ -152,7 +152,7 @@ void getting_randomness (unsigned int data) {
 		kg_movebuf_cnt=0;
 		R_RandomUpdate(&kg_random,(unsigned char *)kg_movebuf,sizeof(kg_movebuf));
 
-		unsigned int bytesNeeded;
+		uint32_t bytesNeeded;
 		R_GetRandomBytesNeeded(&bytesNeeded, &kg_random);
 		SendDlgItemMessage(hwndDlg,IDC_PROGRESS_KEYGEN,PBM_SETPOS,(WPARAM)(64-bytesNeeded/4),0);
 		if (!bytesNeeded) {

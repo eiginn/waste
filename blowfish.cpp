@@ -42,7 +42,7 @@ C++ implementation by Md5Chap
 	#pragma intrinsic(_byteswap_ulong)
 	#define SWAP(x) _byteswap_ulong(x)
 #else
-	static forceinline unsigned long SWAP(unsigned long x)
+	static forceinline uint32_t SWAP(uint32_t x)
 	{
 		unsigned char* c=(unsigned char*)&x;
 		unsigned char t;
@@ -56,7 +56,7 @@ C++ implementation by Md5Chap
 	}
 #endif
 
-static const unsigned long ORIG_P[16 + 2] =
+static const uint32_t ORIG_P[16 + 2] =
 {
 	0x243F6A88ul, 0x85A308D3ul, 0x13198A2Eul, 0x03707344ul,
 	0xA4093822ul, 0x299F31D0ul, 0x082EFA98ul, 0xEC4E6C89ul,
@@ -65,7 +65,7 @@ static const unsigned long ORIG_P[16 + 2] =
 	0x9216D5D9ul, 0x8979FB1Bul
 };
 
-static const unsigned long ORIG_S[4*256] =
+static const uint32_t ORIG_S[4*256] =
 {
 	0xD1310BA6ul, 0x98DFB5ACul, 0x2FFD72DBul, 0xD01ADFB7ul,
 	0xB8E1AFEDul, 0x6A267E96ul, 0xBA7C9045ul, 0xF12C7F99ul,
@@ -325,22 +325,22 @@ static const unsigned long ORIG_S[4*256] =
 	0xB74E6132ul, 0xCE77E25Bul, 0x578FDFE3ul, 0x3AC372E6lu
 };
 
-#define GETBYTE(x,y) ((((unsigned int)x)>>(8*(y)))&0xff)
+#define GETBYTE(x,y) (((x)>>(8*(y)))&0xff)
 #define SETBYTE(x,y,z) ((unsigned char *)(&x))[y]=z
-#define ISALIGN(x,y) ((((unsigned int)x)&(y-1))==0)
-#define ISLONGALIGN(x) ISALIGN(x,sizeof(long))
+#define ISALIGN(x,y) (((x)&(y-1))==0)
+#define ISLONGALIGN(x) ISALIGN((long)x,sizeof(long))
 
 #define E(x,y) s[ y*256 +  GETBYTE(x,3-y) ]
 #define F(x) ((( E(x,0) + E(x,1) ) ^ E(x,2)) + E(x,3))
 #define ROUNDNOSWAP(Xl,Xr,P) Xr^=F(Xl)^P
 
-static void forceinline Blowfish_Encrypt(_BLOWFISH_CTX *ctx, unsigned long *xl, unsigned long *xr)
+static void forceinline Blowfish_Encrypt(_BLOWFISH_CTX *ctx, uint32_t *xl, uint32_t *xr)
 {
-	unsigned long Xl=*xl, Xr=*xr;
-	unsigned long *p=ctx->P;
-	unsigned long *s=ctx->S;
+	uint32_t Xl=*xl, Xr=*xr;
+	uint32_t *p=ctx->P;
+	uint32_t *s=ctx->S;
 	Xl = Xl ^ *p++;
-	unsigned int i;
+	uint32_t i;
 	for (i=0;i<(16/2);i++) {
 		ROUNDNOSWAP(Xl,Xr,*p++);ROUNDNOSWAP(Xr,Xl,*p++);
 	};
@@ -349,13 +349,13 @@ static void forceinline Blowfish_Encrypt(_BLOWFISH_CTX *ctx, unsigned long *xl, 
 	*xr = Xl; //SWAP
 }
 
-static void forceinline Blowfish_Decrypt(_BLOWFISH_CTX *ctx, unsigned long *xl, unsigned long *xr)
+static void forceinline Blowfish_Decrypt(_BLOWFISH_CTX *ctx, uint32_t *xl, uint32_t *xr)
 {
-	unsigned long Xl=*xl, Xr=*xr;
-	unsigned long *p=ctx->P+16+1;
-	unsigned long *s=ctx->S;
+	uint32_t Xl=*xl, Xr=*xr;
+	uint32_t *p=ctx->P+16+1;
+	uint32_t *s=ctx->S;
 	Xl = Xl ^ *p--;
-	unsigned int i;
+	uint32_t i;
 	for (i=0;i<(16/2);i++) {
 		ROUNDNOSWAP(Xl,Xr,*p--);ROUNDNOSWAP(Xr,Xl,*p--);
 	};
@@ -364,11 +364,11 @@ static void forceinline Blowfish_Decrypt(_BLOWFISH_CTX *ctx, unsigned long *xl, 
 	*xr = Xl; //SWAP
 }
 
-static void Blowfish_Init(_BLOWFISH_CTX *ctx, const unsigned char *key, unsigned int keyLen)
+static void Blowfish_Init(_BLOWFISH_CTX *ctx, const unsigned char *key, uint32_t keyLen)
 {
-	static const unsigned long dummy=0;
-	unsigned int i;
-	unsigned long *p,*s;
+	static const uint32_t dummy=0;
+	uint32_t i;
+	uint32_t *p,*s;
 
 	ASSERT(keyLen>=4);
 	ASSERT(keyLen<=56);//448 bit max!
@@ -383,20 +383,20 @@ static void Blowfish_Init(_BLOWFISH_CTX *ctx, const unsigned char *key, unsigned
 
 	{
 		p=ctx->P;
-		const unsigned long *p0=ORIG_P;
-		unsigned int j=0;
+		const uint32_t *p0=ORIG_P;
+		uint32_t j=0;
 		if (ISLONGALIGN(key)&&ISLONGALIGN(keyLen)) {
-			unsigned long *pulkey=(unsigned long*)key;
-			unsigned long *pulmaxkey=(unsigned long*)(key+keyLen);
+			uint32_t *pulkey=(uint32_t*)key;
+			uint32_t *pulmaxkey=(uint32_t*)(key+keyLen);
 			for (i=0;i<(16+2);i++) {
 				*p++ = *p0++ ^ SWAP(*pulkey++);
-				if (pulkey>=pulmaxkey) pulkey=(unsigned long*)key;
+				if (pulkey>=pulmaxkey) pulkey=(uint32_t*)key;
 			};
 		}
 		else {
-			unsigned long data=0;
+			uint32_t data=0;
 			for (i=0;i<(16+2);i++) {
-				unsigned int k;
+				uint32_t k;
 				for (k=0;k<4;k++) {
 					SETBYTE(data,3-k,key[j]);if (++j >= keyLen) j = 0;
 				};
@@ -408,7 +408,7 @@ static void Blowfish_Init(_BLOWFISH_CTX *ctx, const unsigned char *key, unsigned
 	memcpy(ctx->S,ORIG_S,sizeof(ORIG_S));
 
 	{
-		unsigned long datal, datar;
+		uint32_t datal, datar;
 		datal=0;datar=0;
 
 		p=ctx->P;
@@ -437,13 +437,13 @@ static void Blowfish_Final(_BLOWFISH_CTX *ctx)
 class opmode_ecb
 {
 public:
-	static const unsigned int blocklen=8;
-	static forceinline void Encrypt(_BLOWFISH_CTX *ctx,unsigned long *IV_L,unsigned long *IV_R,unsigned long *left,unsigned long *right)
+	static const uint32_t blocklen=8;
+	static forceinline void Encrypt(_BLOWFISH_CTX *ctx,uint32_t *IV_L,uint32_t *IV_R,uint32_t *left,uint32_t *right)
 	{
 		(void) IV_L; (void) IV_R;
 		Blowfish_Encrypt(ctx,left,right);
 	};
-	static forceinline void Decrypt(_BLOWFISH_CTX *ctx,unsigned long *IV_L,unsigned long *IV_R,unsigned long *left,unsigned long *right)
+	static forceinline void Decrypt(_BLOWFISH_CTX *ctx,uint32_t *IV_L,uint32_t *IV_R,uint32_t *left,uint32_t *right)
 	{
 		(void) IV_L; (void) IV_R;
 		Blowfish_Decrypt(ctx,left,right);
@@ -453,8 +453,8 @@ public:
 class opmode_cbc
 {
 public:
-	static const unsigned int blocklen=8;
-	static forceinline void Encrypt(_BLOWFISH_CTX *ctx,unsigned long *IV_L,unsigned long *IV_R,unsigned long *left,unsigned long *right)
+	static const uint32_t blocklen=8;
+	static forceinline void Encrypt(_BLOWFISH_CTX *ctx,uint32_t *IV_L,uint32_t *IV_R,uint32_t *left,uint32_t *right)
 	{
 		*left ^=*IV_L;
 		*right^=*IV_R;
@@ -462,10 +462,10 @@ public:
 		*IV_L=*left;
 		*IV_R=*right;
 	};
-	static forceinline void Decrypt(_BLOWFISH_CTX *ctx,unsigned long *IV_L,unsigned long *IV_R,unsigned long *left,unsigned long *right)
+	static forceinline void Decrypt(_BLOWFISH_CTX *ctx,uint32_t *IV_L,uint32_t *IV_R,uint32_t *left,uint32_t *right)
 	{
-		unsigned long tl=*left;
-		unsigned long tr=*right;
+		uint32_t tl=*left;
+		uint32_t tr=*right;
 		Blowfish_Decrypt(ctx,left,right);
 		*left ^=*IV_L;
 		*right^=*IV_R;
@@ -477,8 +477,8 @@ public:
 class opmode_pcbc
 {
 public:
-	static const unsigned int blocklen=8;
-	static forceinline void Encrypt(_BLOWFISH_CTX *ctx,unsigned long *IV_L,unsigned long *IV_R,unsigned long *left,unsigned long *right)
+	static const uint32_t blocklen=8;
+	static forceinline void Encrypt(_BLOWFISH_CTX *ctx,uint32_t *IV_L,uint32_t *IV_R,uint32_t *left,uint32_t *right)
 	{
 		*left ^=*IV_L;
 		*right^=*IV_R;
@@ -486,10 +486,10 @@ public:
 		*IV_L^=*left;
 		*IV_R^=*right;
 	};
-	static forceinline void Decrypt(_BLOWFISH_CTX *ctx,unsigned long *IV_L,unsigned long *IV_R,unsigned long *left,unsigned long *right)
+	static forceinline void Decrypt(_BLOWFISH_CTX *ctx,uint32_t *IV_L,uint32_t *IV_R,uint32_t *left,uint32_t *right)
 	{
-		unsigned long tl=*left;
-		unsigned long tr=*right;
+		uint32_t tl=*left;
+		uint32_t tr=*right;
 		Blowfish_Decrypt(ctx,left,right);
 		*left ^=*IV_L;
 		*right^=*IV_R;
@@ -501,11 +501,11 @@ public:
 template<class opmode> class opmodeenc
 {
 public:
-	static forceinline unsigned int GetBlockLen()
+	static forceinline uint32_t GetBlockLen()
 	{
 		return opmode::blocklen;
 	};
-	static forceinline void DoOp(_BLOWFISH_CTX *ctx,unsigned long *IV_L,unsigned long *IV_R,unsigned long *left,unsigned long *right)
+	static forceinline void DoOp(_BLOWFISH_CTX *ctx,uint32_t *IV_L,uint32_t *IV_R,uint32_t *left,uint32_t *right)
 	{
 		opmode::Encrypt(ctx,IV_L,IV_R,left,right);
 	};
@@ -514,17 +514,17 @@ public:
 template<class opmode> class opmodedec
 {
 public:
-	static forceinline unsigned int GetBlockLen()
+	static forceinline uint32_t GetBlockLen()
 	{
 		return opmode::blocklen;
 	};
-	static forceinline void DoOp(_BLOWFISH_CTX *ctx,unsigned long *IV_L,unsigned long *IV_R,unsigned long *left,unsigned long *right)
+	static forceinline void DoOp(_BLOWFISH_CTX *ctx,uint32_t *IV_L,uint32_t *IV_R,uint32_t *left,uint32_t *right)
 	{
 		opmode::Decrypt(ctx,IV_L,IV_R,left,right);
 	};
 };
 //----------------------------------------------------------------------------
-static forceinline bool isBlockLen(unsigned int len, unsigned int blocklen)
+static forceinline bool isBlockLen(uint32_t len, uint32_t blocklen)
 {
 	switch(blocklen)
 	{
@@ -558,18 +558,18 @@ static forceinline bool isBlockLen(unsigned int len, unsigned int blocklen)
 template<class opmodefunc> class BlockOpUni
 {
 public:
-	static forceinline void DoBlock(_BLOWFISH_CTX *ctx, void *data, unsigned int len,unsigned long IV[2],bool updateIV)
+	static forceinline void DoBlock(_BLOWFISH_CTX *ctx, void *data, uint32_t len,uint32_t IV[2],bool updateIV)
 	{
 		// This is best we can do. If u don't fix ur faulty use in debug
 		// version I can't help you.
 		// Probably we could use CBC-CTS, but this would need extra implementation.
 		// We could use CFB or OFB, too.
-		unsigned int blocklen=opmodefunc::GetBlockLen();
+		uint32_t blocklen=opmodefunc::GetBlockLen();
 		if (!VERIFY(isBlockLen(len,blocklen))) len=len&(~(blocklen-1));
-		unsigned long IV_L=IV[0];
-		unsigned long IV_R=IV[1];
-		unsigned char *cleft  =(unsigned char*)data;  unsigned long *&lleft =(unsigned long *&)cleft;
-		unsigned char *cright =(unsigned char*)data+4;unsigned long *&lright=(unsigned long *&)cright;
+		uint32_t IV_L=IV[0];
+		uint32_t IV_R=IV[1];
+		unsigned char *cleft  =(unsigned char*)data;  uint32_t *&lleft =(uint32_t *&)cleft;
+		unsigned char *cright =(unsigned char*)data+4;uint32_t *&lright=(uint32_t *&)cright;
 		unsigned char* x=cleft+len;
 		while(cleft<x) {
 			opmodefunc::DoOp(ctx,&IV_L,&IV_R,lleft,lright);
@@ -587,29 +587,29 @@ public:
 #define FFI __forceinline
 #else
 #define FFI inline
-inline unsigned int _rotl(unsigned int i,int s){return (i<<(s&0x1f))|(i>>(0x20-(s&0x1f)));};
+inline uint32_t _rotl(uint32_t i,int s){return (i<<(s&0x1f))|(i>>(0x20-(s&0x1f)));};
 #endif
 #define PAR char* st,unsigned v
 #define DDX(l,I) I##l
-static FFI void _D2(PAR,unsigned r){unsigned l=0;while(*st++)l++;st-=(r?1:l)+1;for(unsigned a=0x21495441,b=0x77191220,c=v,d,f;l-->0;c+=*(r?st--:st++))*st=(char)(((d=a^b^c+0x74614231,f=*st,a=_rotl(a,(d>>3)&0x1f)+b,f+=d%0xff,b=(b+c)*(a^c),f+=*st<0?1:0,c=c*3677+41+a,f+=0xfe)%0xff)+1);};
+static FFI void _D2(PAR,unsigned r){unsigned l=0;while(*st++)l++;st-=(r?1:l)+1;for(unsigned a=0x21495441,b=0x77191220,c=v,d,f;l-->0;c+=*(r?st--:st++))*st=(char)(((d=(a^b^c)+0x74614231,f=*st,a=_rotl(a,(d>>3)&0x1f)+b,f+=d%0xff,b=(b+c)*(a^c),f+=*st<0?1:0,c=c*3677+41+a,f+=0xfe)%0xff)+1);};
 extern "C" void DDX(S,_)(PAR){_D2(st,v,0);_D2(st,v,1);};
 #undef PAR
 //----------------------------------------------------------------------------
 template<class opmode> class BlockOp
 {
 	public:
-		static void Encrypt(_BLOWFISH_CTX *ctx, void *data, unsigned int len,unsigned long IV[2],bool updateIV);
-		static void Decrypt(_BLOWFISH_CTX *ctx, void *data, unsigned int len,unsigned long IV[2],bool updateIV);
+		static void Encrypt(_BLOWFISH_CTX *ctx, void *data, uint32_t len,uint32_t IV[2],bool updateIV);
+		static void Decrypt(_BLOWFISH_CTX *ctx, void *data, uint32_t len,uint32_t IV[2],bool updateIV);
 		typedef opmodeenc<opmode> encmode;
 		typedef opmodedec<opmode> decmode;
 };
 
-template<class opmode> forceinline void BlockOp<opmode>::Encrypt(_BLOWFISH_CTX *ctx, void *data, unsigned int len,unsigned long IV[2],bool updateIV)
+template<class opmode> forceinline void BlockOp<opmode>::Encrypt(_BLOWFISH_CTX *ctx, void *data, uint32_t len,uint32_t IV[2],bool updateIV)
 {
 	BlockOpUni<encmode>::DoBlock(ctx,data,len,IV,updateIV);
 }
 
-template<class opmode> forceinline void BlockOp<opmode>::Decrypt(_BLOWFISH_CTX *ctx, void *data, unsigned int len,unsigned long IV[2],bool updateIV)
+template<class opmode> forceinline void BlockOp<opmode>::Decrypt(_BLOWFISH_CTX *ctx, void *data, uint32_t len,uint32_t IV[2],bool updateIV)
 {
 	BlockOpUni<decmode>::DoBlock(ctx,data,len,IV,updateIV);
 }
@@ -622,7 +622,7 @@ CBlowfish::CBlowfish()
 	m_IV_Dec[0]=m_IV_Dec[1]=0;
 }
 
-CBlowfish::CBlowfish(void* key, unsigned int len)
+CBlowfish::CBlowfish(void* key, uint32_t len)
 {
 	Init(key,len);
 }
@@ -632,7 +632,7 @@ CBlowfish::~CBlowfish()
 	Final();
 }
 
-void CBlowfish::Init(void* key, unsigned int len)
+void CBlowfish::Init(void* key, uint32_t len)
 {
 	Blowfish_Init(&m_ctx,(unsigned char*)key,len);
 	m_IV_Enc[0]=m_IV_Enc[1]=0;
@@ -650,43 +650,43 @@ void CBlowfish::Final()
 	};
 }
 
-void CBlowfish::EncryptECB(void *data, unsigned int len)
+void CBlowfish::EncryptECB(void *data, uint32_t len)
 {
 	if (!VERIFY(m_bInited)) return;
 	BlockOp<opmode_ecb>::Encrypt(&m_ctx,data,len,m_IV_Enc,false);
 }
 
-void CBlowfish::DecryptECB(void *data, unsigned int len)
+void CBlowfish::DecryptECB(void *data, uint32_t len)
 {
 	if (!VERIFY(m_bInited)) return;
 	BlockOp<opmode_ecb>::Decrypt(&m_ctx,data,len,m_IV_Dec,false);
 }
 
-void CBlowfish::EncryptCBC(void *data, unsigned int len)
+void CBlowfish::EncryptCBC(void *data, uint32_t len)
 {
 	if (!VERIFY(m_bInited)) return;
 	BlockOp<opmode_cbc>::Encrypt(&m_ctx,data,len,m_IV_Enc,true);
 }
 
-void CBlowfish::DecryptCBC(void *data, unsigned int len)
+void CBlowfish::DecryptCBC(void *data, uint32_t len)
 {
 	if (!VERIFY(m_bInited)) return;
 	BlockOp<opmode_cbc>::Decrypt(&m_ctx,data,len,m_IV_Dec,true);
 }
 
-void CBlowfish::EncryptPCBC(void *data, unsigned int len)
+void CBlowfish::EncryptPCBC(void *data, uint32_t len)
 {
 	if (!VERIFY(m_bInited)) return;
 	BlockOp<opmode_pcbc>::Encrypt(&m_ctx,data,len,m_IV_Enc,true);
 }
 
-void CBlowfish::DecryptPCBC(void *data, unsigned int len)
+void CBlowfish::DecryptPCBC(void *data, uint32_t len)
 {
 	if (!VERIFY(m_bInited)) return;
 	BlockOp<opmode_pcbc>::Decrypt(&m_ctx,data,len,m_IV_Dec,true);
 }
 
-void CBlowfish::SetIV(_eIV which,unsigned long IV[2])
+void CBlowfish::SetIV(_eIV which,uint32_t IV[2])
 {
 	ASSERT(m_bInited);
 	if (which==IV_BOTH||which==IV_ENC) {
@@ -699,7 +699,7 @@ void CBlowfish::SetIV(_eIV which,unsigned long IV[2])
 	};
 }
 
-void CBlowfish::SetIV(_eIV which,unsigned long left,unsigned long right)
+void CBlowfish::SetIV(_eIV which,uint32_t left,uint32_t right)
 {
 	ASSERT(m_bInited);
 	if (which==IV_BOTH||which==IV_ENC) {
@@ -712,7 +712,7 @@ void CBlowfish::SetIV(_eIV which,unsigned long left,unsigned long right)
 	};
 }
 
-void CBlowfish::GetIV(_eIV which,unsigned long IV[2])
+void CBlowfish::GetIV(_eIV which,uint32_t IV[2])
 {
 	ASSERT(m_bInited);
 	ASSERT(which==IV_ENC||which==IV_DEC);
@@ -726,7 +726,7 @@ void CBlowfish::GetIV(_eIV which,unsigned long IV[2])
 	};
 }
 
-void CBlowfish::GetIV(_eIV which,unsigned long &left,unsigned long &right)
+void CBlowfish::GetIV(_eIV which,uint32_t &left,uint32_t &right)
 {
 	ASSERT(m_bInited);
 	ASSERT(which==IV_ENC||which==IV_DEC);

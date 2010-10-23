@@ -30,12 +30,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	#include "resource.hpp"
 #endif
 
-void add_to_netq(unsigned long ip, unsigned short port, int rating, int replace)
+void add_to_netq(uint32_t ip, uint16_t port, int rating, int replace)
 {
 	if (rating > 100) rating=100;
 	if (rating < 0) rating=0;
 
-	if (ip == ((unsigned long) -1) || ip == 0L) {
+	if (ip == ((uint32_t) -1) || ip == 0L) {
 		return;
 	}
 
@@ -43,7 +43,7 @@ void add_to_netq(unsigned long ip, unsigned short port, int rating, int replace)
 	in.s_addr=ip;
 	char *t=inet_ntoa(in);
 	if (!port) port=CONFIG_port_DEFAULT;
-	if (t && ip != ((unsigned long) -1) && ip) {
+	if (t && ip != ((uint32_t) -1) && ip) {
 		char host[256];
 		safe_strncpy(host,t,sizeof(host));
 		if (is_accessable_addr(ip) && allowIP(ip)) {
@@ -114,7 +114,7 @@ void LoadNetQ()
 				char *ratingp=p;
 				while (*ratingp && *ratingp != ':') ratingp++;
 				if (*ratingp) *ratingp++=0;
-				add_to_netq(inet_addr(line),(unsigned short)atoi(p),100-atoi(ratingp),1);
+				add_to_netq(inet_addr(line),(uint16_t)atoi(p),100-atoi(ratingp),1);
 			}
 			else break;
 		};

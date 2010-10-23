@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _NETQ_H_
 #define _NETQ_H_
 
-void add_to_netq(unsigned long ip, unsigned short port, int rating, int replace);
+void add_to_netq(uint32_t ip, uint16_t port, int rating, int replace);
 void LoadNetQ();
 void SaveNetQ();
 

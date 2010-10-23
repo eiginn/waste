@@ -50,7 +50,7 @@ public:
 	unsigned char get_max_ttl() { return m_max_ttl; }
 	void set_max_ttl(unsigned char a) { m_max_ttl=a; }
 
-	int find_route(T_GUID *id, unsigned int msgtype); //-1 = local, -2 = none, >=0 = queue
+	int find_route(T_GUID *id, uint32_t msgtype); //-1 = local, -2 = none, >=0 = queue
 
 	static unsigned char GetMessagePriority(int type);
 

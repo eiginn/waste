@@ -30,16 +30,16 @@ class SHAify {
 
 public:
 	SHAify();
-	void add(unsigned char *data, unsigned int datalen);
+	void add(unsigned char *data, uint32_t datalen);
 	void final(unsigned char *out);
 	void reset();
 
 private:
 
-	unsigned long H[5];
-	unsigned long W[80];
-	unsigned int lenW;
-	unsigned long size[2];
+	uint32_t H[5];
+	uint32_t W[80];
+	uint32_t lenW;
+	uint32_t size[2];
 };
 
 #endif//_SHA_H_

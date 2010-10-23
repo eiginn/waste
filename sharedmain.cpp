@@ -103,16 +103,16 @@ further messages are verified with a MD5 to detect tampering.
 
 #include "build/build.hpp"
 
-#ifdef _DEBUG
-	#define VERSION "v" __VER_SFULL __VER_SCUST2 " debug" " (build " __VER_SBUILD ")"
+#ifdef _WASTEDEBUG
+	#define LOCALVERSION "v" __VER_SFULL __VER_SCUST2 " debug" " (build " __VER_SBUILD ")"
 #else
-	#define VERSION "v" __VER_SFULL __VER_SCUST2 " (build " __VER_SBUILD ")"
+	#define LOCALVERSION "v" __VER_SFULL __VER_SCUST2 " (build " __VER_SBUILD ")"
 #endif
 
 #ifdef _DEFINE_SRV
-	const char g_nameverstr[]=APP_NAME " Server " VERSION;
+	const char g_nameverstr[]=APP_NAME " Server " LOCALVERSION;
 #else
-	const char g_nameverstr[]=APP_NAME " " VERSION;
+	const char g_nameverstr[]=APP_NAME " " LOCALVERSION;
 #endif
 
 C_FileDB *g_database;
@@ -143,7 +143,7 @@ int g_conspeed,g_route_traffic;
 int g_log_level;
 int g_log_flush_auto;
 int g_max_simul_dl;
-unsigned int g_max_simul_dl_host;
+uint32_t g_max_simul_dl_host;
 int g_use_accesslist;
 #if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 	int g_appendprofiletitles;
@@ -151,7 +151,7 @@ int g_use_accesslist;
 int g_do_autorefresh;
 bool g_TriggerDbRefresh;
 int g_accept_downloads;
-unsigned short g_port;
+uint16_t g_port;
 int g_chat_timestamp;
 int g_keydist_flags;
 
@@ -161,7 +161,7 @@ int g_keydist_flags;
 // 1=force
 // 2=dynamic resolve
 int g_forceip_dynip_mode;
-unsigned long g_forceip_dynip_addr;
+uint32_t g_forceip_dynip_addr;
 char g_forceip_name[256];
 
 FILE* _logfile=0;
@@ -242,7 +242,7 @@ void main_BroadcastPublicKey(T_Message *src)
 	memcpy(k.modulus,g_key.modulus,MAX_RSA_MODULUS_LEN);
 	rep.set_key(&k);
 
-	T_Message msg={0,};
+	T_Message msg={{0},};
 	msg.data=rep.Make();
 	if (msg.data) {
 		if (src) {
@@ -288,7 +288,7 @@ void update_set_port()
 
 	g_port=0;
 	if (g_route_traffic && g_config->ReadInt(CONFIG_listen,CONFIG_listen_DEFAULT)) {
-		g_port=(unsigned short)(g_config->ReadInt(CONFIG_port,CONFIG_port_DEFAULT)&0xffff);
+		g_port=(uint16_t)(g_config->ReadInt(CONFIG_port,CONFIG_port_DEFAULT)&0xffff);
 	};
 	if (g_port) {
 		log_printf(ds_Informational,"[main] creating listen object on %d",g_port);
@@ -477,7 +477,7 @@ void doDatabaseRescan()
 	};
 }
 
-void main_handleUpload(char *guidstr, char *fnstr, C_UploadRequest *t)
+void main_handleUpload(const char *guidstr, const char *fnstr, C_UploadRequest *t)
 {
 	#ifndef _DEFINE_SRV
 		int willq=Xfer_WillQ(fnstr,guidstr);
@@ -552,9 +552,9 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 					{
 						if ((g_forceip_dynip_mode==2) && cn && (cn->get_remote_port())) {
 							if (!cn->get_has_sent_remoteip()) {
-								unsigned long rip;
+								uint32_t rip;
 								cn->set_has_sent_remoteip();
-								rip=(unsigned long)v;
+								rip=(uint32_t)v;
 								if ((rip!=0)&&(rip!=INADDR_NONE)&&(!IPv4IsLoopback(rip))&&(!IPv4IsPrivateNet(rip))) {
 									if (g_forceip_dynip_addr!=rip) {
 										char ad2[64];
@@ -593,7 +593,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 	case MESSAGE_KEYDIST:
 		{
 			C_KeydistRequest *r=new C_KeydistRequest(message->data);
-			if ((r->get_flags() & M_KEYDIST_FLAG_LISTEN) || (g_port && g_listen && !g_listen->is_error()) && r->get_key()->bits) {
+			if ((r->get_flags() & M_KEYDIST_FLAG_LISTEN) || ((g_port && g_listen && !g_listen->is_error()) && r->get_key()->bits)) {
 				if (g_keydist_flags&1) { //add without prompt
 					main_handleKeyDist(r,0);
 					delete r;
@@ -621,7 +621,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 			C_MessagePing rep(message->data);
 
 			#if (defined(_WIN32)&&(!defined(_DEFINE_SRV))) || defined(_DEFINE_WXUI)
-				unsigned int a=(unsigned int)(cn->get_interface());// Intellisense bug here
+				uint32_t a=(uint32_t)(cn->get_interface());// Intellisense bug here
 				if (rep.m_port && rep.m_ip && (a != rep.m_ip)) {
 					add_to_netq(rep.m_ip,rep.m_port,90,0);
 				};
@@ -640,7 +640,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 				repl.set_conspeed(g_conspeed);
 				repl.set_guid(&g_client_id);
 				repl.add_item(-1,g_regnick,"Node",g_database->GetNumFiles(),g_database->GetNumMB(),g_database->GetLatestTime());
-				T_Message msg={0,};
+				T_Message msg={{0},};
 				msg.message_guid=message->message_guid;
 				msg.data=repl.Make();
 				if (msg.data) {
@@ -702,8 +702,8 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 							if (a >= 0 && a < g_uploads.GetSize()) {
 								char *p=g_uploads.Get(a);
 								if (p) {
-									int lvidx;
-									while ((lvidx=g_lvsend.FindItemByParam((int)p)) >= 0) {
+									long lvidx;
+									while ((lvidx=g_lvsend.FindItemByParam((long)p)) >= 0) {
 										g_lvsend.DeleteItem(lvidx);
 									};
 									free(p);
@@ -723,7 +723,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 					int idx=r->get_idx();
 					if (idx >= UPLOAD_BASE_IDX) {
 						idx-=UPLOAD_BASE_IDX;
-						int lvidx=g_lvsend.FindItemByParam((int)g_uploads.Get(idx));
+						long lvidx=g_lvsend.FindItemByParam((long)g_uploads.Get(idx));
 						if (lvidx >= 0) {
 							g_lvsend.SetItemParam(lvidx,0);
 							g_lvsend.SetItemText(lvidx,3,"File already uploaded.");
@@ -733,7 +733,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 				}
 				else if (x == n && !r->is_abort()) { //new file request
 #if 0
-#ifndef _DEBUG
+#ifndef _WASTEDEBUG
 #error todo
 #endif
 					dbg_printf(ds_Debug,"XXX: new request on idx=%05i",r->get_idx());
@@ -762,7 +762,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 #if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 
 									int lvidx;
-									if ((lvidx=g_lvsend.FindItemByParam((int)g_uploads.Get(idx))) >= 0) {
+									if ((lvidx=g_lvsend.FindItemByParam((long)g_uploads.Get(idx))) >= 0) {
 										g_lvsend.DeleteItem(lvidx);
 									};
 #endif
@@ -771,7 +771,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 						};
 						if (fn[0]) {
 #if 0
-#ifndef _DEBUG
+#ifndef _WASTEDEBUG
 #error todo
 #endif
 							dbg_printf(ds_Debug,"XXX: accept request on idx=%05i",r->get_idx());
@@ -796,7 +796,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 							};
 #endif
 
-							char *err=a->GetError();
+							const char *err=a->GetError();
 							if (err) {
 #if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 
@@ -804,7 +804,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 									g_lvsend.InsertItem(0,a->GetName(),0);
 									char buf[32];
 									int fs_l,fs_h;
-									a->GetSize((unsigned int *)&fs_l,(unsigned int *)&fs_h);
+									a->GetSize((uint32_t *)&fs_l,(uint32_t *)&fs_h);
 									FormatSizeStr64(buf,fs_l,fs_h);
 									g_lvsend.SetItemText(0,1,r->get_nick());
 									g_lvsend.SetItemText(0,2,buf);
@@ -817,10 +817,10 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 								g_sends.Add(a);
 #if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 
-								g_lvsend.InsertItem(0,a->GetName(),(int)a);
+								g_lvsend.InsertItem(0,a->GetName(),(long)a);
 								char buf[32];
 								int fs_l,fs_h;
-								a->GetSize((unsigned int *)&fs_l,(unsigned int *)&fs_h);
+								a->GetSize((uint32_t *)&fs_l,(uint32_t *)&fs_h);
 								FormatSizeStr64(buf,fs_l,fs_h);
 								g_lvsend.SetItemText(0,1,r->get_nick());
 								g_lvsend.SetItemText(0,2,buf);
@@ -834,7 +834,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 						}
 						else {
 							// TODO: check if ok for server
-							T_Message msg={0,};
+							T_Message msg={{0},};
 							C_FileSendReply reply;
 							reply.set_error(1);
 							msg.data=reply.Make();
@@ -879,7 +879,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 				C_MessageChatReply rep;
 				rep.setnick(g_regnick);
 
-				T_Message msg={0,};
+				T_Message msg={{0},};
 				msg.message_guid=message->message_guid;
 				msg.data=rep.Make();
 				if (msg.data) {
@@ -896,12 +896,12 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 			if (upflag&1) {
 				C_UploadRequest *r = new C_UploadRequest(message->data);
 				if (!stricmp(r->get_dest(),g_client_id_str) || (g_regnick[0] && !stricmp(r->get_dest(),g_regnick))) {
-					char *fn=r->get_fn();
+					const char *fn=r->get_fn();
 					// TODO: check with this better?
 					//int weirdfn=!strncmp(fn,"..",2) || strstr(fn,":") || strstr(fn,"\\..") || strstr(fn,"/..") || strstr(fn,"..\\") || strstr(fn,"../") || fn[0]=='\\' || fn[0] == '/';
 					int weirdfn=!strncmp(fn,"..",2) || strstr(fn,":") || strstr(fn,"..\\") || strstr(fn,"../") || fn[0]=='\\' || fn[0] == '/';
 					if (!(upflag & 4) || weirdfn) {
-						char *p=fn;
+						const char *p=fn;
 						while (*p) p++;
 						while (p >= fn && *p != '/' && *p != '\\') p--;
 						p++;
@@ -964,7 +964,7 @@ void main_onGotChannel(const char *cnl)
 				};
 			};
 
-			if (time(NULL) - (unsigned int)i.lParam >  CHANNEL_STARVE_DELAY) {
+			if (time(NULL) - (uint32_t)i.lParam >  CHANNEL_STARVE_DELAY) {
 				h=TreeView_GetNextSibling(htree,h);
 				chatroom_item *p=L_Chatroom;
 				while(p!=NULL) {

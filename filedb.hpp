@@ -41,7 +41,7 @@ public:
 
 	int DoScan(int maxtime, C_FileDB *oldDB); //returns number of files scanned, or -1 if done
 
-	void Search(char *ss, C_MessageSearchReply *repl,
+	void Search(const char *ss, C_MessageSearchReply *repl,
 		C_MessageQueueList *mqueuesend, T_Message *srcmessage,
 		void (*gm)(T_Message *message, C_MessageQueueList *_this, C_Connection *cn));
 	int GetFile(int index, char *file, char *meta, int *length_low, int *length_high, char **sharebaseptr=0);
@@ -53,14 +53,14 @@ public:
 	int readIn(char *fn);
 
 #ifdef _WIN32
-	static unsigned int FileTimeToUnixTime(FILETIME *ft);
-	static void UnixTimeToFileTime(FILETIME *ft, unsigned int t);
+	static uint32_t FileTimeToUnixTime(FILETIME *ft);
+	static void UnixTimeToFileTime(FILETIME *ft, uint32_t t);
 #endif
 
 	//util funcs
-	static void parselist(char *out, char *in);
-	static inline int in_string(char *string, char *substring);
-	static int substr_search(char *bigtext1, char *bigtext2, char *littletext_list);
+	static void parselist(char *out, const char *in);
+	static inline int in_string(const char *string, const char *substring);
+	static int substr_search(const char *bigtext1, const char *bigtext2, const char *littletext_list);
 
 protected:
 	void clearDBs();
@@ -109,8 +109,8 @@ protected:
 	char m_ext_list[32768]; //ADDED Md5Chap (doing check length on copy)
 
 	void alloc_entry();
-	int in_list(char *list, char *v);
-	void doRecursiveAddDB(char *cur_path);
+	int in_list(const char *list, const char *v);
+	void doRecursiveAddDB(const char *cur_path);
 #ifdef _WIN32
 	void mp3_getmetainfo(HANDLE hFile,char *meta, int filelen);
 	void jpg_getmetainfo(HANDLE hFile,char *meta, int filelen);

@@ -77,7 +77,7 @@ C_UploadRequest::C_UploadRequest(C_SHBuf *in)
 C_SHBuf	*C_UploadRequest::Make()
 {
 	if (!m_fn || !m_fn[0] || strlen(m_fn) > 2048) {
-		log_printf(ds_Warning,"uploadrequest::make(): filename length %d out of range",m_fn?strlen(m_fn):0);
+		log_printf(ds_Warning,"uploadrequest::make(): filename length %d out of range",(int)(m_fn?strlen(m_fn):0));
 		return new C_SHBuf(0);
 	};
 	C_SHBuf *p=new C_SHBuf(16+8+(sizeof(m_dest)-1)+4+(sizeof(m_nick)-1)+::strlen(m_fn));

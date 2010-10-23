@@ -27,9 +27,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #ifndef _DEFINE_WXUI
 #if defined(_WIN32)&&(!defined(_DEFINE_SRV))
-void W_ListView::AddCol(char *text, int w)
+void W_ListView::AddCol(const char *text, int w)
 {
-	LVCOLUMN lvc={0,};
+	LVCOLUMN lvc={{0},};
 	lvc.mask = LVCF_TEXT|LVCF_WIDTH;
 	lvc.pszText = text;
 	if (w) lvc.cx=w;
@@ -43,7 +43,7 @@ int W_ListView::GetColumnWidth(int col)
 	return ListView_GetColumnWidth(m_hwnd,col);
 }
 
-int W_ListView::GetParam(int p)
+int W_ListView::GetParam(long p)
 {
 	LVITEM lvi;
 	lvi.mask = LVIF_PARAM;
@@ -52,9 +52,9 @@ int W_ListView::GetParam(int p)
 	return lvi.lParam;
 }
 
-int W_ListView::InsertItem(int p, const char *text, int param)
+int W_ListView::InsertItem(long p, const char *text, int param)
 {
-	LVITEM lvi={0,};
+	LVITEM lvi={{0},};
 	lvi.mask = LVIF_TEXT | LVIF_PARAM;
 	lvi.iItem = p;
 	lvi.pszText = (char*)text;
@@ -77,9 +77,9 @@ int W_ListView::InsertItemSorted(const char *text, int param, const char *sortte
 	return InsertItem(x,text,param);
 }
 
-void W_ListView::SetItemText(int p, int si, const char *text)
+void W_ListView::SetItemText(long p, int si, const char *text)
 {
-	LVITEM lvi={0,};
+	LVITEM lvi={{0},};
 	lvi.iItem = p;
 	lvi.iSubItem = si;
 	lvi.mask = LVIF_TEXT;
@@ -88,9 +88,9 @@ void W_ListView::SetItemText(int p, int si, const char *text)
 	ListView_SetItem(m_hwnd, &lvi);
 }
 
-void W_ListView::SetItemParam(int p, int param)
+void W_ListView::SetItemParam(long p, int param)
 {
-	LVITEM lvi={0,};
+	LVITEM lvi={{0},};
 	lvi.iItem = p;
 	lvi.mask=LVIF_PARAM;
 	lvi.lParam=param;
@@ -133,7 +133,7 @@ void W_ListView::Resort()
 
 #else /* _DEFINE_WXUI */
 
-void W_ListView::AddCol(char *text, int w)
+void W_ListView::AddCol(const char *text, int w)
 {
 		wxString str = cstr_to_wxstr(text);
 	m_hwnd->InsertColumn((long) m_col, str,
@@ -147,7 +147,7 @@ int W_ListView::GetColumnWidth(int col)
 	return m_hwnd->GetColumnWidth((long) col);
 }
 
-int W_ListView::GetParam(int p)
+int W_ListView::GetParam(long p)
 {
 	wxListItem lvi;
 		lvi.SetId(p);
@@ -156,7 +156,7 @@ int W_ListView::GetParam(int p)
 	return lvi.GetData();
 }
 
-int W_ListView::InsertItem(int p, const char *text, int param)
+int W_ListView::InsertItem(long p, const char *text, int param)
 {
 	wxListItem lvi;
 		wxString str = cstr_to_wxstr(text);
@@ -181,7 +181,7 @@ int W_ListView::InsertItemSorted(const char *text, int param, const char *sortte
 	return InsertItem(x,text,param);
 }
 
-void W_ListView::SetItemText(int p, int si, const char *text)
+void W_ListView::SetItemText(long p, int si, const char *text)
 {
 		wxString str = cstr_to_wxstr(text);
 	//wxListItem lvi;
@@ -190,7 +190,7 @@ void W_ListView::SetItemText(int p, int si, const char *text)
 	m_hwnd->SetItem(p, si, str);
 }
 
-void W_ListView::SetItemParam(int p, int param)
+void W_ListView::SetItemParam(long p, int param)
 {
 	wxListItem lvi;
 	lvi.SetMask(wxLIST_MASK_DATA);

@@ -58,8 +58,8 @@ void MakeID128Str(T_GUID *id, char *str)
 	Bin2Hex(str,id->idc,sizeof(id->idc));
 }
 
-#if defined(_DEBUG) && defined(WIN32)
-	char* dbgstrdup(const char*str,const char *file, unsigned int line)
+#if defined(_WASTEDEBUG) && defined(WIN32)
+	char* dbgstrdup(const char*str,const char *file, uint32_t line)
 	{
 		if (!str) return NULL;
 		int len=strlen(str);
@@ -134,7 +134,7 @@ R_RANDOM_STRUCT g_random;
 
 #if defined(_WIN32)&&(!defined(_DEFINE_SRV))
 static WNDPROC rng_oldWndProc;
-static unsigned int rng_movebuf[7];
+static uint32_t rng_movebuf[7];
 static int rng_movebuf_cnt;
 
 static BOOL CALLBACK rng_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM lParam)
@@ -147,7 +147,7 @@ static BOOL CALLBACK rng_newWndProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARA
 			rng_movebuf_cnt=0;
 			R_RandomUpdate(&g_random,(unsigned char *)rng_movebuf,sizeof(rng_movebuf));
 
-			unsigned int bytesNeeded;
+			uint32_t bytesNeeded;
 			R_GetRandomBytesNeeded(&bytesNeeded, &g_random);
 			SendDlgItemMessage(hwndDlg,IDC_PROGRESS_RNG,PBM_SETPOS,(WPARAM)(64-bytesNeeded/4),0);
 			if (bytesNeeded<1) EndDialog(hwndDlg,1);
@@ -225,9 +225,9 @@ void MYSRAND()
 
 ////misc string shit
 
-char *extension(char *fn)
+const char *extension(const char *fn)
 {
-	char *s = fn+strlen(fn);
+	const char *s = fn+strlen(fn);
 	while (s > fn && *s != '.'
 #ifdef _WIN32
 		&& *s != '\\'
@@ -315,7 +315,7 @@ HWND CreateTooltip(HWND hWnd, LPSTR strTT)
 {
 	HWND hWndTT;                 //handle to the ToolTip control
 	TOOLINFO ti;
-	unsigned int uid = 0;       //for ti initialization
+	uint32_t uid = 0;       //for ti initialization
 	LPTSTR lptstr = strTT;
 	RECT rect;                  //for client area coordinates
 
@@ -362,7 +362,7 @@ HWND CreateTooltip(HWND hWnd, LPSTR strTT)
 
 	/* SEND AN ADDTOOL MESSAGE TO THE TOOLTIP CONTROL WINDOW */
 	if(!SendMessage(hWndTT, TTM_ADDTOOL, 0, (LPARAM)&ti)){
-		#ifdef _DEBUG
+		#ifdef _WASTEDEBUG
 			MessageBox(0,"DEBUG: Couldn't create the ToolTip control.","Error",MB_OK);
 			return NULL;
 		#endif
@@ -400,7 +400,7 @@ void toolWindowSet(int twstate)
 ACitem *g_aclist=0;
 int g_aclist_size;
 
-bool allowIP(unsigned long addr)
+bool allowIP(uint32_t addr)
 {
 	if (!g_use_accesslist) return true;
 
@@ -539,8 +539,12 @@ static int readEncodedChar(FILE *in) //returns -1 on error
 {
 	char buf[2];
 	int ret;
-	do buf[0]=(char)(fgetc(in)&0xff);
-	while (buf[0] == '\n' ||
+	int c;
+	do {
+		c = fgetc(in);
+		if (c == EOF) return -1;
+		buf[0]=(char)(c&0xff);
+	} while (buf[0] == '\n' ||
 		buf[0] == '\r' ||
 		buf[0] == '\t' ||
 		buf[0] == ' ' ||
@@ -551,7 +555,10 @@ static int readEncodedChar(FILE *in) //returns -1 on error
 		buf[0] == ':' ||
 		buf[0] == '|'
 		);
-	buf[1]=(char)(fgetc(in)&0xff);
+		
+	c = fgetc(in);
+	if (c == EOF) return -1;
+	buf[1]=(char)(c&0xff);
 
 	if (buf[0] >= '0' && buf[0] <= '9') ret=(buf[0]-'0')<<4;
 	else if (buf[0] >= 'A' && buf[0] <= 'F') ret=(buf[0]-'A'+10)<<4;
@@ -564,15 +571,18 @@ static int readEncodedChar(FILE *in) //returns -1 on error
 	return ret;
 }
 
-static int readBFdata(FILE *in, CBlowfish *bl, void *data, unsigned int len)
+static int readBFdata(FILE *in, CBlowfish *bl, void *data, uint32_t len)
 {
-	unsigned int x;
+	uint32_t x;
 	for (x = 0; x < len; x++) {
 		int c=readEncodedChar(in);
 		if (c<0) return 1;
 		((unsigned char *)data)[x]=(unsigned char)c;
+printf("x=%i\n",x);
+printf("c=0x%02x\n",c);
 	};
 	bl->DecryptCBC(data, len);
+for (x = 0; x < len; x++) printf("nb=0x%02x\n",(int)(((unsigned char *)data)[x]));
 	return 0;
 }
 
@@ -603,7 +613,7 @@ int doLoadKey(const char *pstr, const char *keyfn, R_RSA_PRIVATE_KEY *key)
 		return 1;
 	};
 
-	char *err=NULL;
+	const char *err=NULL;
 	char linebuf[1024];
 	while (!err) {
 		fgets(linebuf,1023,fp);
@@ -632,7 +642,7 @@ int doLoadKey(const char *pstr, const char *keyfn, R_RSA_PRIVATE_KEY *key)
 				};
 				if (!err) {
 					char buf[8];
-					bl.SetIV(CBlowfish::IV_BOTH,(unsigned long*)tl);
+					bl.SetIV(CBlowfish::IV_BOTH,(uint32_t*)tl);
 					if (readBFdata(fp,&bl,buf,8)) {
 						err="Private key corrupt";
 					}
@@ -888,10 +898,10 @@ void copyMyPubKey
 	char *buf2;
 
 #ifdef _WIN32
-		char *EOL = "\r\n";
+		const char *EOL = "\r\n";
 		bool wantCrLf = true;
 #else
-		char *EOL = "\n";
+		const char *EOL = "\n";
 		bool wantCrLf = false;
 #endif
 
@@ -1013,7 +1023,7 @@ int findPublicKeyFromKey(R_RSA_PUBLIC_KEY *key) // 1 on found, searches pending 
 	return 0; //no key found
 }
 
-char *findPublicKey(unsigned char *hash, R_RSA_PUBLIC_KEY *out)
+const char *findPublicKey(unsigned char *hash, R_RSA_PUBLIC_KEY *out)
 {
 	int x;
 	for (x = 0; x < g_pklist.GetSize(); x ++) {
@@ -1035,7 +1045,7 @@ char *findPublicKey(unsigned char *hash, R_RSA_PUBLIC_KEY *out)
 	return NULL; //no key found
 }
 
-char *conspeed_strs[5]={"Modem","ISDN","Slow DSL/Cable","T1/Fast DSL/Cable","T3/LAN"};
+const char *conspeed_strs[5]={"Modem","ISDN","Slow DSL/Cable","T1/Fast DSL/Cable","T3/LAN"};
 int conspeed_speeds[5]={32,64,384,1600,20000};
 int get_speedstr(int kbps, char *str)
 {
@@ -1047,41 +1057,41 @@ int get_speedstr(int kbps, char *str)
 	return x;
 }
 
-bool IPv4TestIpInMask(unsigned long addr,unsigned long subnet,unsigned long mask)
+bool IPv4TestIpInMask(uint32_t addr,uint32_t subnet,uint32_t mask)
 {
 	subnet&=mask;
 	addr&=mask;
 	return addr==subnet;
 }
 
-unsigned long IPv4Addr(unsigned char i1,unsigned char i2,unsigned char i3,unsigned char i4)
+uint32_t IPv4Addr(unsigned char i1,unsigned char i2,unsigned char i3,unsigned char i4)
 {
-	unsigned long t;
+	uint32_t t;
 	t=htonl(
-		(((unsigned long)i1)<<24)|
-		(((unsigned long)i2)<<16)|
-		(((unsigned long)i3)<< 8)|
-		(((unsigned long)i4)<< 0)
+		(((uint32_t)i1)<<24)|
+		(((uint32_t)i2)<<16)|
+		(((uint32_t)i3)<< 8)|
+		(((uint32_t)i4)<< 0)
 		);
 	return t;
 }
 
-unsigned long IPv4NetMask(unsigned int networkbits)
+uint32_t IPv4NetMask(uint32_t networkbits)
 {
-	unsigned long i;
+	uint32_t i;
 	if (!networkbits) return 0;
 	networkbits&=0x1f;
-	i=(unsigned long)-1;
+	i=(uint32_t)-1;
 	i=i<<(32-(networkbits&31));
 	return htonl(i);
 }
 
-bool IPv4IsLoopback(unsigned long addr)
+bool IPv4IsLoopback(uint32_t addr)
 {
 	return IPv4TestIpInMask(addr,IPv4Addr(127,  0,  0,  0),IPv4NetMask( 8));
 }
 
-bool IPv4IsPrivateNet(unsigned long addr)
+bool IPv4IsPrivateNet(uint32_t addr)
 {
 	bool t;
 	t=IPv4TestIpInMask(addr,IPv4Addr( 10,  0,  0,  0),IPv4NetMask( 8));if (t) return true;
@@ -1091,7 +1101,7 @@ bool IPv4IsPrivateNet(unsigned long addr)
 }
 
 #ifdef _WIN32
-	bool GetInterfaceInfoOnAddr(unsigned long addr,unsigned long &localaddr,unsigned long &localmask)
+	bool GetInterfaceInfoOnAddr(uint32_t addr,uint32_t &localaddr,uint32_t &localmask)
 	{
 		SOCKET s;
 		s=socket(AF_INET,SOCK_DGRAM,0);
@@ -1111,8 +1121,8 @@ bool IPv4IsPrivateNet(unsigned long addr)
 		};
 
 		len=len/sizeof(ii[0]);
-		unsigned long laddr=0;
-		unsigned long lmask=0;
+		uint32_t laddr=0;
+		uint32_t lmask=0;
 		bool ret=false;
 		DWORD i;
 		for (i=0;i<len;i++) {
@@ -1136,7 +1146,7 @@ bool IPv4IsPrivateNet(unsigned long addr)
 		return false;
 	}
 #else
-	bool GetInterfaceInfoOnAddr(unsigned long addr,unsigned long &localaddr,unsigned long &localmask)
+	bool GetInterfaceInfoOnAddr(uint32_t addr,uint32_t &localaddr,uint32_t &localmask)
 	{
 		struct ifaddrs *ifaces, *ifa;
 
@@ -1155,8 +1165,8 @@ bool IPv4IsPrivateNet(unsigned long addr)
 			};
 		};
 
-		unsigned long laddr=0;
-		unsigned long lmask=0;
+		uint32_t laddr=0;
+		uint32_t lmask=0;
 		bool ret=false;
 		for (ifa = ifaces; ifa != NULL; ifa = ifa->ifa_next)
 		{
@@ -1165,9 +1175,9 @@ bool IPv4IsPrivateNet(unsigned long addr)
 				if (ifa->ifa_addr->sa_family==AF_INET) {
 					sockaddr_in *in;
 					in=(sockaddr_in*)(ifa->ifa_addr);
-					unsigned long laddr=in->sin_addr.s_addr;
+					uint32_t laddr=in->sin_addr.s_addr;
 					in=(sockaddr_in*)(ifa->ifa_netmask);
-					unsigned long lmask=in->sin_addr.s_addr;
+					uint32_t lmask=in->sin_addr.s_addr;
 					if (IPv4TestIpInMask(addr,laddr,lmask)) {
 						ret=true;
 						break;
@@ -1185,7 +1195,7 @@ bool IPv4IsPrivateNet(unsigned long addr)
 	}
 #endif
 
-bool is_accessable_addr(unsigned long addr)
+bool is_accessable_addr(uint32_t addr)
 {
 	if (g_use_accesslist) return true;
 
@@ -1196,8 +1206,8 @@ bool is_accessable_addr(unsigned long addr)
 
 	//if (!g_mql->GetNumQueues()) return true;
 
-	unsigned long localaddr;
-	unsigned long localmask;
+	uint32_t localaddr;
+	uint32_t localmask;
 	if (GetInterfaceInfoOnAddr(addr,localaddr,localmask)) {
 		if (addr!=localaddr) {
 			return true;
@@ -1261,7 +1271,7 @@ void CLogfile::operator()(dSeverity sev,const char *text,...) const
 		if (tm) sprintf(strc,"<%02d/%02d/%02d %02d:%02d:%02d:%d> ",tm->tm_year%100, tm->tm_mon+1, tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec, logidx++);
 		else strcpy(strc,"<" "????" "> ");    /* avoid interpreting as trigraphs! */
 
-		#if defined(_DEBUG) || defined(_DEFINE_WXUI)
+		#if defined(_WASTEDEBUG) || defined(_DEFINE_WXUI)
 			strc+=strlen(strc);
 			strcpy(strc,"{");strc+=1;
 			strcpy(strc,m_szFilename);strc+=strlen(strc);
@@ -1283,7 +1293,7 @@ void CLogfile::operator()(dSeverity sev,const char *text,...) const
 		if (_logfile) {
 			fprintf(_logfile,"%s\n",str);
 			if (g_log_flush_auto) fflush(_logfile);
-			#if defined(_WIN32)&&(defined(_DEBUG))
+			#if defined(_WIN32)&&(defined(_WASTEDEBUG))
 				static const char* _ret="\n";
 				len2=strc-str+strlen(_ret);
 				if (len2<buflen) {
@@ -1350,8 +1360,8 @@ bool log_UpdatePath(const char *logpath, bool bIsFilename)
 void update_forceip_dns_resolution()
 {
 	if (g_forceip_dynip_mode==1) {
-		unsigned long ipold=g_forceip_dynip_addr;
-		unsigned long ip=inet_addr(g_forceip_name);
+		uint32_t ipold=g_forceip_dynip_addr;
+		uint32_t ip=inet_addr(g_forceip_name);
 		if (ip==INADDR_NONE) {
 			hostent* ent = gethostbyname(g_forceip_name);
 			if (ent) {
@@ -1379,7 +1389,7 @@ void update_forceip_dns_resolution()
 }
 
 //ADDED Md5Chap Moved from srchwnd coz need in server for dbg
-void FormatSizeStr64(char *out, unsigned int low, unsigned int high)
+void FormatSizeStr64(char *out, uint32_t low, uint32_t high)
 {
 	if (high) {
 		sprintf(out,"%u GB",high*4 + (low>>30));
@@ -1441,7 +1451,7 @@ const char* CopySingleToken(char* dest,const char* source,char stopchar,int dest
 }
 
 //len must be integral
-void GenerateRandomSeed(void* target,unsigned int len,R_RANDOM_STRUCT *random)
+void GenerateRandomSeed(void* target,uint32_t len,R_RANDOM_STRUCT *random)
 {
 	//according to X9.17, afaik.
 	//ADDED md5chap using BFCBC for Ivector
@@ -1457,7 +1467,7 @@ void GenerateRandomSeed(void* target,unsigned int len,R_RANDOM_STRUCT *random)
 	bl.Init(tmpkey, sizeof(tmpkey));
 	memset(&tmpkey,0,sizeof(tmpkey));
 
-	unsigned long tm[2]={time(NULL),GetTickCount()};
+	uint32_t tm[2]={time(NULL),GetTickCount()};
 	bl.EncryptECB(tm,sizeof(tm));
 
 	bl.SetIV(CBlowfish::IV_ENC,tm);
@@ -1470,7 +1480,7 @@ void GenerateRandomSeed(void* target,unsigned int len,R_RANDOM_STRUCT *random)
 
 // you need double size array if converting to crlf
 // buflen Specifies the target size!
-bool str_return_unpack(char *dst,const char* src,unsigned int dstbuflen,const char returnChar)
+bool str_return_unpack(char *dst,const char* src,uint32_t dstbuflen,const char returnChar)
 {
 	if (dstbuflen<=0) return false;
 	const char *p1;
@@ -1478,7 +1488,7 @@ bool str_return_unpack(char *dst,const char* src,unsigned int dstbuflen,const ch
 	p1=src;
 	p2=dst;
 	while (*p1) {
-		if (((unsigned int)(p2-dst))>=(dstbuflen-1)) {
+		if (((uint32_t)(p2-dst))>=(dstbuflen-1)) {
 			*p2=0;
 			return false;
 		};
@@ -1497,7 +1507,7 @@ bool str_return_unpack(char *dst,const char* src,unsigned int dstbuflen,const ch
 // you need double size array if converting to crlf
 // buflen Specifies the target size!
 // automatic removal of leading/tailing returns
-bool str_return_pack(char *dst,const char* src,unsigned int dstbuflen,const char returnChar)
+bool str_return_pack(char *dst,const char* src,uint32_t dstbuflen,const char returnChar)
 {
 	if (dstbuflen<=0) return false;
 	const char *p1;
@@ -1506,7 +1516,7 @@ bool str_return_pack(char *dst,const char* src,unsigned int dstbuflen,const char
 	p1=src;
 	p3=p2=dst;
 	while (*p1) {
-		if (((unsigned int)(p2-dst))>=(dstbuflen-1)) {
+		if (((uint32_t)(p2-dst))>=(dstbuflen-1)) {
 			*p2=0;
 			return false;
 		};
@@ -1527,10 +1537,10 @@ bool str_return_pack(char *dst,const char* src,unsigned int dstbuflen,const char
 	return true;
 };
 
-void RandomizePadding(void* buf,unsigned int bufsize,unsigned int datasize)
+void RandomizePadding(void* buf,uint32_t bufsize,uint32_t datasize)
 {
 	if (!VERIFY(bufsize>=datasize)) return;
-	unsigned int len=bufsize-datasize;
+	uint32_t len=bufsize-datasize;
 	if (len==0) return;
 	unsigned char* cbuf=(unsigned char* )buf;
 	cbuf+=datasize;
@@ -1549,7 +1559,7 @@ void RelpaceCr(char* st)
 //Hint: has is mandatory, strings optional, length=16+40+32=88
 void MakeUserStringFromHash(unsigned char *hash,char* longstring, char*shortstring)
 {
-	char *t;
+	const char *t;
 	bool nouser=false;
 	if (((t=findPublicKey(hash,NULL))!=0) && *t) {
 		if (shortstring) safe_strncpy(shortstring,t,16);
@@ -1586,10 +1596,10 @@ void MakeUserStringFromHash(unsigned char *hash,char* longstring, char*shortstri
 	#define _BP1 1
 	#define _BN1 1
 	//----------------------------------------------------------------------------------
-	static unsigned long CheckRsa_Single(int enable,int n,unsigned char *inp,bool blind)
+	static uint32_t CheckRsa_Single(int enable,int n,unsigned char *inp,bool blind)
 	{
 		unsigned char out[4096/8];
-		unsigned int outlen;
+		uint32_t outlen;
 		int ret;
 		if (enable) {
 			WasteSleep(0);
@@ -1637,12 +1647,12 @@ void MakeUserStringFromHash(unsigned char *hash,char* longstring, char*shortstri
 
 			//------------------------------
 			int n=N;
-			unsigned long tick1u=CheckRsa_Single(_UQ0,n,cq0,false);
-			unsigned long tick2u=CheckRsa_Single(_UQ1,n,cq1,false);
-			unsigned long tick3u=CheckRsa_Single(_UN1,n,cn1,false);
-			unsigned long tick1b=CheckRsa_Single(_BP0,n,cq0,true);
-			unsigned long tick2b=CheckRsa_Single(_BP1,n,cq1,true);
-			unsigned long tick3b=CheckRsa_Single(_BN1,n,cn1,true);
+			uint32_t tick1u=CheckRsa_Single(_UQ0,n,cq0,false);
+			uint32_t tick2u=CheckRsa_Single(_UQ1,n,cq1,false);
+			uint32_t tick3u=CheckRsa_Single(_UN1,n,cn1,false);
+			uint32_t tick1b=CheckRsa_Single(_BP0,n,cq0,true);
+			uint32_t tick2b=CheckRsa_Single(_BP1,n,cq1,true);
+			uint32_t tick3b=CheckRsa_Single(_BN1,n,cn1,true);
 			//------------------------------
 			double dperitem1u=(double)tick1u/(double)n;
 			double dperitem2u=(double)tick2u/(double)n;

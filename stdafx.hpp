@@ -48,7 +48,7 @@ inline LPTSTR safe_strncpy(char* lpDest, const char* lpSrc,int iMaxBufLength)
 #define DIRCHAR '\\'
 
 #ifndef ASSERT
-	#ifdef _DEBUG
+	#ifdef _WASTEDEBUG
 		#define ASSERT(x) assert(x)
 	#else
 		#define ASSERT(x) ((void)0)
@@ -56,27 +56,27 @@ inline LPTSTR safe_strncpy(char* lpDest, const char* lpSrc,int iMaxBufLength)
 #endif
 
 #ifndef VERIFY
-	#ifdef _DEBUG
+	#ifdef _WASTEDEBUG
 		#define VERIFY(x) (ASSERT(x),(x))
 	#else
 		#define VERIFY(x) (x)
 	#endif
 #endif
 
-#ifdef _DEBUG
+#ifdef _WASTEDEBUG
 	#define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__)
 	#define malloc(x) _malloc_dbg( x, _NORMAL_BLOCK, __FILE__, __LINE__)
 	#define new DEBUG_NEW
 	#define strdup(x) dbgstrdup(x, __FILE__, __LINE__)
-	char* dbgstrdup(const char*str,const char *file, unsigned int line);
+	char* dbgstrdup(const char*str,const char *file, uint32_t line);
 #else
 	#define DEBUG_NEW new
-#endif // _DEBUG
+#endif // _WASTEDEBUG
 
 #endif
 
 #ifdef _DEFINE_WXUI
-#ifdef _DEBUG
+#ifdef _WASTEDEBUG
 #ifndef _NORMAL_BLOCK
 #define _NORMAL_BLOCK   1024
 #endif // _NORMAL_BLOCK

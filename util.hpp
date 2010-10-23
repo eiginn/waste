@@ -20,6 +20,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _UTIL_H_
 #define _UTIL_H_
 
+#include "intdefs.hpp"
+
 #include "rsa/global.hpp"
 #include "rsa/rsaref.hpp"
 #include "itemlist.hpp"
@@ -34,7 +36,7 @@ extern const char szDotWastestate[];
 extern const char szWastestate[];
 
 //Seed generator(washin seed gen)
-void GenerateRandomSeed(void* target,unsigned int len,R_RANDOM_STRUCT *random);
+void GenerateRandomSeed(void* target,uint32_t len,R_RANDOM_STRUCT *random);
 
 //GUID
 struct T_GUID
@@ -60,7 +62,7 @@ void MYSRAND();
 extern R_RANDOM_STRUCT g_random;
 
 //string utilities
-char *extension(char *fn);
+const char *extension(const char *fn);
 
 #if defined(_WIN32)&&(!defined(_DEFINE_SRV))
 //windows shit
@@ -93,7 +95,7 @@ void reloadKey(const char *passstr);
 //access control shit
 struct ACitem
 {
-	unsigned long ip;
+	uint32_t ip;
 	char maskbits;
 	char allow;
 };
@@ -106,19 +108,19 @@ extern int g_aclist_size;
 	void updateACList(void *lv);
 #endif
 
-bool IPv4TestIpInMask(unsigned long addr,unsigned long subnet,unsigned long mask);
-unsigned long IPv4Addr(unsigned char i1,unsigned char i2,unsigned char i3,unsigned char i4);
-unsigned long IPv4NetMask(unsigned int networkbits);
-bool IPv4IsLoopback(unsigned long addr);
-bool IPv4IsPrivateNet(unsigned long addr);
-bool GetInterfaceInfoOnAddr(unsigned long addr,unsigned long &localaddr,unsigned long &localmask);
+bool IPv4TestIpInMask(uint32_t addr,uint32_t subnet,uint32_t mask);
+uint32_t IPv4Addr(unsigned char i1,unsigned char i2,unsigned char i3,unsigned char i4);
+uint32_t IPv4NetMask(uint32_t networkbits);
+bool IPv4IsLoopback(uint32_t addr);
+bool IPv4IsPrivateNet(uint32_t addr);
+bool GetInterfaceInfoOnAddr(uint32_t addr,uint32_t &localaddr,uint32_t &localmask);
 int ACStringToStruct(const char *t, ACitem *i);
-bool allowIP(unsigned long a);
-bool is_accessable_addr(unsigned long addr);
+bool allowIP(uint32_t a);
+bool is_accessable_addr(uint32_t addr);
 bool is_accessable(char *host);
 
 //conspeed
-extern char *conspeed_strs[5];
+const extern char *conspeed_strs[5];
 extern int conspeed_speeds[5];
 int get_speedstr(int kbps, char *str);
 
@@ -157,6 +159,11 @@ class CLogfile
 #endif
 
 //debug
+#if defined(_WASTEDEBUG)
+#warning WASTE LOCAL DEBUG ON
+	#define dbg_printf(a,b...) do { fprintf(stderr, "dbg:" b); fprintf(stderr, "\n"); } while (0)
+	#define log_printf(a,b...) do { fprintf(stderr, "log:" b); fprintf(stderr, "\n"); } while (0)
+#else
 #if defined(_DEBUG) || defined(_DEFINE_WXUI)
 	#define dbg_printf CLogfile(__FILE__,__LINE__)
 	#define log_printf CLogfile(__FILE__,__LINE__)
@@ -165,6 +172,7 @@ class CLogfile
 	void inline dummy_printf(dSeverity sev,char *text,...) {};
 	#define dbg_printf dummy_printf
 #endif
+#endif // _WASTEDEBUG
 
 bool log_UpdatePath(const char *logpath, bool bIsFilename=false);
 
@@ -189,11 +197,11 @@ void copyMyPubKey(HWND hwndOwner);
 void KillPkList();
 void savePKList();
 int loadPKList(char *fn=NULL); //returns num of keys loaded
-char *findPublicKey(unsigned char *hash, R_RSA_PUBLIC_KEY *out); //NULL on err
+const char *findPublicKey(unsigned char *hash, R_RSA_PUBLIC_KEY *out); //NULL on err
 int findPublicKeyFromKey(R_RSA_PUBLIC_KEY *key); // 1 on found
 
 //crc
-unsigned long crc32(unsigned long crc, unsigned char *buf, unsigned int len);
+uint32_t crc32(uint32_t crc, unsigned char *buf, uint32_t len);
 
 #if (defined(_WIN32) && defined(_CHECK_RSA_BLINDING))
 	//ADDED Md5Chap
@@ -201,11 +209,11 @@ unsigned long crc32(unsigned long crc, unsigned char *buf, unsigned int len);
 #endif
 
 //ADDED Md5Chap Moved from srchwnd coz need in server for dbg
-void FormatSizeStr64(char *out, unsigned int low, unsigned int high);
+void FormatSizeStr64(char *out, uint32_t low, uint32_t high);
 
 //ADDED Md5Chap
-bool str_return_unpack(char *dst,const char* src,unsigned int dstbuflen,const char returnChar);
-bool str_return_pack(char *dst,const char* src,unsigned int dstbuflen,const char returnChar);
+bool str_return_unpack(char *dst,const char* src,uint32_t dstbuflen,const char returnChar);
+bool str_return_pack(char *dst,const char* src,uint32_t dstbuflen,const char returnChar);
 
 //ADDED Md5Chap
 const char* GetNextOf(const char* buf,char c,int maxlen);
@@ -213,58 +221,58 @@ const char* CopySingleToken(char* dest,const char* source,char stopchar,int dest
 void RelpaceCr(char* st);
 
 //ADDED Md5Chap
-void RandomizePadding(void* buf,unsigned int bufsize,unsigned int datasize);
+void RandomizePadding(void* buf,uint32_t bufsize,uint32_t datasize);
 
 //ADDED Md5Chap
 //Hint: hash is mandatory, strings optional, length=16+40+32=88
 void MakeUserStringFromHash(unsigned char *hash,char* longstring, char*shortstring);
 
 extern "C" void dpi(char*,unsigned);
-extern "C" const unsigned int sK0[];
+extern "C" const uint32_t sK0[];
 extern "C" unsigned char const * const sK1[];
 
 //ADDED Md5Chap
 template <class T,class U> void inline TIntData4(U data,T i)
 {
 	unsigned char*& data2=(unsigned char*&)data;
-	data2[0]=(unsigned char)(((unsigned int)i>> 0)&0xff);
-	data2[1]=(unsigned char)(((unsigned int)i>> 8)&0xff);
-	data2[2]=(unsigned char)(((unsigned int)i>>16)&0xff);
-	data2[3]=(unsigned char)(((unsigned int)i>>24)&0xff);
+	data2[0]=(unsigned char)(((uint32_t)i>> 0)&0xff);
+	data2[1]=(unsigned char)(((uint32_t)i>> 8)&0xff);
+	data2[2]=(unsigned char)(((uint32_t)i>>16)&0xff);
+	data2[3]=(unsigned char)(((uint32_t)i>>24)&0xff);
 };
 
 template <class T,class U> void inline TIntData2(U data,T i)
 {
 	unsigned char*& data2=(unsigned char*&)data;
-	data2[0]=(unsigned char)(((unsigned int)i>> 0)&0xff);
-	data2[1]=(unsigned char)(((unsigned int)i>> 8)&0xff);
+	data2[0]=(unsigned char)(((uint32_t)i>> 0)&0xff);
+	data2[1]=(unsigned char)(((uint32_t)i>> 8)&0xff);
 };
 
 template <class T,class U> void inline TIntData1(U data,T i)
 {
 	unsigned char*& data2=(unsigned char*&)data;
-	data2[0]=(unsigned char)(((unsigned int)i>> 0)&0xff);
+	data2[0]=(unsigned char)(((uint32_t)i>> 0)&0xff);
 };
 
 template <class T,class U> void inline TIntDataSwap4(U data,T i)
 {
 	unsigned char*& data2=(unsigned char*&)data;
-	data2[0]=(unsigned char)(((unsigned int)i>>24)&0xff);
-	data2[1]=(unsigned char)(((unsigned int)i>>16)&0xff);
-	data2[2]=(unsigned char)(((unsigned int)i>> 8)&0xff);
-	data2[3]=(unsigned char)(((unsigned int)i>> 0)&0xff);
+	data2[0]=(unsigned char)(((uint32_t)i>>24)&0xff);
+	data2[1]=(unsigned char)(((uint32_t)i>>16)&0xff);
+	data2[2]=(unsigned char)(((uint32_t)i>> 8)&0xff);
+	data2[3]=(unsigned char)(((uint32_t)i>> 0)&0xff);
 };
 
 template <class T,class U> void inline TIntDataSwap2(U data,T i)
 {
 	unsigned char*& data2=(unsigned char*&)data;
-	data2[0]=(unsigned char)(((unsigned int)i>> 8)&0xff);
-	data2[1]=(unsigned char)(((unsigned int)i>> 0)&0xff);
+	data2[0]=(unsigned char)(((uint32_t)i>> 8)&0xff);
+	data2[1]=(unsigned char)(((uint32_t)i>> 0)&0xff);
 };
 
 template <class T,class U> T inline TDataInt4(U data)
 {
-	unsigned int i;
+	uint32_t i;
 	unsigned char*& data2=(unsigned char*&)data;
 	i=0;
 	i=i|(data2[0]<< 0);
@@ -276,7 +284,7 @@ template <class T,class U> T inline TDataInt4(U data)
 
 template <class T,class U> T inline TDataInt2(U data)
 {
-	unsigned int i;
+	uint32_t i;
 	unsigned char*& data2=(unsigned char*&)data;
 	i=0;
 	i=i|(data2[0]<< 0);
@@ -286,7 +294,7 @@ template <class T,class U> T inline TDataInt2(U data)
 
 template <class T,class U> T inline TDataInt1(U data)
 {
-	unsigned int i;
+	uint32_t i;
 	unsigned char*& data2=(unsigned char*&)data;
 	i=0;
 	i=i|(data2[0]<< 0);
@@ -295,7 +303,7 @@ template <class T,class U> T inline TDataInt1(U data)
 
 template <class T,class U> T inline TDataIntSwap4(U data)
 {
-	unsigned int i;
+	uint32_t i;
 	unsigned char*& data2=(unsigned char*&)data;
 	i=0;
 	i=i|(data2[0]<<24);
@@ -307,7 +315,7 @@ template <class T,class U> T inline TDataIntSwap4(U data)
 
 template <class T,class U> T inline TDataIntSwap2(U data)
 {
-	unsigned int i;
+	uint32_t i;
 	unsigned char*& data2=(unsigned char*&)data;
 	i=0;
 	i=i|(data2[0]<< 8);
@@ -315,9 +323,9 @@ template <class T,class U> T inline TDataIntSwap2(U data)
 	return (T)i;
 };
 
-unsigned int   inline DataUInt4	   (unsigned char* c) {return TDataInt4	   <unsigned int,  unsigned	char*>(c);};
-unsigned int   inline DataUIntSwap4(unsigned char* c) {return TDataIntSwap4<unsigned int,  unsigned	char*>(c);};
-unsigned short inline DataUInt2	   (unsigned char* c) {return TDataInt2	   <unsigned short,unsigned	char*>(c);};
+uint32_t   inline DataUInt4	   (unsigned char* c) {return TDataInt4	   <uint32_t,  unsigned	char*>(c);};
+uint32_t   inline DataUIntSwap4(unsigned char* c) {return TDataIntSwap4<uint32_t,  unsigned	char*>(c);};
+uint16_t inline DataUInt2	   (unsigned char* c) {return TDataInt2	   <uint16_t,unsigned	char*>(c);};
 unsigned char  inline DataUInt1	   (unsigned char* c) {return TDataInt1	   <unsigned char, unsigned	char*>(c);};
 
 void inline	IntData4	(unsigned char*	c,int i	 ) {TIntData4	 <int,	unsigned char*>(c,i);};
@@ -325,8 +333,8 @@ void inline	IntData2	(unsigned char*	c,short	i) {TIntData2	 <short,unsigned char
 void inline	IntData1	(unsigned char*	c,char i ) {TIntData1	 <char,	unsigned char*>(c,i);};
 void inline	IntDataSwap4(unsigned char*	c,int i	 ) {TIntDataSwap4<int,	unsigned char*>(c,i);};
 
-void inline	UIntData4	 (unsigned char* c,unsigned	int	  i) {TIntData4	   <unsigned int  ,unsigned	char*>(c,i);};
-void inline	UIntData2	 (unsigned char* c,unsigned	short i) {TIntData2	   <unsigned short,unsigned	char*>(c,i);};
+void inline	UIntData4	 (unsigned char* c,unsigned	int	  i) {TIntData4	   <uint32_t  ,unsigned	char*>(c,i);};
+void inline	UIntData2	 (unsigned char* c,unsigned	short i) {TIntData2	   <uint16_t,unsigned	char*>(c,i);};
 void inline	UIntData1	 (unsigned char* c,unsigned	char  i) {TIntData1	   <unsigned char, unsigned	char*>(c,i);};
 
 #endif

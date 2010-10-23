@@ -190,7 +190,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 	}
 #endif
 
-	static void add_chatline(CHAT_HWND hwndDlg, char *line)
+	static void add_chatline(CHAT_HWND hwndDlg, const char *line)
 	{
 #ifdef _DEFINE_WXUI
 		wxTextCtrl *ctrl = wxDynamicCast(hwndDlg,WxChat)->m_chattext;
@@ -368,7 +368,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 	static void gotNick(CHAT_HWND hwnd, const char *nick, int state, int statemask, int delifold)
 	{
 		#if 0
-			#ifndef _DEBUG
+			#ifndef _WASTEDEBUG
 				#error remove 1
 			#endif
 			char buf[512];
@@ -664,7 +664,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 	//type 1 private 2 room 4 bcast
 	void chat_log(int type, const char *context, const char *src, const char *str_c, chatroom_item *cnl)
 	{
-		#ifdef _DEBUG
+		#ifdef _WASTEDEBUG
 			int xt;
 			if (context[0]=='&' || context[0]=='#') xt=2;
 			else if (!strcmp(_bcastsrc,context)) xt=4;
@@ -803,7 +803,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 		if (oldnick && oldnick[0]!='.' && g_regnick[0]!='.') {
 			char buf[64];
 			sprintf(buf,"/nick/%s",oldnick);
-			T_Message msg={0,};
+			T_Message msg={{0},};
 			C_MessageChat req;
 			req.set_chatstring(buf);
 			req.set_dest("&");
@@ -818,7 +818,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 		chatroom_item *p=L_Chatroom;
 		while (p) {
 			//HACK init but unref
-			//T_Message msg={0,};
+			//T_Message msg={{0},};
 			C_MessageChat req;
 			if (p->channel[0] == '#' || p->channel[0] == '&') {
 #ifdef _DEFINE_WXUI
@@ -1063,7 +1063,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 									if (!strstr(text,"\r") && !strstr(text,"\n") && text[4] == ' ' && text[5] && text[5] != ' ' &&
 										((dstr=strstr(text+5," "))!=0))
 									{
-										T_Message msg={0,};
+										T_Message msg={{0},};
 										C_MessageChat req;
 										//dstr is the string we are sending
 										if (dstr[1] == '/') {
@@ -1169,7 +1169,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 					if (*text) *text++=0;
 					if (!*lasttext) break;
 
-					T_Message msg={0,};
+					T_Message msg={{0},};
 					C_MessageChat req;
 
 					char buf[1024];
@@ -1237,7 +1237,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 		if (cli && (cli->channel[0] == '#' || cli->channel[0] == '&'))
 		{
 			if (g_regnick[0] && g_regnick[0]!='.') {
-				T_Message msg={0,};
+				T_Message msg={{0},};
 				C_MessageChat req;
 				req.set_chatstring("/leave");
 				req.set_dest(cli->channel);
@@ -1312,7 +1312,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 
 	BOOL WINAPI Chat_DlgProc(CHAT_HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
-		static unsigned int linkclicktime;
+		static uint32_t linkclicktime;
 		switch (uMsg)
 		{
 		case WM_USER+0x103:
@@ -1465,7 +1465,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 
 					if (g_regnick[0] && g_regnick[0]!='.')
 					{
-						T_Message msg={0,};
+						T_Message msg={{0},};
 						C_MessageChat req;
 						req.set_chatstring("/join");
 						req.set_dest(L_Chatroom->channel);
@@ -1786,7 +1786,7 @@ bool chat_handle_whois(C_MessageChat &chat)
 						}
 						else {
 							char buf[128];
-							char *tmp="Message sent, delivery confirmed";
+							const char *tmp="Message sent, delivery confirmed";
 #ifdef _DEFINE_WXUI
 							wxGetDlgItemText(wxDynamicCast(p->hwnd,WxChat)->m_status, buf, sizeof(buf));
 #else

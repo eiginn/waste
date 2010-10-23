@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	#define UPLOAD_BASE_IDX 0x70000000
 
-	int Xfer_WillQ(char *file, char *guidstr);
+	int Xfer_WillQ(const char *file, const char *guidstr);
 
 	void Xfer_Run();
 	void RecvQ_UpdateStatusText();

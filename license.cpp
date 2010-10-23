@@ -537,5 +537,5 @@ static const unsigned char sz4[]=
 	0x00
 };
 
-extern "C" const unsigned int szGPL0[]={sizeof(sz1),sizeof(sz2),sizeof(sz3),sizeof(sz4)};
+extern "C" const uint32_t szGPL0[]={sizeof(sz1),sizeof(sz2),sizeof(sz3),sizeof(sz4)};
 extern "C" unsigned char const * const szGPL1[]={sz1,sz2,sz3,sz4};

@@ -37,16 +37,16 @@ class SearchCacheItem
 		C_ItemList<C_MessageSearchReply> searchreplies;
 		char lastsearchtext[512];
 		T_GUID search_id;
-		unsigned int search_id_time;
+		uint32_t search_id_time;
 		int numcons;
-		unsigned int lastvisitem;
+		uint32_t lastvisitem;
 };
 
 void KillDirgetlist();
 void KillSearchhistory();
 
 extern SearchCacheItem *g_searchcache[SEARCHCACHE_NUMITEMS];
-void Search_Search(char *str);
+void Search_Search(const char *str);
 
 void Search_Resort();
 void Search_AddReply(T_Message *message);

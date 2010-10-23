@@ -27,7 +27,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "config.h"
 #define THREAD_SAFE
+#ifndef _REENTRANT
 #define _REENTRANT
+#endif
 #include <pthread.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -63,7 +65,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 static inline char *safe_strncpy(char *out, const char *in, int maxl) { strncpy(out,in,maxl); out[maxl-1]=0; return out; }
 
-static inline unsigned int GetTickCount()
+static inline uint32_t GetTickCount()
 {
 	struct timeval tv;
 	gettimeofday(&tv,NULL);
@@ -73,7 +75,7 @@ static inline unsigned int GetTickCount()
 #define MAX_PATH 1024
 
 #ifndef ASSERT
-	#ifdef _DEBUG
+	#ifdef _WASTEDEBUG
 		#define ASSERT(x) assert(x)
 	#else
 		#define ASSERT(x) ((void)0)
@@ -81,7 +83,7 @@ static inline unsigned int GetTickCount()
 #endif
 
 #ifndef VERIFY
-	#ifdef _DEBUG
+	#ifdef _WASTEDEBUG
 		#define VERIFY(x) (ASSERT(x),(x))
 	#else
 		#define VERIFY(x) (x)

@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "wxappresources.h"
 #include "wxchat.h"
 #include "main.hpp"
+#include "srchwnd.hpp" // Search_Search()
 
 
 // globals
@@ -599,7 +600,7 @@ void MainFrame::BrowseUser (wxString who)
 	wxString text = _T("/") + who;
 	wxstr_to_cstr(buf, text, 1023);
 
-	extern void Search_Search(char *);
+	//extern void Search_Search(char *);
 	Search_Search(buf);
 }
 

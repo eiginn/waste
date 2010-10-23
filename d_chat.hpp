@@ -39,7 +39,7 @@ int chat_HandleMsg(T_Message *message); //refered by either srvmain or d_chat
 #endif
 
 		T_GUID lastMsgGuid;
-		unsigned int lastmsgguid_time;
+		uint32_t lastmsgguid_time;
 
 #if defined(_WIN32)&&(!defined(_DEFINE_SRV))
 		WNDPROC chatdiv_oldWndProc;

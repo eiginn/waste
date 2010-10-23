@@ -60,10 +60,10 @@ extern int g_conspeed,g_route_traffic;
 extern int g_log_level;
 extern int g_log_flush_auto;
 extern int g_max_simul_dl;
-extern unsigned int g_max_simul_dl_host;
+extern uint32_t g_max_simul_dl_host;
 
 extern int g_forceip_dynip_mode;
-extern unsigned long g_forceip_dynip_addr;
+extern uint32_t g_forceip_dynip_addr;
 extern char g_forceip_name[256];
 
 extern char g_performs[4096];
@@ -71,7 +71,7 @@ extern int g_use_accesslist;
 extern int g_appendprofiletitles;
 extern int g_do_autorefresh;
 extern int g_accept_downloads;
-extern unsigned short g_port;
+extern uint16_t g_port;
 extern int g_chat_timestamp;
 extern int g_keydist_flags; //&4=route, &3= 2=prompt,1=all,0=ignore
 extern char g_regnick[32];
@@ -117,7 +117,7 @@ void main_onGotNick(const char *nick, int del);
 void main_onGotChannel(const char *cnl);
 void main_BroadcastPublicKey(T_Message *src=NULL);
 void main_handleKeyDist(C_KeydistRequest *kdr, int pending);
-void main_handleUpload(char *guidstr, char *fnstr, C_UploadRequest *t);
+void main_handleUpload(const char *guidstr, const char *fnstr, C_UploadRequest *t);
 
 void InitializeNetworkparts();
 void PrepareDownloadDirectory();

@@ -58,12 +58,12 @@ public:
 	void set_fn_hash(unsigned char fnhash[SHA_OUTSIZE]);
 	void get_fn_hash(unsigned char fnhash[SHA_OUTSIZE]);
 
-	void set_dc_ipport(unsigned long ip, unsigned short port)
+	void set_dc_ipport(uint32_t ip, uint16_t port)
 	{
 		m_ip=ip;
 		m_port=port;
 	};
-	void get_dc_ipport(unsigned long *ip, unsigned short *port)
+	void get_dc_ipport(uint32_t *ip, uint16_t *port)
 	{
 		*port=m_port;
 		*ip=m_ip;
@@ -79,10 +79,10 @@ public:
 		m_need_chunks_used=0;
 		m_need_chunks_indexused=0;
 	};
-	void add_need_chunk(unsigned int idx);
+	void add_need_chunk(uint32_t idx);
 
 	int get_chunks_needed() { return m_need_chunks_used; }
-	unsigned int get_need_chunk(int idx) //only valid on the decompress side (otherwise returns RLE crap)
+	uint32_t get_need_chunk(int idx) //only valid on the decompress side (otherwise returns RLE crap)
 	{
 		return m_need_chunks_offs[idx];
 	};
@@ -91,15 +91,15 @@ protected:
 	int m_abort;
 	T_GUID m_guid,m_prev_guid;
 	int m_idx;
-	unsigned long m_ip;
-	unsigned short m_port;
+	uint32_t m_ip;
+	uint16_t m_port;
 	unsigned char m_fnhash[SHA_OUTSIZE];
 	char m_nick[32];
 	bool bIsInitialRequest;
 
 	//on write side, this stores some nifty RLE stuff.
 	//on the read side, it is decompressed on the fly into m_need_chunks_offs and m_need_chunks_len is not used
-	unsigned int m_need_chunks_offs[FILE_MAX_CHUNKS_PER_REQ];
+	uint32_t m_need_chunks_offs[FILE_MAX_CHUNKS_PER_REQ];
 	char m_need_chunks_len[FILE_MAX_CHUNKS_PER_REQ];
 
 	int m_need_chunks_used;
@@ -118,28 +118,28 @@ public:
 	void set_error(int err) { m_error=err; }
 	int get_error() { return m_error; }
 
-	void set_index(unsigned int index) { m_index=index; }
+	void set_index(uint32_t index) { m_index=index; }
 	int get_index() { return m_index; } //-1 if header
 
 	//header only fields
 	void get_hash(unsigned char hash[SHA_OUTSIZE]) { memcpy(hash,m_hash,SHA_OUTSIZE); }
 	void set_hash(unsigned char hash[SHA_OUTSIZE]) { memcpy(m_hash,hash,SHA_OUTSIZE); }
-	void get_file_len(unsigned int *low, unsigned int *high) { *low = m_file_len_low; *high=m_file_len_high; }
-	void set_file_len(unsigned int file_len_low, unsigned int file_len_high);
+	void get_file_len(uint32_t *low, uint32_t *high) { *low = m_file_len_low; *high=m_file_len_high; }
+	void set_file_len(uint32_t file_len_low, uint32_t file_len_high);
 
-	void set_file_dates(unsigned int create_date, unsigned int mod_date) { m_create_date=create_date; m_mod_date = mod_date; }
-	void get_file_dates(unsigned int *create_date, unsigned int *mod_date) { *create_date=m_create_date; *mod_date=m_mod_date; }
+	void set_file_dates(uint32_t create_date, uint32_t mod_date) { m_create_date=create_date; m_mod_date = mod_date; }
+	void get_file_dates(uint32_t *create_date, uint32_t *mod_date) { *create_date=m_create_date; *mod_date=m_mod_date; }
 
 	void set_chunkcount(int cnt) { m_chunkcnt=cnt; }
 	int get_chunkcount() { return m_chunkcnt; }
 
-	void set_dc_ipport(unsigned long ip, unsigned short port)
+	void set_dc_ipport(uint32_t ip, uint16_t port)
 	{
 		m_ip=ip;
 		m_port=port;
 	};
 
-	void get_dc_ipport(unsigned long *ip, unsigned short *port)
+	void get_dc_ipport(uint32_t *ip, uint16_t *port)
 	{
 		*port=m_port;
 		*ip=m_ip;
@@ -154,18 +154,18 @@ public:
 	int get_data_len() { return m_data_len; }
 
 protected:
-	unsigned int m_index;
+	uint32_t m_index;
 
 	int m_error;
 
 	//header only
 	unsigned char m_hash[SHA_OUTSIZE];
-	unsigned int m_file_len_low, m_file_len_high;
-	unsigned int m_create_date;
-	unsigned int m_mod_date;
-	unsigned int m_chunkcnt;
-	unsigned long m_ip;
-	unsigned short m_port;
+	uint32_t m_file_len_low, m_file_len_high;
+	uint32_t m_create_date;
+	uint32_t m_mod_date;
+	uint32_t m_chunkcnt;
+	uint32_t m_ip;
+	uint16_t m_port;
 	char m_nick[32]; //ADDED Md5Chap - let's do real things ;)
 
 	//data only

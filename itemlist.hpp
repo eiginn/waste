@@ -51,7 +51,6 @@ public:
 	{
 		if (m_list && idx >= 0 && idx < m_size) {
 			m_size--;
-
 			if (idx != m_size) w_memmove(m_list+idx,m_list+idx+1,sizeof(T *)*(m_size-idx));
 			if (!(m_size&31)&&m_size) { //resize down
 				m_list=(T**)::realloc(m_list,sizeof(T*)*m_size);

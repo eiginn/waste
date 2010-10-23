@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "wxbrowser.h"
 #include "main.hpp"
+#include "srchwnd.hpp" // Search_Search()
 
 ////@begin XPM images
 #include "res/file.xpm"
@@ -283,7 +284,7 @@ wxIcon WxBrowser::GetIconResource( const wxString& name )
 
 void WxBrowser::OnSrchUserlistClick( wxCommandEvent& event )
 {
-	extern void Search_Search(char *);
+	//extern void Search_Search(const char *);
 	Search_Search("/");
 	event.Skip();
 }

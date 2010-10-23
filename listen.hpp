@@ -35,7 +35,7 @@ public:
 
 protected:
 	int m_socket;
-	unsigned short m_port;
+	uint16_t m_port;
 };
 
 #endif //_C_LISTEN_H_

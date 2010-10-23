@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define IS_VALID(x) (m_validbf[(x)>>3]&(1<<(x&7)))
 #define SET_VALID(x) m_validbf[(x)>>3]|=(1<<(x&7))
 
-static void* malloc_memset(unsigned int len,char c)
+static void* malloc_memset(uint32_t len,char c)
 {
 	void* b=malloc(len);
 	if (b) memset(b,c,len);
@@ -125,7 +125,7 @@ XferSend::XferSend(C_MessageQueueList *mql,T_GUID *guid, C_FileSendRequest *req,
 				#endif
 
 				if (g_config->ReadInt(CONFIG_shafiles,CONFIG_shafiles_DEFAULT) &&
-					(!m_filelen_bytes_h && m_filelen_bytes_l < (unsigned int)g_config->ReadInt(CONFIG_maxsizesha,CONFIG_maxsizesha_DEFAULT)*1024*1024) &&
+					(!m_filelen_bytes_h && m_filelen_bytes_l < (uint32_t)g_config->ReadInt(CONFIG_maxsizesha,CONFIG_maxsizesha_DEFAULT)*1024*1024) &&
 					req->get_bIsInitialRequest())
 				{
 					context.reset();
@@ -158,8 +158,8 @@ XferSend::XferSend(C_MessageQueueList *mql,T_GUID *guid, C_FileSendRequest *req,
 				};
 
 				if (g_config->ReadInt(CONFIG_directxfers,CONFIG_directxfers_DEFAULT)) {
-					unsigned long ip;
-					unsigned short prt=0;
+					uint32_t ip;
+					uint16_t prt=0;
 					req->get_dc_ipport(&ip,&prt);
 					if (ip && prt) {
 						NetKern_ConnectToHostIfOK(ip,prt);
@@ -203,7 +203,7 @@ XferSend::XferSend(C_MessageQueueList *mql,T_GUID *guid, C_FileSendRequest *req,
 	};
 
 	if (m_err) { //send reply
-		T_Message msg={0,};
+		T_Message msg={{0},};
 		m_reply.set_error(1);
 		msg.data=m_reply.Make();
 		if (msg.data) {
@@ -227,7 +227,7 @@ XferSend::~XferSend()
 
 void XferSend::Abort(C_MessageQueueList *mql)
 {
-	T_Message msg={0,};
+	T_Message msg={{0},};
 	m_err="Aborted";
 	m_reply.set_error(2);
 	msg.data=m_reply.Make();
@@ -251,7 +251,7 @@ int XferSend::run_hdr(C_MessageQueueList *mql)
 	if (m_need_reply) {
 		dbg_printf(ds_Debug,"xfer_send: sent header");
 		m_need_reply=0;
-		T_Message msg={0,};
+		T_Message msg={{0},};
 		msg.data=m_reply.Make();
 		msg.message_type=MESSAGE_FILE_REQUEST_REPLY;
 		msg.message_length=msg.data->GetLength();
@@ -271,13 +271,13 @@ void XferSend::run(C_MessageQueueList *mql)
 		if (a >= -1 && mql->GetQueue(a)->getlen() < mql->GetQueue(a)->getmaxlen()/4) {
 			m_lastsendtime=GetTickCount();
 
-			unsigned int x=chunks_to_send[chunks_to_send_pos++];
+			uint32_t x=chunks_to_send[chunks_to_send_pos++];
 			if (x >= 0 && x < m_filelen_chunks) {
-				unsigned int newpos_l=x*FILE_CHUNKSIZE;
+				uint32_t newpos_l=x*FILE_CHUNKSIZE;
 				#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-					unsigned int newpos_h=(unsigned int) (((__int64)x*(__int64)FILE_CHUNKSIZE)>>32);
+					uint32_t newpos_h=(uint32_t) (((__int64)x*(__int64)FILE_CHUNKSIZE)>>32);
 				#else
-					unsigned int newpos_h=0;
+					uint32_t newpos_h=0;
 				#endif
 				if (newpos_l != m_lastpos_l || newpos_h != m_lastpos_h) {
 					#ifdef XFER_WIN32_FILEIO
@@ -297,14 +297,14 @@ void XferSend::run(C_MessageQueueList *mql)
 				#else
 					int l=fread(buf,1,FILE_CHUNKSIZE,m_file);
 				#endif
-				unsigned int o = m_lastpos_l;
+				uint32_t o = m_lastpos_l;
 				m_lastpos_l+=l;
 				if (m_lastpos_l < o) m_lastpos_h++;
 				C_FileSendReply datareply;
 
 				datareply.set_data(buf,l);
 				datareply.set_index(x);
-				T_Message msg={0,};
+				T_Message msg={{0},};
 				msg.data=datareply.Make();
 				msg.message_type=MESSAGE_FILE_REQUEST_REPLY;
 				msg.message_length=msg.data->GetLength();
@@ -335,7 +335,7 @@ void XferSend::run(C_MessageQueueList *mql)
 
 		if (g_extrainf) sprintf(s+strlen(s)," %d/%d/%d (%d)",m_max_chunksent+1,m_chunks_sent_total,m_filelen_chunks,chunks_to_send_len);
 
-		int idx=g_lvsend.FindItemByParam((int)this);
+		int idx=g_lvsend.FindItemByParam((long)this);
 		if (idx!=-1) g_lvsend.SetItemText(idx,3,s);
 	}
 #endif
@@ -366,14 +366,14 @@ void XferSend::onGotMsg(C_FileSendRequest *req)
 	m_reply.set_file_len(m_filelen_bytes_l,m_filelen_bytes_h);
 	m_reply.set_file_dates(m_create_date,m_mod_date);
 	m_reply.set_index((unsigned)-1);
-	unsigned int x;
+	uint32_t x;
 
 	chunks_to_send_pos=0;
 	chunks_to_send_len=req->get_chunks_needed();
 	if (chunks_to_send_len) {
 		if (chunks_to_send_len > FILE_MAX_CHUNKS_PER_REQ) chunks_to_send_len=FILE_MAX_CHUNKS_PER_REQ;
 		for (x = 0; x < chunks_to_send_len; x ++) {
-			unsigned int nc=req->get_need_chunk(x);
+			uint32_t nc=req->get_need_chunk(x);
 			if (nc < m_filelen_chunks) chunks_to_send[x]=nc;
 			else {
 				chunks_to_send_len--; //sending less chunks
@@ -387,7 +387,7 @@ void XferSend::onGotMsg(C_FileSendRequest *req)
 		chunks_to_send_len=1;
 	};
 	m_reply.set_chunkcount(chunks_to_send_len);
-	unsigned int tm=GetTickCount()-m_starttime;
+	uint32_t tm=GetTickCount()-m_starttime;
 
 	#ifdef _WIN32
 		if (tm) m_last_cps=MulDiv(m_chunks_sent_total-m_lastchunkcnt,1000*FILE_CHUNKSIZE,tm);
@@ -458,7 +458,7 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 	#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 		/* this section updates the 'Downloads' tab when the transfers start
 		*/
-		g_lvrecv.InsertItem(0,filename,(int)this);
+		g_lvrecv.InsertItem(0,filename,(long)this);
 		g_lvrecv.SetItemText(0,2,"Connecting");
 		g_lvrecv.SetItemText(0,1,sizestr);
 		g_lvrecv.SetItemText(0,3,guididx);
@@ -516,8 +516,8 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 		g_config->ReadInt(CONFIG_directxfers,CONFIG_directxfers_DEFAULT)
 		)
 	{
-		unsigned long ip=INADDR_NONE;
-		unsigned short prt=0;
+		uint32_t ip=INADDR_NONE;
+		uint16_t prt=0;
 		if (g_forceip_dynip_mode==0) {
 			ip=g_mql->GetQueue(0)->get_con()->get_interface();
 		}
@@ -655,7 +655,7 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 		m_err="File already exists";
 
 		#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-			int idx=g_lvrecv.FindItemByParam((int)this);
+			int idx=g_lvrecv.FindItemByParam((long)this);
 			if (idx!=-1) {
 				g_lvrecv.SetItemText(idx,3,"");
 				// Holy god damned shit! Do we really refer runtime data in Listviews? omg!!!
@@ -664,7 +664,7 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 
 		//let's tell we're done
 		request.set_abort(3);
-		T_Message m={0,};
+		T_Message m={{0},};
 		m.data=request.Make();
 		m.message_type=MESSAGE_FILE_REQUEST;
 		m.message_length=m.data->GetLength();
@@ -693,7 +693,7 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 			return;
 		};
 
-	unsigned int x;
+	uint32_t x;
 
 	m_create_date=m_mod_date=0;
 	m_bytes_total_l=0xFFFFFFFF;
@@ -737,9 +737,9 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 						m_validbf=(unsigned char *)malloc_memset((m_chunk_total+7)/8,0);
 						#ifdef XFER_WIN32_FILEIO
 							if (m_validbf &&
-								ReadFile(m_hstatfile,m_validbf,(m_chunk_total+7)/8,&d,NULL) && d==(unsigned int)((m_chunk_total+7)/8))
+								ReadFile(m_hstatfile,m_validbf,(m_chunk_total+7)/8,&d,NULL) && d==(uint32_t)((m_chunk_total+7)/8))
 						#else
-							if (m_validbf && fread(m_validbf,1,(m_chunk_total+7)/8,m_statfile)==(unsigned int)((m_chunk_total+7)/8))
+							if (m_validbf && fread(m_validbf,1,(m_chunk_total+7)/8,m_statfile)==(uint32_t)((m_chunk_total+7)/8))
 						#endif
 							{
 								for (x = 0; x < m_chunk_total; x ++) {
@@ -761,7 +761,7 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 						{
 							safe_strncpy(m_nick,nick,sizeof(m_nick));
 							#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-								int idx=g_lvrecv.FindItemByParam((int)this);
+								int idx=g_lvrecv.FindItemByParam((long)this);
 								if (idx!=-1) {
 									g_lvrecv.SetItemText(idx,4,nick);
 								};
@@ -772,7 +772,7 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 		if (m_chunk_total<1) {
 			m_chunk_total=FILE_MAX_CHUNKS_PER_REQ; //default request as much as we can
 		};
-		T_Message m={0,};
+		T_Message m={{0},};
 		request.clear_need_chunks();
 		int setfirst=0;
 		for (x = m_first_chunkilack; x < m_chunk_total && request.get_chunks_needed() < m_adaptive_chunksize; x ++) {
@@ -802,7 +802,7 @@ XferRecv::XferRecv(C_MessageQueueList *mql, const char *guididx, const char *siz
 
 XferRecv::~XferRecv()
 {
-	unsigned int filesize_l=1,filesize_h=0; //assume good file, don't delete if unknown!
+	uint32_t filesize_l=1,filesize_h=0; //assume good file, don't delete if unknown!
 	#ifdef XFER_WIN32_FILEIO
 		if (m_houtfile!=INVALID_HANDLE_VALUE) {
 			if (m_done) {
@@ -844,7 +844,7 @@ XferRecv::~XferRecv()
 	#else
 		if (m_outfile) {
 			fseek(m_outfile,0,SEEK_END);
-			filesize_l=(unsigned int)ftell(m_outfile);
+			filesize_l=(uint32_t)ftell(m_outfile);
 			filesize_h=0;
 			//fucko for bsd, write date(s)
 			fclose(m_outfile);
@@ -942,7 +942,7 @@ char *XferRecv::getOutputFileCopy()
 			FILE_ATTRIBUTE_NORMAL, NULL);
 		if (h == INVALID_HANDLE_VALUE) return NULL;
 		int x=0;
-		unsigned int old_l, old_h=0;
+		uint32_t old_l, old_h=0;
 		old_l=SetFilePointer(m_houtfile,0,(LONG *)&old_h,FILE_CURRENT);
 		SetFilePointer(m_houtfile,0,NULL,FILE_BEGIN);
 		for (;;) {
@@ -967,7 +967,7 @@ void XferRecv::Abort(C_MessageQueueList *mql)
 	//send abort message
 	request.set_prev_guid(&m_guid);
 	request.set_abort(1);
-	T_Message m={0,};
+	T_Message m={{0},};
 	m.data=request.Make();
 	m.message_type=MESSAGE_FILE_REQUEST;
 	m.message_length=m.data->GetLength();
@@ -1018,7 +1018,7 @@ int XferRecv::run(C_MessageQueueList *mql)
 	#endif
 
 	if (chunks_coming<=0 || time(NULL)-last_msg_time > RECEIVE_TIMEOUT_DELAY) {
-		unsigned int x;
+		uint32_t x;
 		//send a new request
 		if (chunks_coming <= 0) {
 			m_adaptive_chunksize += m_adaptive_chunksize/4;
@@ -1044,13 +1044,13 @@ int XferRecv::run(C_MessageQueueList *mql)
 			return 1; //timeout
 		};
 
-		T_Message m={0,};
+		T_Message m={{0},};
 		request.clear_need_chunks();
 		int setfirst=0;
 		for (x = m_first_chunkilack; x < m_chunk_total && request.get_chunks_needed() < m_adaptive_chunksize; x ++) {
 			if (!IS_VALID(x)) {
 				#if 0
-					#ifndef _DEBUG
+					#ifndef _WASTEDEBUG
 						#error todo
 					#endif
 					dbg_printf(ds_Debug,"XXX: asking for chunk 0x%04x",x);
@@ -1086,23 +1086,23 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 		delete reply;
 		return;
 	};
-	unsigned int idx=reply->get_index();
+	uint32_t idx=reply->get_index();
 	last_msg_time=time(NULL);
 	m_hasgotchunks=1;
-	if (idx==(unsigned int)~0) { //woohoo header
+	if (idx==(uint32_t)~0) { //woohoo header
 		delete lasthdr;
 		lasthdr=reply;
 
 		if (g_config->ReadInt(CONFIG_directxfers,CONFIG_directxfers_DEFAULT)) {
-			unsigned long ip=0;
-			unsigned short prt=0;
+			uint32_t ip=0;
+			uint16_t prt=0;
 			lasthdr->get_dc_ipport(&ip,&prt);
 			if (ip && prt) {
 				NetKern_ConnectToHostIfOK(ip,prt);
 			};
 		};
 		chunks_coming=lasthdr->get_chunkcount();
-		unsigned int fs_h,fs_l;
+		uint32_t fs_h,fs_l;
 		lasthdr->get_file_len(&fs_l,&fs_h);
 		lasthdr->get_file_dates(&m_create_date,&m_mod_date);
 		m_chunk_total=(fs_l+FILE_CHUNKSIZE-1)/FILE_CHUNKSIZE + (fs_h * ((1<<30)/FILE_CHUNKSIZE) * 4);
@@ -1116,7 +1116,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 		if (bNewUsername) {
 			safe_strncpy(m_nick,lasthdr->get_nick(),sizeof(m_nick));
 			#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-				int idx=g_lvrecv.FindItemByParam((int)this);
+				int idx=g_lvrecv.FindItemByParam((long)this);
 				if (idx!=-1) {
 					char s[32];
 					FormatSizeStr64(s,fs_l,fs_h);
@@ -1162,11 +1162,11 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 			return;
 		};
 
-		unsigned int newpos_l=FILE_CHUNKSIZE*idx;
+		uint32_t newpos_l=FILE_CHUNKSIZE*idx;
 		#ifdef _WIN32
-			unsigned int newpos_h=(unsigned int) (((__int64)FILE_CHUNKSIZE*(__int64)idx)>>32);
+			uint32_t newpos_h=(uint32_t) (((__int64)FILE_CHUNKSIZE*(__int64)idx)>>32);
 		#else
-			unsigned int newpos_h=0;//fucko bsd 64 bit fn
+			uint32_t newpos_h=0;//fucko bsd 64 bit fn
 		#endif
 
 		if (m_outfile_lastpos_l != newpos_l || m_outfile_lastpos_h != newpos_h) {
@@ -1192,7 +1192,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 		};
 
 		#if 0
-			#ifndef _DEBUG
+			#ifndef _WASTEDEBUG
 				#error todo
 			#endif
 			dbg_printf(ds_Debug,"XXX: idx=%05i Pos=0x%08x total=0x%04x cnt=0x%04x",idx,newpos_l,m_chunk_total,m_chunk_cnt);
@@ -1218,7 +1218,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 			#ifndef XFER_WIN32_FILEIO
 				fflush(m_outfile);
 			#endif
-			unsigned int o=m_outfile_lastpos_l;
+			uint32_t o=m_outfile_lastpos_l;
 			m_outfile_lastpos_l+=n;
 			if (m_outfile_lastpos_l < o) m_outfile_lastpos_h++;
 
@@ -1239,7 +1239,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 				m_cps_blks[m_cps_blks_pos]=(m_chunk_cnt-m_chunk_startcnt);
 				m_cps_blks_pos++;
 				m_cps_blks_pos%=CPS_WINDOWSIZE;
-				unsigned int tm=CPS_WINDOWSIZE*CPS_WINDOWLEN;
+				uint32_t tm=CPS_WINDOWSIZE*CPS_WINDOWLEN;
 				#ifdef _WIN32
 					m_last_cps=MulDiv(m_chunk_cnt-m_chunk_startcnt - m_cps_blks[m_cps_blks_pos],1000*FILE_CHUNKSIZE,tm);
 				#else
@@ -1250,13 +1250,13 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 
 			if (m_chunk_cnt >= m_chunk_total) {
 				m_chunk_cnt=0;
-				unsigned int x;
+				uint32_t x;
 				for (x = 0; x < m_chunk_total; x ++) if (IS_VALID(x)) m_chunk_cnt++;
 				if (m_chunk_cnt >= m_chunk_total) { //done!
 					if (lasthdr) {
 						unsigned char zerohash[SHA_OUTSIZE]={0,};
 						unsigned char hash[SHA_OUTSIZE],hash2[SHA_OUTSIZE];
-						unsigned int l_h,l_l;
+						uint32_t l_h,l_l;
 						lasthdr->get_file_len(&l_l,&l_h);
 						lasthdr->get_hash(hash);
 						if (memcmp(zerohash,hash,SHA_OUTSIZE) && !l_h) {
@@ -1266,11 +1266,11 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 								fseek(m_outfile,0,SEEK_SET);
 							#endif
 							SHAify context;
-							unsigned int l=l_l;
+							uint32_t l=l_l;
 
 							while (l>0) {
 								unsigned char buf[8192];
-								unsigned int a=sizeof(buf);
+								uint32_t a=sizeof(buf);
 								if (a > l) a=l;
 								#ifdef XFER_WIN32_FILEIO
 									DWORD d;
@@ -1289,7 +1289,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 								m_done=1;
 								request.set_prev_guid(&m_guid);
 								request.set_abort(2);
-								T_Message m={0,};
+								T_Message m={{0},};
 								m.data=request.Make();
 								m.message_type=MESSAGE_FILE_REQUEST;
 								m.message_length=m.data->GetLength();
@@ -1318,7 +1318,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 						};
 						/* this section updates the 'Downloads' tab  after the download
 						has completed.. prints filename, status, and location. */
-						int idx=g_lvrecv.FindItemByParam((int)this);
+						int idx=g_lvrecv.FindItemByParam((long)this);
 						if (idx!=-1) {
 							g_lvrecv.SetItemText(idx,2,s);
 							g_lvrecv.SetItemText(idx,3,"");
@@ -1329,7 +1329,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 					m_done=1;
 					request.set_prev_guid(&m_guid);
 					request.set_abort(2);
-					T_Message m={0,};
+					T_Message m={{0},};
 					m.data=request.Make();
 					m.message_type=MESSAGE_FILE_REQUEST;
 					m.message_length=m.data->GetLength();
@@ -1358,7 +1358,7 @@ void XferRecv::onGotMsg(C_FileSendReply *reply)
 						m_chunk_cnt,m_total_chunks_recvd,m_chunk_total,m_adaptive_chunksize);
 					}
 
-					int idx=g_lvrecv.FindItemByParam((int)this);
+					int idx=g_lvrecv.FindItemByParam((long)this);
 					if (idx!=-1) g_lvrecv.SetItemText(idx,2,s);
 				#endif
 			};

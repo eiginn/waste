@@ -409,8 +409,8 @@ static BOOL CALLBACK Pref_ProfilesProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LP
 		case IDC_BUTTON_START_PROFILE_MANAGER:
 			{
 				g_config->Flush();
-				PROCESS_INFORMATION ProcInfo={0,};
-				STARTUPINFO StartUp={0,};
+				PROCESS_INFORMATION ProcInfo={{0},};
+				STARTUPINFO StartUp={{0},};
 				StartUp.cb=sizeof(StartUp);
 				char tmp[1024];
 				tmp[0]='\"';
@@ -692,8 +692,8 @@ static BOOL CALLBACK ACeditProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM /*
 				char *p=strstr(tmp,"/");
 				*p++=0;
 				if (*p <= '9' && *p >= '0') {
-					unsigned int ip=inet_addr(tmp);
-					unsigned int mask=atoi(p);
+					uint32_t ip=inet_addr(tmp);
+					uint32_t mask=atoi(p);
 					if (mask!=0x20) mask&=0x1f; // need /32 too
 					if (inet_addr(tmp) != INADDR_NONE) {
 						ip=ip&IPv4NetMask(mask);
@@ -1915,7 +1915,7 @@ static BOOL CALLBACK Pref_ChatProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM
 			};
 		case IDC_BUTTON_FONT: //chat font
 			{
-				LOGFONT lf={0,};
+				LOGFONT lf={{0},};
 				CHOOSEFONT cf={sizeof(cf),0,0,0,0,
 					CF_EFFECTS|CF_SCREENFONTS|CF_INITTOLOGFONTSTRUCT,
 					0,};
@@ -2192,7 +2192,7 @@ static BOOL CALLBACK Pref_RecvProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM
 			};
 		case IDC_BROWSESAVE:
 			{
-				BROWSEINFO bi={0,};
+				BROWSEINFO bi={{0},};
 				ITEMIDLIST *idlist;
 				char name[1024];
 				GetDlgItemText(hwndDlg,IDC_EDIT_DL_PATH,name,sizeof(name));
@@ -2387,7 +2387,7 @@ static BOOL CALLBACK Pref_SendProc(HWND hwndDlg, UINT uMsg, WPARAM wParam,LPARAM
 		case IDC_ADDDIR:
 			{
 				char name[MAX_PATH]="";
-				BROWSEINFO bi={0,};
+				BROWSEINFO bi={{0},};
 				ITEMIDLIST *idlist;
 				bi.hwndOwner = hwndDlg;
 				bi.pszDisplayName = name;
@@ -3123,7 +3123,7 @@ static BOOL WINAPI SW_Proc2(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM /*lPa
 	if (uMsg == WM_COMMAND) {
 		if (LOWORD(wParam) == IDC_ADDDIR) {
 			char name[MAX_PATH]="";
-			BROWSEINFO bi={0,};
+			BROWSEINFO bi={{0},};
 			ITEMIDLIST *idlist;
 			bi.hwndOwner = hwndDlg;
 			bi.pszDisplayName = name;
@@ -3152,7 +3152,7 @@ static BOOL WINAPI SW_Proc2(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM /*lPa
 	};
 	if (uMsg == WM_COMMAND && LOWORD(wParam) == IDC_SAVEPATH) {
 		char name[MAX_PATH];
-		BROWSEINFO bi={0,};
+		BROWSEINFO bi={{0},};
 		ITEMIDLIST *idlist;
 		GetDlgItemText(hwndDlg,IDC_SAVEPATH,name,MAX_PATH);
 		bi.hwndOwner = hwndDlg;

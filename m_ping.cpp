@@ -49,7 +49,7 @@ C_MessagePing::C_MessagePing(C_SHBuf *in)
 	l-=4+2;
 	if (l>0) {
 		if (l > (int) sizeof(m_nick)-1) {
-			dbg_printf(ds_Debug,"Ping: got ping with nick > %i", sizeof(m_nick)-1);
+			dbg_printf(ds_Debug,"Ping: got ping with nick > %i", (int)sizeof(m_nick)-1);
 		}
 		else {
 			memcpy(m_nick,data,l);

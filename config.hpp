@@ -27,10 +27,10 @@ public:
 	C_Config(char *ini);
 	~C_Config();
 	void Flush();
-	void  WriteInt(char *name, int value);
-	const char *WriteString(char *name, const char *string);
-	int   ReadInt(char *name, int defvalue);
-	const char *ReadString(char *name, const char *defvalue);
+	void  WriteInt(const char *name, int value);
+	const char *WriteString(const char *name, const char *string);
+	int   ReadInt(const char *name, int defvalue);
+	const char *ReadString(const char *name, const char *defvalue);
 
 private:
 	struct strType

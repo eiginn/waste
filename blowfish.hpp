@@ -25,10 +25,12 @@ Current class and templates written by Md5Chap
 #ifndef _BLOWFISH_H
 #define _BLOWFISH_H
 
+#include "intdefs.hpp"
+
 struct _BLOWFISH_CTX
 {
-	unsigned long P[16+2];
-	unsigned long S[4*256];
+	uint32_t P[16+2];
+	uint32_t S[4*256];
 };
 
 class CBlowfish
@@ -41,24 +43,24 @@ class CBlowfish
 			IV_DEC
 		};
 		CBlowfish();
-		CBlowfish(void* key, unsigned int len);
+		CBlowfish(void* key, uint32_t len);
 		~CBlowfish();
-		void Init(void* key, unsigned int len);
-		void SetIV(_eIV which, unsigned long IV[2]);
-		void SetIV(_eIV which, unsigned long left, unsigned long right);
-		void GetIV(_eIV which, unsigned long IV[2]);
-		void GetIV(_eIV which, unsigned long &left, unsigned long &right);
+		void Init(void* key, uint32_t len);
+		void SetIV(_eIV which, uint32_t IV[2]);
+		void SetIV(_eIV which, uint32_t left, uint32_t right);
+		void GetIV(_eIV which, uint32_t IV[2]);
+		void GetIV(_eIV which, uint32_t &left, uint32_t &right);
 		void Final();
-		void EncryptECB(void *data, unsigned int len);
-		void DecryptECB(void *data, unsigned int len);
-		void EncryptCBC(void *data, unsigned int len);
-		void DecryptCBC(void *data, unsigned int len);
-		void EncryptPCBC(void *data, unsigned int len);
-		void DecryptPCBC(void *data, unsigned int len);
+		void EncryptECB(void *data, uint32_t len);
+		void DecryptECB(void *data, uint32_t len);
+		void EncryptCBC(void *data, uint32_t len);
+		void DecryptCBC(void *data, uint32_t len);
+		void EncryptPCBC(void *data, uint32_t len);
+		void DecryptPCBC(void *data, uint32_t len);
 	private:
 		bool m_bInited;
-		unsigned long m_IV_Enc[2];
-		unsigned long m_IV_Dec[2];
+		uint32_t m_IV_Enc[2];
+		uint32_t m_IV_Dec[2];
 		_BLOWFISH_CTX m_ctx;
 };
 

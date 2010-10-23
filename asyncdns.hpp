@@ -27,7 +27,7 @@ public:
 	C_AsyncDNS(int max_cache_entries=32);
 	~C_AsyncDNS();
 
-	int resolve(char *hostname, unsigned long *addr); //return 0 on success, 1 on wait, -1 on unresolvable
+	int resolve(char *hostname, uint32_t *addr); //return 0 on success, 1 on wait, -1 on unresolvable
 
 protected:
 	struct cache_entry
@@ -35,7 +35,7 @@ protected:
 		int last_used; //timestamp.
 		int resolved;
 		char hostname[256];
-		unsigned long addr;
+		uint32_t addr;
 	};
 
 	cache_entry *m_cache;

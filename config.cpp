@@ -87,27 +87,27 @@ C_Config::C_Config(char *ini)
 	fclose(fp);
 }
 
-void C_Config::WriteInt(char *name, int value)
+void C_Config::WriteInt(const char *name, int value)
 {
 	char buf[32];
 	sprintf(buf,"%d",value);
 	WriteString(name,buf);
 }
 
-int C_Config::ReadInt(char *name, int defvalue)
+int C_Config::ReadInt(const char *name, int defvalue)
 {
 	const char *t=ReadString(name,"");
 	if (*t) return atoi(t);
 	return defvalue;
 }
 
-const char *C_Config::WriteString(char *name, const char *string)
+const char *C_Config::WriteString(const char *name, const char *string)
 {
 	int x;
 	m_dirty=1;
 	for (x = 0; x < m_num_strs; x ++) {
 		if (m_strs[x].value && !strncmp(name,m_strs[x].name,16)) {
-			unsigned int l=(strlen(m_strs[x].value)+16)&~15;
+			uint32_t l=(strlen(m_strs[x].value)+16)&~15;
 			if (strlen(string)<l) {
 				strcpy(m_strs[x].value,string);
 			}
@@ -131,7 +131,7 @@ const char *C_Config::WriteString(char *name, const char *string)
 	return m_strs[m_num_strs++].value;
 }
 
-const char *C_Config::ReadString(char *name, const char *defstr)
+const char *C_Config::ReadString(const char *name, const char *defstr)
 {
 	int x;
 	for (x = 0; x < m_num_strs; x ++) {

@@ -45,7 +45,7 @@ public:
 
 	void clear_items();
 	int would_fit(char *name, char *metadata);
-	void add_item(int id, char *name, char *metadata, int length_bytes_low, int length_bytes_high, int file_time);
+	void add_item(int id, const char *name, const char *metadata, int length_bytes_low, int length_bytes_high, int file_time);
 	int get_item(int index, int *id, char *name, char *metadata, int *length_bytes_low, int *length_bytes_high, int *file_time);
 	void delete_item(int index);
 	int find_item(char *name, char *meta, int maxitems);
@@ -102,11 +102,11 @@ public:
 	char *get_searchstring() { return m_searchstring; }
 	int get_min_conspeed() { return m_min_conspeed; }
 
-	void set_min_conspeed(unsigned int speed) { m_min_conspeed=speed; }
+	void set_min_conspeed(uint32_t speed) { m_min_conspeed=speed; }
 	void set_searchstring(char *str);
 
 protected:
-	unsigned int m_min_conspeed;
+	uint32_t m_min_conspeed;
 	char m_searchstring[256];
 
 };

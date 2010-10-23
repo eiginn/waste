@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define	CONFIG_LOGLEVEL							"loglevel"
 #define	CONFIG_LOGLEVEL_DEFAULT					ds_Critical
 #define	CONFIG_LOGLEVEL_MIN						ds_Console
-#ifdef _DEBUG
+#ifdef _WASTEDEBUG
 	#define	CONFIG_LOGLEVEL_MAX						ds_Debug
 #else
 	#define	CONFIG_LOGLEVEL_MAX						ds_Informational

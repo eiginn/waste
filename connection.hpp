@@ -61,15 +61,15 @@ class _bfInit
 			stage4_complete
 		};
 		_bfInit() {i=0;};
-		bool TestAll1(unsigned int mask);
-		bool TestAll0(unsigned int mask);
+		bool TestAll1(uint32_t mask);
+		bool TestAll0(uint32_t mask);
 		bool Get(_flags f);
 		void Set(_flags f,bool value);
-		unsigned int GetI();
-		void SetI(unsigned int i);
+		uint32_t GetI();
+		void SetI(uint32_t i);
 		_stage GetStage();
 	private:
-		unsigned int i;
+		uint32_t i;
 };
 
 class C_Connection
@@ -83,7 +83,7 @@ public:
 	};
 
 	C_Connection(int s, struct sockaddr_in *loc=NULL);
-	C_Connection(char *hostname, unsigned short port, C_AsyncDNS *dns=NULL);
+	C_Connection(char *hostname, uint16_t port, C_AsyncDNS *dns=NULL);
 	~C_Connection();
 
 	state run(int max_send_bytes, int max_recv_bytes);
@@ -103,9 +103,9 @@ public:
 	int recv_bytes_available();
 	int recv_bytes(void *data, int maxlength); //multiples of 8
 
-	unsigned long get_interface();
-	unsigned long get_remote() { return m_saddr.sin_addr.s_addr; };
-	unsigned short get_remote_port() { return m_remote_port; };
+	uint32_t get_interface();
+	uint32_t get_remote() { return m_saddr.sin_addr.s_addr; };
+	uint16_t get_remote_port() { return m_remote_port; };
 
 	int get_total_bytes_recv() { return m_recv_bytes_total; };
 	int was_ever_connected() { return m_ever_connected; };
@@ -128,7 +128,7 @@ public:
 
 protected:
 	int  m_socket;
-	unsigned short m_remote_port;
+	uint16_t m_remote_port;
 	char m_recv_buffer[MAX_CONNECTION_RECVSIZE];
 	char m_send_buffer[MAX_CONNECTION_SENDSIZE];
 	int  m_recv_pos;
@@ -155,13 +155,13 @@ protected:
 
 	struct
 	{
-		unsigned int time_ms;
-		unsigned int send_bytes;
-		unsigned int recv_bytes;
+		uint32_t time_ms;
+		uint32_t send_bytes;
+		uint32_t recv_bytes;
 	} bps_count[30];
 
 	int bps_count_pos;
-	unsigned int m_start_time;
+	uint32_t m_start_time;
 
 	void encrypt_buffer(void *data, int len);
 	void decrypt_buffer(void *data, int len);

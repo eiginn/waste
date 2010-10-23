@@ -63,7 +63,7 @@ union _Keyinfo //should not interfere with packing
 	struct
 	{
 		unsigned char sKey[CONNECTION_KEYSIZE];
-		unsigned long sIV[2];
+		uint32_t sIV[2];
 		unsigned char sRand[CONNECTION_BFPUBKEY];//This is used as MAC
 	};
 };

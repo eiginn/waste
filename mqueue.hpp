@@ -83,7 +83,7 @@ struct T_Message //the header is now 40 bytes per packet. this is kinda a lot, h
 
 	//crc applied to the following
 	unsigned char message_prio;
-	unsigned int message_type;
+	uint32_t message_type;
 	int message_length; //actually encoded as two bytes
 	unsigned char message_ttl;
 
@@ -112,8 +112,8 @@ public:
 
 	void run(int isrecv, int maxbytesend);
 
-	void add_route(T_GUID *id, unsigned int msgtype);
-	int is_route(T_GUID *id, unsigned int msgtype);
+	void add_route(T_GUID *id, uint32_t msgtype);
+	int is_route(T_GUID *id, uint32_t msgtype);
 
 	int get_stat_recv() { return m_stat_recv; }
 	int get_stat_send() { return m_stat_send; }
@@ -130,7 +130,7 @@ protected:
 	void insert(int pos, T_Message *msg);
 	void removefirst();
 
-	int msg2tab(unsigned int msg);
+	int msg2tab(uint32_t msg);
 
 	int find_route(T_GUID *id, int whichtab); //returns index of where route should go (or is)
 

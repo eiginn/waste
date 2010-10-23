@@ -87,7 +87,7 @@ C_MessageSearchReply::C_MessageSearchReply(C_SHBuf *in)
 	};
 
 	if (l < 16) {
-		log_printf(ds_Warning,"searchreply: invalid message (no guid)!",x);
+		log_printf(ds_Warning,"searchreply: invalid message (no guid - x=%i)!",x);
 		return;
 	};
 	memcpy(&m_guid,data,16); data+=16; l-=16;
@@ -111,7 +111,7 @@ int C_MessageSearchReply::would_fit(char *name, char *metadata)
 	return (m_size + 16+l1+1+l2+1 <= MESSAGE_MAX_PAYLOAD_ROUTE);
 }
 
-void C_MessageSearchReply::add_item(int id, char *name, char *metadata, int length_bytes_low, int length_bytes_high, int file_time)
+void C_MessageSearchReply::add_item(int id, const char *name, const char *metadata, int length_bytes_low, int length_bytes_high, int file_time)
 {
 #if 0
 	if (!would_fit(name,metadata)) {
@@ -240,7 +240,7 @@ C_SHBuf *C_MessageSearchRequest::Make()
 	if (strlen(m_searchstring) < 1) return NULL;
 	C_SHBuf *buf=new C_SHBuf(2+strlen(m_searchstring)+1);
 	unsigned char *data=(unsigned char *)buf->Get();
-	UIntData2(data,(unsigned short)waste_min(m_min_conspeed,0xffff));data+=2;
+	UIntData2(data,(uint16_t)waste_min(m_min_conspeed,0xffff));data+=2;
 	memcpy((char*)data,m_searchstring,strlen(m_searchstring)+1);
 	return buf;
 }

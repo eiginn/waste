@@ -85,9 +85,9 @@ C_FileSendRequest::C_FileSendRequest(C_SHBuf *in)
 	m_port=DataUInt2(data);data+=2;datalen-=2;
 
 	while (datalen>4 && m_need_chunks_used < FILE_MAX_CHUNKS_PER_REQ) {
-		unsigned int offs=DataUInt4(data);  data+=4;datalen-=4;
-		unsigned int len= DataUInt1(data)+1;data+=1;datalen-=1;
-		unsigned int x;
+		uint32_t offs=DataUInt4(data);  data+=4;datalen-=4;
+		uint32_t len= DataUInt1(data)+1;data+=1;datalen-=1;
+		uint32_t x;
 
 		for (x = 0; (x < len) && (m_need_chunks_used < FILE_MAX_CHUNKS_PER_REQ); x++) {
 			if (offs==0) bIsInitialRequest=true;
@@ -145,7 +145,7 @@ C_SHBuf *C_FileSendRequest::Make()
 	return p;
 }
 
-void C_FileSendRequest::add_need_chunk(unsigned int idx)
+void C_FileSendRequest::add_need_chunk(uint32_t idx)
 {
 	if (m_need_chunks_used >= FILE_MAX_CHUNKS_PER_REQ) return;
 
@@ -216,13 +216,13 @@ C_FileSendReply::C_FileSendReply(C_SHBuf *in)
 	memset(m_nick,0,sizeof(m_nick));
 
 	unsigned char *data=(unsigned char *)in->Get();
-	unsigned int datalen=in->GetLength();
+	uint32_t datalen=in->GetLength();
 
 	if (datalen < 4) { m_error=datalen; return; }
 
 	m_index=DataUInt4(data);data+=4;datalen-=4;
 
-	if (m_index != (unsigned int)~0) { //woohoo we get data now
+	if (m_index != (uint32_t)~0) { //woohoo we get data now
 		m_data_len=datalen;
 		if (m_data_len < 0 || m_data_len > FILE_CHUNKSIZE) {
 			log_printf(ds_Warning,"filesendreply: data length out of range, %d",m_data_len);
@@ -272,7 +272,7 @@ C_SHBuf *C_FileSendReply::Make()
 
 	if (m_error) return new C_SHBuf(m_error>3?3:m_error);
 
-	if (m_index!=(unsigned int)~0) {
+	if (m_index!=(uint32_t)~0) {
 		if (m_data_len > FILE_CHUNKSIZE) {
 			log_printf(ds_Warning,"filesendreply::make() data length = %d",m_data_len);
 			return new C_SHBuf(0);
@@ -300,7 +300,7 @@ C_SHBuf *C_FileSendReply::Make()
 	return p;
 }
 
-void C_FileSendReply::set_file_len(unsigned int file_len_low, unsigned int file_len_high)
+void C_FileSendReply::set_file_len(uint32_t file_len_low, uint32_t file_len_high)
 {
 	m_file_len_low=file_len_low;
 	m_file_len_high=file_len_high;

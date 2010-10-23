@@ -52,7 +52,7 @@ C_KeydistRequest::C_KeydistRequest(C_SHBuf *in)
 	m_flags=0;
 
 	unsigned char *data=(unsigned char *)in->Get();
-	unsigned int datalen=in->GetLength();
+	uint32_t datalen=in->GetLength();
 
 	if (datalen < (sizeof(m_nick)-1)+1+2+2+2 ||
 		datalen > (sizeof(m_nick)-1)+1+2+2+2 + MAX_RSA_MODULUS_LEN*2) {
@@ -67,8 +67,8 @@ C_KeydistRequest::C_KeydistRequest(C_SHBuf *in)
 	datalen--;
 
 	m_key.bits=DataUInt2(data);data+=2;datalen-=2;
-	unsigned int modlen=DataUInt2(data);data+=2;datalen-=2;
-	unsigned int explen=DataUInt2(data);data+=2;datalen-=2;
+	uint32_t modlen=DataUInt2(data);data+=2;datalen-=2;
+	uint32_t explen=DataUInt2(data);data+=2;datalen-=2;
 	if (m_key.bits < MIN_RSA_MODULUS_BITS || m_key.bits > MAX_RSA_MODULUS_BITS ||
 		modlen > MAX_RSA_MODULUS_LEN || explen > MAX_RSA_MODULUS_LEN || datalen < explen+modlen)
 	{
@@ -106,9 +106,9 @@ C_SHBuf *C_KeydistRequest::Make()
 
 	memcpy   (data,m_nick,sizeof(m_nick)-1);data+=sizeof(m_nick)-1; //31 no NULL
 	UIntData1(data,m_flags);data+=1;
-	UIntData2(data,(unsigned short)(m_key.bits&0xffff));data+=2;
-	UIntData2(data,(unsigned short)(modlen&0xffff));data+=2;
-	UIntData2(data,(unsigned short)(explen&0xffff));data+=2;
+	UIntData2(data,(uint16_t)(m_key.bits&0xffff));data+=2;
+	UIntData2(data,(uint16_t)(modlen&0xffff));data+=2;
+	UIntData2(data,(uint16_t)(explen&0xffff));data+=2;
 	memcpy   (data,modptr,modlen);data+=modlen;
 	memcpy   (data,expptr,explen);data+=explen;
 	return p;
