@@ -385,7 +385,7 @@ static void Blowfish_Init(_BLOWFISH_CTX *ctx, const unsigned char *key, unsigned
 		p=ctx->P;
 		const unsigned long *p0=ORIG_P;
 		unsigned int j=0;
-		if (ISLONGALIGN(key)&&ISLONGALIGN(keyLen)) {
+		if (ISLONGALIGN((size_t)key)&&ISLONGALIGN(keyLen)) {
 			unsigned long *pulkey=(unsigned long*)key;
 			unsigned long *pulmaxkey=(unsigned long*)(key+keyLen);
 			for (i=0;i<(16+2);i++) {

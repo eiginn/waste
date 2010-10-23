@@ -525,7 +525,7 @@ static void RunSends()
 		int s=xs->run_hdr(g_mql);
 		if (s) {
 			#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-				int idx=g_lvsend.FindItemByParam((int)xs);
+				int idx=g_lvsend.FindItemByParam((size_t)xs);
 				if (idx!=-1) {
 					if (!g_config->ReadInt(CONFIG_send_autoclear,CONFIG_send_autoclear_DEFAULT)) {
 						char *a=xs->GetError();
@@ -636,7 +636,7 @@ static void RunRecvs()
 		int s=xr->run(g_mql);
 		if (s) {
 			#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-				int idx=g_lvrecv.FindItemByParam((int)xr);
+				int idx=g_lvrecv.FindItemByParam((size_t)xr);
 				if (idx!=-1) {
 					char text[128];
 					char *a=xr->GetError();
@@ -790,7 +790,7 @@ int Xfer_WillQ(char *file, char *guidstr)
 		};
 		p++;
 
-		g_lvsend.InsertItem(0,p,(int)fnptr);
+		g_lvsend.InsertItem(0,p,(size_t)fnptr);
 		g_lvsend.SetItemText(0,1,user);
 		g_lvsend.SetItemText(0,2,"");
 		g_lvsend.SetItemText(0,3,PENDING_UPLOAD_STRING);

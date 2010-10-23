@@ -146,7 +146,7 @@ static void ListenToSocket()
 					char *a=inet_ntoa(in);
 					char str2[512];
 					sprintf(str2,"%s (incoming)",a?a:"?");
-					g_lvnetcons.InsertItem(0,"Authenticating",(int)c);
+					g_lvnetcons.InsertItem(0,"Authenticating",(size_t)c);
 					g_lvnetcons.SetItemText(0,1,str2);
 					g_lvnetcons.SetItemText(0,2,"100");
 				#endif
@@ -212,12 +212,12 @@ void NetKern_ConnectToHostIfOK(unsigned long ip, unsigned short port)
 			if (netqpos<0) {
 				char buf[1024];
 				sprintf(buf,"%s:%d",text,(int)(unsigned short)port);
-				g_lvnetcons.InsertItem(0,"Connecting",(int)newcon);
+				g_lvnetcons.InsertItem(0,"Connecting",(size_t)newcon);
 				g_lvnetcons.SetItemText(0,1,buf);
 				g_lvnetcons.SetItemText(0,2,"90");
 			}
 			else {
-				g_lvnetcons.SetItemParam(netqpos,(int)newcon);
+				g_lvnetcons.SetItemParam(netqpos,(size_t)newcon);
 				g_lvnetcons.SetItemText(netqpos,0,"Connecting");
 			};
 
@@ -355,7 +355,7 @@ static void HandleNewOutCons()
 		int s=cc->run(-1,-1);
 		if (s == C_Connection::STATE_DIENOW) {
 			#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-				int a=g_lvnetcons.FindItemByParam((int)cc);
+				int a=g_lvnetcons.FindItemByParam((size_t)cc);
 				if (a >= 0) {
 					g_lvnetcons.DeleteItem(a);
 				};
@@ -376,7 +376,7 @@ static void HandleNewOutCons()
 			#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 				unsigned short port=cc->get_remote_port();
 				int irat=0;
-				int a=g_lvnetcons.FindItemByParam((int)g_new_net.Get(x));
+				int a=g_lvnetcons.FindItemByParam((size_t)g_new_net.Get(x));
 				if (a >= 0) {
 					char rat[32];
 					g_lvnetcons.GetText(a,2,rat,sizeof(rat));
@@ -428,7 +428,7 @@ static void HandleNewOutCons()
 			cc->recv_bytes(b,SYNC_SIZE);
 			if (!cc->PopRandomCrap()) {
 				#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-					int a=g_lvnetcons.FindItemByParam((int)cc);
+					int a=g_lvnetcons.FindItemByParam((size_t)cc);
 					if (a >= 0) {
 						g_lvnetcons.DeleteItem(a);
 					};
@@ -443,7 +443,7 @@ static void HandleNewOutCons()
 			}
 			else if (memcmp(b,g_con_str,SYNC_SIZE)) {
 				#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-					int a=g_lvnetcons.FindItemByParam((int)cc);
+					int a=g_lvnetcons.FindItemByParam((size_t)cc);
 					if (a >= 0) {
 						g_lvnetcons.DeleteItem(a);
 					};
@@ -501,7 +501,7 @@ static void HandleNewOutCons()
 							log_printf(ds_Warning,"Limiter: Host %s as %s cannot connect, because incoming connection limit is reached!",ad,descstr_l);
 						};
 						#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-							int a=g_lvnetcons.FindItemByParam((int)cc);
+							int a=g_lvnetcons.FindItemByParam((size_t)cc);
 							if (a >= 0) {
 								g_lvnetcons.DeleteItem(a);
 							};
@@ -518,7 +518,7 @@ static void HandleNewOutCons()
 
 				if (allowconnection) {
 					#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
-						int a=g_lvnetcons.FindItemByParam((int)cc);
+						int a=g_lvnetcons.FindItemByParam((size_t)cc);
 						if (a >= 0) {
 							char newconstr[512];
 							struct in_addr in;
@@ -576,7 +576,7 @@ void AddConnection(char *str, unsigned short port, int rating)
 	#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 		char str2[512];
 		sprintf(str2,"%s:%d",str,(int)port);
-		g_lvnetcons.InsertItem(0,"Connecting",(int)newcon);
+		g_lvnetcons.InsertItem(0,"Connecting",(size_t)newcon);
 		g_lvnetcons.SetItemText(0,1,str2);
 		sprintf(str2,"%d",rating);
 		g_lvnetcons.SetItemText(0,2,str2);

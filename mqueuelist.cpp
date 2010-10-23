@@ -209,7 +209,7 @@ void C_MessageQueueList::run(int doRouting)
 
 			#if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 				if (m_lv) {
-					int i=m_lv->FindItemByParam((int)cm->get_con());
+					int i=m_lv->FindItemByParam((size_t)cm->get_con());
 					if (i != -1) {
 						char text[512];
 						m_lv->GetText(i,1,text,sizeof(text));

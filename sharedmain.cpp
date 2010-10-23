@@ -703,7 +703,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 								char *p=g_uploads.Get(a);
 								if (p) {
 									int lvidx;
-									while ((lvidx=g_lvsend.FindItemByParam((int)p)) >= 0) {
+									while ((lvidx=g_lvsend.FindItemByParam((size_t)p)) >= 0) {
 										g_lvsend.DeleteItem(lvidx);
 									};
 									free(p);
@@ -723,7 +723,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 					int idx=r->get_idx();
 					if (idx >= UPLOAD_BASE_IDX) {
 						idx-=UPLOAD_BASE_IDX;
-						int lvidx=g_lvsend.FindItemByParam((int)g_uploads.Get(idx));
+						int lvidx=g_lvsend.FindItemByParam((size_t)g_uploads.Get(idx));
 						if (lvidx >= 0) {
 							g_lvsend.SetItemParam(lvidx,0);
 							g_lvsend.SetItemText(lvidx,3,"File already uploaded.");
@@ -762,7 +762,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 #if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 
 									int lvidx;
-									if ((lvidx=g_lvsend.FindItemByParam((int)g_uploads.Get(idx))) >= 0) {
+									if ((lvidx=g_lvsend.FindItemByParam((size_t)g_uploads.Get(idx))) >= 0) {
 										g_lvsend.DeleteItem(lvidx);
 									};
 #endif
@@ -817,7 +817,7 @@ void main_MsgCallback(T_Message *message, C_MessageQueueList *_this, C_Connectio
 								g_sends.Add(a);
 #if defined(_WIN32)&&(!defined(_DEFINE_SRV)) || defined(_DEFINE_WXUI)
 
-								g_lvsend.InsertItem(0,a->GetName(),(int)a);
+								g_lvsend.InsertItem(0,a->GetName(),(size_t)a);
 								char buf[32];
 								int fs_l,fs_h;
 								a->GetSize((unsigned int *)&fs_l,(unsigned int *)&fs_h);
