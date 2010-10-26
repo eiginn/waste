@@ -7,6 +7,8 @@ Inc., created 1991. All rights reserved.
 #ifndef _GLOBAL_H_
 #define _GLOBAL_H_ 1
 
+#include "intdefs.hpp"
+
 /* PROTOTYPES should be set to one if and only if the compiler supports
 function argument prototyping.
 The following makes PROTOTYPES default to 1 if it has not already been
@@ -20,10 +22,10 @@ defined as 0 with C compiler flags.
 typedef unsigned char *POINTER;
 
 /* UINT2 defines a two byte word */
-typedef unsigned short int UINT2;
+typedef uint16_t UINT2;
 
 /* UINT4 defines a four byte word */
-typedef unsigned long int UINT4;
+typedef uint32_t UINT4;
 
 #ifndef NULL_PTR
 #define NULL_PTR ((POINTER)0)
