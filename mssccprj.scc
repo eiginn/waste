@@ -1,0 +1,5 @@
+SCC = This is a Source Code Control file
+
+[PadLockSL.dsp]
+SCC_Aux_Path = "\\Embedded-sw\SourseSafe\"
+SCC_Project_Name = "$/PadLock SL/src/TRUNK", FDBAAAAA

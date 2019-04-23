@@ -1,0 +1,18 @@
+size of the images that user have to take:
+
+button background image size: 50*50
+listview header background image size 100*20
+main pane and dialog background image size: 100*20
+
+todo list:
+===========
+
+A method will be provided that the user can change VIAsecIM user interface using a set of icons ,images and colors.
+
+here is a example configure file given to user how he can do if he want to do
+
+[$skinname$]
+background1=
+background2=
+headerground=
+buttonground=

@@ -1,0 +1,813 @@
+<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
+<class>IDD_XFERS</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>IDD_XFERS</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>503</width>
+            <height>271</height>
+        </rect>
+    </property>
+    <property name="font">
+        <font>
+        </font>
+    </property>
+    <property name="caption">
+        <string>File Transfer</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>11</number>
+        </property>
+        <property name="spacing">
+            <number>6</number>
+        </property>
+        <widget class="QTabWidget" row="0" column="0">
+            <property name="name">
+                <cstring>TabWidget_IDC_TAB</cstring>
+            </property>
+            <property name="focusPolicy">
+                <enum>NoFocus</enum>
+            </property>
+            <property name="tabShape">
+                <enum>Rounded</enum>
+            </property>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>Downloads</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Downloads</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <property name="margin">
+                        <number>11</number>
+                    </property>
+                    <property name="spacing">
+                        <number>6</number>
+                    </property>
+                    <widget class="QLayoutWidget" row="0" column="0">
+                        <property name="name">
+                            <cstring>Layout50</cstring>
+                        </property>
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <property name="margin">
+                                <number>0</number>
+                            </property>
+                            <property name="spacing">
+                                <number>6</number>
+                            </property>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>Layout49</cstring>
+                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <property name="margin">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="spacing">
+                                        <number>6</number>
+                                    </property>
+                                    <widget class="QListView">
+                                        <property name="name">
+                                            <cstring>ListView_IDC_RECVLIST</cstring>
+                                        </property>
+                                        <property name="font">
+                                            <font>
+                                            </font>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLayoutWidget">
+                                        <property name="name">
+                                            <cstring>Layout48</cstring>
+                                        </property>
+                                        <vbox>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <property name="margin">
+                                                <number>0</number>
+                                            </property>
+                                            <property name="spacing">
+                                                <number>6</number>
+                                            </property>
+                                            <widget class="QPushButton">
+                                                <property name="name">
+                                                    <cstring>PushButton_IDC_RESUME</cstring>
+                                                </property>
+                                                <property name="enabled">
+                                                    <bool>false</bool>
+                                                </property>
+                                                <property name="focusPolicy">
+                                                    <enum>NoFocus</enum>
+                                                </property>
+                                                <property name="text">
+                                                    <string>R</string>
+                                                </property>
+                                                <property name="flat">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <property name="toolTip" stdset="0">
+                                                    <string>Resume abort item</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QPushButton">
+                                                <property name="name">
+                                                    <cstring>PushButton_IDC_DndABORTSEL</cstring>
+                                                </property>
+                                                <property name="enabled">
+                                                    <bool>false</bool>
+                                                </property>
+                                                <property name="focusPolicy">
+                                                    <enum>NoFocus</enum>
+                                                </property>
+                                                <property name="text">
+                                                    <string>A</string>
+                                                </property>
+                                                <property name="flat">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <property name="toolTip" stdset="0">
+                                                    <string>Abort item</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QPushButton">
+                                                <property name="name">
+                                                    <cstring>PushButton_IDC_DndCLEARCOMP</cstring>
+                                                </property>
+                                                <property name="enabled">
+                                                    <bool>false</bool>
+                                                </property>
+                                                <property name="focusPolicy">
+                                                    <enum>NoFocus</enum>
+                                                </property>
+                                                <property name="text">
+                                                    <string>CC</string>
+                                                </property>
+                                                <property name="flat">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <property name="toolTip" stdset="0">
+                                                    <string>Clear completed Item</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QPushButton">
+                                                <property name="name">
+                                                    <cstring>PushButton_IDC_DndCLEARCOMP3</cstring>
+                                                </property>
+                                                <property name="enabled">
+                                                    <bool>false</bool>
+                                                </property>
+                                                <property name="focusPolicy">
+                                                    <enum>NoFocus</enum>
+                                                </property>
+                                                <property name="text">
+                                                    <string>CI</string>
+                                                </property>
+                                                <property name="flat">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <property name="toolTip" stdset="0">
+                                                    <string>Clear Inactive Items</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QPushButton">
+                                                <property name="name">
+                                                    <cstring>PushButton_IDC_DndCLEARALL</cstring>
+                                                </property>
+                                                <property name="enabled">
+                                                    <bool>false</bool>
+                                                </property>
+                                                <property name="focusPolicy">
+                                                    <enum>NoFocus</enum>
+                                                </property>
+                                                <property name="text">
+                                                    <string>CA</string>
+                                                </property>
+                                                <property name="flat">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <property name="toolTip" stdset="0">
+                                                    <string>Clear all</string>
+                                                </property>
+                                            </widget>
+                                        </vbox>
+                                    </widget>
+                                </hbox>
+                            </widget>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>Layout46</cstring>
+                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <property name="margin">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="spacing">
+                                        <number>6</number>
+                                    </property>
+                                    <widget class="QCheckBox">
+                                        <property name="name">
+                                            <cstring>CheckBox_IDC_DndAUTOCLEAR</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Remove when complete</string>
+                                        </property>
+                                        <property name="checked">
+                                            <bool>true</bool>
+                                        </property>
+                                    </widget>
+                                    <widget class="QCheckBox">
+                                        <property name="name">
+                                            <cstring>CheckBox_IDC_DndAUTORESUME</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Auto-resume timeouts</string>
+                                        </property>
+                                        <property name="checked">
+                                            <bool>true</bool>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>Label_IDC_MSD</cstring>
+                                        </property>
+                                        <property name="backgroundOrigin">
+                                            <enum>ParentOrigin</enum>
+                                        </property>
+                                        <property name="focusPolicy">
+                                            <enum>NoFocus</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string>Max downloads:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLineEdit">
+                                        <property name="name">
+                                            <cstring>LineEdit_IDC_MAXSIMULDL</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>1</hsizetype>
+                                                <vsizetype>0</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="focusPolicy">
+                                            <enum>ClickFocus</enum>
+                                        </property>
+                                        <property name="frameShape">
+                                            <enum>StyledPanel</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string>4</string>
+                                        </property>
+                                        <property name="edited">
+                                            <bool>true</bool>
+                                        </property>
+                                    </widget>
+                                </hbox>
+                            </widget>
+                        </vbox>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>DownloadQueue</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Download Queue</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <property name="margin">
+                        <number>11</number>
+                    </property>
+                    <property name="spacing">
+                        <number>6</number>
+                    </property>
+                    <widget class="QLabel" row="1" column="0">
+                        <property name="name">
+                            <cstring>Label_IDC_QUEUEITEMS</cstring>
+                        </property>
+                        <property name="font">
+                            <font>
+                            </font>
+                        </property>
+                        <property name="focusPolicy">
+                            <enum>NoFocus</enum>
+                        </property>
+                        <property name="frameShape">
+                            <enum>StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                            <enum>Plain</enum>
+                        </property>
+                        <property name="lineWidth">
+                            <number>0</number>
+                        </property>
+                        <property name="text">
+                            <string></string>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignTop|AlignLeft</set>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget" row="0" column="0">
+                        <property name="name">
+                            <cstring>Layout51</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <property name="margin">
+                                <number>0</number>
+                            </property>
+                            <property name="spacing">
+                                <number>6</number>
+                            </property>
+                            <widget class="QListView">
+                                <property name="name">
+                                    <cstring>ListView_IDC_RECVLISTQ</cstring>
+                                </property>
+                                <property name="font">
+                                    <font>
+                                    </font>
+                                </property>
+                                <property name="showSortIndicator">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>Layout47</cstring>
+                                </property>
+                                <vbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <property name="margin">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="spacing">
+                                        <number>6</number>
+                                    </property>
+                                    <widget class="QPushButton">
+                                        <property name="name">
+                                            <cstring>PushButton_IDC_DLNOW</cstring>
+                                        </property>
+                                        <property name="enabled">
+                                            <bool>false</bool>
+                                        </property>
+                                        <property name="focusPolicy">
+                                            <enum>NoFocus</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string>D</string>
+                                        </property>
+                                        <property name="flat">
+                                            <bool>true</bool>
+                                        </property>
+                                        <property name="toolTip" stdset="0">
+                                            <string>Download the Selected Item Now</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QPushButton">
+                                        <property name="name">
+                                            <cstring>PushButton_IDC_MOVETOTOP</cstring>
+                                        </property>
+                                        <property name="enabled">
+                                            <bool>false</bool>
+                                        </property>
+                                        <property name="focusPolicy">
+                                            <enum>NoFocus</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string>MT</string>
+                                        </property>
+                                        <property name="flat">
+                                            <bool>true</bool>
+                                        </property>
+                                        <property name="toolTip" stdset="0">
+                                            <string>Move to Top</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QPushButton">
+                                        <property name="name">
+                                            <cstring>PushButton_IDC_MOVETOBOTTOM</cstring>
+                                        </property>
+                                        <property name="enabled">
+                                            <bool>false</bool>
+                                        </property>
+                                        <property name="focusPolicy">
+                                            <enum>NoFocus</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string>MB</string>
+                                        </property>
+                                        <property name="flat">
+                                            <bool>true</bool>
+                                        </property>
+                                        <property name="toolTip" stdset="0">
+                                            <string>Move to Bottom</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QPushButton">
+                                        <property name="name">
+                                            <cstring>PushButton_IDC_REMOVEQUEUE</cstring>
+                                        </property>
+                                        <property name="enabled">
+                                            <bool>false</bool>
+                                        </property>
+                                        <property name="focusPolicy">
+                                            <enum>NoFocus</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string>R</string>
+                                        </property>
+                                        <property name="flat">
+                                            <bool>true</bool>
+                                        </property>
+                                        <property name="toolTip" stdset="0">
+                                            <string>Remove Selected Items</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QPushButton">
+                                        <property name="name">
+                                            <cstring>PushButton_IDC_CLEARQUEUE</cstring>
+                                        </property>
+                                        <property name="enabled">
+                                            <bool>false</bool>
+                                        </property>
+                                        <property name="focusPolicy">
+                                            <enum>NoFocus</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string>C</string>
+                                        </property>
+                                        <property name="flat">
+                                            <bool>true</bool>
+                                        </property>
+                                        <property name="toolTip" stdset="0">
+                                            <string>Clear all</string>
+                                        </property>
+                                    </widget>
+                                </vbox>
+                            </widget>
+                        </hbox>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>Uploads</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Uploads</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <property name="margin">
+                        <number>11</number>
+                    </property>
+                    <property name="spacing">
+                        <number>6</number>
+                    </property>
+                    <widget class="QLayoutWidget" row="0" column="0">
+                        <property name="name">
+                            <cstring>Layout57</cstring>
+                        </property>
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <property name="margin">
+                                <number>0</number>
+                            </property>
+                            <property name="spacing">
+                                <number>6</number>
+                            </property>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>Layout56</cstring>
+                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <property name="margin">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="spacing">
+                                        <number>6</number>
+                                    </property>
+                                    <widget class="QListView">
+                                        <property name="name">
+                                            <cstring>ListView_IDC_SENDLIST</cstring>
+                                        </property>
+                                        <property name="font">
+                                            <font>
+                                            </font>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLayoutWidget">
+                                        <property name="name">
+                                            <cstring>Layout55</cstring>
+                                        </property>
+                                        <vbox>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <property name="margin">
+                                                <number>0</number>
+                                            </property>
+                                            <property name="spacing">
+                                                <number>6</number>
+                                            </property>
+                                            <widget class="QPushButton">
+                                                <property name="name">
+                                                    <cstring>PushButton_IDC_SendABORTSEL</cstring>
+                                                </property>
+                                                <property name="enabled">
+                                                    <bool>false</bool>
+                                                </property>
+                                                <property name="focusPolicy">
+                                                    <enum>NoFocus</enum>
+                                                </property>
+                                                <property name="text">
+                                                    <string>A</string>
+                                                </property>
+                                                <property name="flat">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <property name="toolTip" stdset="0">
+                                                    <string>Abort Seleted Items</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QPushButton">
+                                                <property name="name">
+                                                    <cstring>PushButton_IDC_SendCLEARCOMP</cstring>
+                                                </property>
+                                                <property name="enabled">
+                                                    <bool>false</bool>
+                                                </property>
+                                                <property name="focusPolicy">
+                                                    <enum>NoFocus</enum>
+                                                </property>
+                                                <property name="text">
+                                                    <string>CI</string>
+                                                </property>
+                                                <property name="flat">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <property name="toolTip" stdset="0">
+                                                    <string>Clear Inactive Items</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QPushButton">
+                                                <property name="name">
+                                                    <cstring>PushButton_IDC_SendCLEARCOMP2</cstring>
+                                                </property>
+                                                <property name="enabled">
+                                                    <bool>false</bool>
+                                                </property>
+                                                <property name="focusPolicy">
+                                                    <enum>NoFocus</enum>
+                                                </property>
+                                                <property name="text">
+                                                    <string>CA</string>
+                                                </property>
+                                                <property name="flat">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <property name="toolTip" stdset="0">
+                                                    <string>Clear all</string>
+                                                </property>
+                                            </widget>
+                                        </vbox>
+                                    </widget>
+                                </hbox>
+                            </widget>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>CheckBox_IDC_SENDAUTOCLEAR</cstring>
+                                </property>
+                                <property name="font">
+                                    <font>
+                                    </font>
+                                </property>
+                                <property name="text">
+                                    <string>Remove the completed items</string>
+                                </property>
+                                <property name="checked">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                        </vbox>
+                    </widget>
+                </grid>
+            </widget>
+        </widget>
+    </grid>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="6766">789cadd75973dbc81107f0777f0a95fbcd959a254102242a9507dd877551b794ca43f78014a983ba4889542adf3d83e97f8f25dbd2a62abb58aef76710ffe91e0c0efef16de16c7f67e1db1f5f9e263c19f9053fe4c7856fd5f4f676fecf7ffde3df5fbeb6b285f06fd66d2f645ffff6e56b6fb2e01776efc6fd1ab21c408df84f6d1ec36db5bf86bb8d6efcfebdbad96846fb39dc86a7eaacdb2ae3f79760df8e837b1cdfeab639fa4add2e8b566db7a2ce9b52455f98fb9dda2470ee8bb87fd95ca91793637f7e06571d89c73fa88b5cf3780257c83b89eea67e0b75e837ce073dc26db57c57678d56338ee7d57989f1bae6d2471f9b398fe32d99b57eff5cbb9edd2ce6490e7bf8449d35b238bfb4a5b63cba5517983f69c379b71d7d0c975dad87e16a10e74390d7696abdae13ddadb7385f07ea30bef6fb0ab7b51e9ec35d78a82e9aa58e7fa7eea05effa2eef639d64bbdda5933f33a9fe4d52dcc2f57c931df09dc86d9aceb8d6e609fab17d579857ae06ea6e3f3082eb09e74bc32ac575dbf13b5d5eba876abd9ce359f57d565e6e3fa73b1fe56d9aef2b8def9495d607cba53778bc120fa1e66b5c7feb2afe7932fd49ce9fa758ddaed2c2cffb8dedcaaba6876e2f5442bea3243fe198c7c2ae1be5e2f3c5587fcb89faf61d4e71fd5c2fa7dd2fd5c34317e01e718bfa9b6f9a055d8fadd85ad9e0bb8af665233ea6786ad9e11dcd77c3e37e3fade30ebfae6e764cddb514b86fe4fcc387edf8ceba30f173a3f82f105e3d166ed3c2bec7e53a93b4dbddedc18cee1268ceb91efcc581fa44ee76f0746fd74aeb6f9f1a216cc37bf98b1bfaff62dadd7dfc282fae3faccd9eaa1ccacf5b8aebac47cd2ba9a311f2c30ea93963ad57365c6f9409e308e6fc376fe3a6adf421ebeef3bba5f1aea6a80fee2fdbd6875707db95b75b81d45f3215ce0fe76ae4ef3b9a6b6f52547eab03ee2fd801d6cfb77d5367ffe091ea03e6fc6f7afd595f5f30c77e01e2c6a17efff8558fd740417701f66f47367c6f3e506eee3f9b0a40ee74bef1fa7669ccf7d18f32f976abbde85d569fe2bd8fac378a9bf196cfdadc1e88fe3f3a3d3eaf6517fdf8cfad7d4a5dd9f6fd576bdd21e6ce76313663d5f7462d6f545a7b0adcf27b5f5c3bbc95a5fa14efdbcc0d6cf3a8c7e641fb6f548ea3e8e67ed4fca02fd5d27ebf3e41866f4db548bdd9fb55f09d7afe6adc0567f0bc67ae48619d7db66b2d67b06db7a3d575782fbdb016ce717f5583f14afe7f03287f3e39245fbcbe042cd5bead4cf9a19e3bfaa7d07fb6fcc984fb52fed7da1a34ee38f608ce786c9fafdef6a9b3f6ac0361f040fd0ff401dceb75edf701fe6d85f99fa730398f1fe7a09dbf3fb585d617dc92d6ce34f601bbf5487f9d6f959856d3ec6b01d1fd777e92543bf4e6df74ff630d6036d27ebfe757880fe7a6aeb9f67c93ade18b6f57596acfbe3fd9873c1fcbb5798f13e00fb163c31e37e5baa2d5f7660cc8f1faad3fccc9375bf530facff783eb8f21dbc9f6dc2a2ebcd6dc1763d1caa53fe46b2e6338cf9912c59fbbf82311f1ee3a77ae27a941ffdb760c1fbe786bac2f3dae1fb69fd88daf239be3f4aa81fc7cf93b5bf75b5e5d100469edb8671fdbb1d18f3cdd8dfb7fbcf296cfdc7ebd187d71f8c770fdbfbc5068cf975bbc93ade9edaf25d0bb6faf6cd18ef423db0f98ee7dbf76d7c9aaaed783a30ebf1ae0d5bbf3d33ae8f51b21e7f09dbf591abed7c0ac64bf5c4fb7395fa773318fdf3a3ba6fe7f70cc6f1ee00b67a9693b59e398c7a68a81e60bdd2338c7ea948d6faf660dcdf5d7cbe5569bef808c6fcf8ca8cf93b8431be3b4ad6fa9097ea1927ebfe196cf5b5617bff89f5d7d520ff496d79ee3159f30e613bbfd364ed6719b6fbd562b2ee7f806d3ed483949fc3963f49d6f9dc862d7f90acfb8730f239be8f0dd2f8ae84ed791bfb1ba4eff726ffdff6d766387afbf78ec326ceffef19ae0a9fbe1bb8cbb00ddcd08ddc95bb7637eed68d532ad5dffa24e3ceddbb07f7e89ec2e7c14de2360d7a762f6ee6e6ee35a4f6df54b9e896dcb25bf991e156dd9a5b771b6ed36db9ef6edbedb85db7e7f65dcf1d84edd01d85e4c7f0e77138fa24669cba3377ee2ede64345cd365e1e88d98501fdf72ed90506fedf0ffadf0377566ee0ad709095d5792232226b10cf254519f06e1f8ed787c8f2e69f866bb0c592d1ad1155dd30dddd23824dc858c7b7a48198fbd093dd1248cb447531cff4c2f340b9f97a879c89dd36bc858a4255aa6155a0ddb1aadbf3db7a19b118ddc7e4c780e47bfdfb49e0ddaa42dfa4edb21638776698ff67f6450af3eb774801aeaa30ed3368bf5c46ae8888ee9844ee98ccee9821ad47cbfc628a316b5df25e4ef7286545087ba5486e5471c5ebcd8bf5fa75cb931f7438625e43ca8b79093232564f0250f79c45721e19a6ff8f6a78cb01ef98eeff921662001299631e3477ee2094ff9995f78f6ebf5c2f3f07975535e44c612364d99f1320d798557798dd779833779ebf7d76de8e77b583f876f1242869bf0b22b799b7778d74d69cc7bbccfbddf5ffb7c103e877c14beff2e23a4947ccc277c1afe3ce373bee006373fbe7f8439c97eca580a6e713b749973c19d90117e9c7e7c0f8a2b3613f72625d420241cfe2be1874a55ff1891815c7e9c91565b2e433d2bae74fb32e2815cc9b5dcc4ed56c67227f71f67683ff2208f7a5e79499e64225379961799856d2eafb2284bb22ccb1f67a09f153d3f349751f8b9bb2a6b615b970dd9942df95e277c96a1fd849532e145d9961dd9953dd9979e1cc8a11cc9b19cbc4ff8f8beeec6722ac3907126e772210d69865f062d694bfe73c2471952d47714e98494ae94de79f2ec25fc60287e4df8b80e0ef7703af295effb81bff4433ff257fefa77099f3fa3a8f237fed68fe5d0dff97b3dfed784cf32ea7efc837ff44f7ee2a71f277c5e877f0e9f173ff3f3cf12feec79eb5f433d9f1effe71975827e3edbfe92e7fe7ffefee5bf2234ea52</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>PushButton_IDC_RESUME</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnIDCResume()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_DndABORTSEL</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnIDCDndAbortSel()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_DndCLEARCOMP</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnIDCDndClearComp()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_DndCLEARCOMP3</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnIDCDndClearComp3()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_DndCLEARALL</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnIDCDndClearAll()</slot>
+    </connection>
+    <connection>
+        <sender>CheckBox_IDC_DndAUTORESUME</sender>
+        <signal>stateChanged(int)</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>chkBoxIDCDndAutoResume(int)</slot>
+    </connection>
+    <connection>
+        <sender>CheckBox_IDC_DndAUTOCLEAR</sender>
+        <signal>stateChanged(int)</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>chkBoxIDCDndAutoClear(int)</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_DLNOW</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnDlNow()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_MOVETOTOP</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnMoveToTop()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_MOVETOBOTTOM</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnMoveToBottom()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_REMOVEQUEUE</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnRemoveQueue()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_CLEARQUEUE</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnClearQueue()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_SendABORTSEL</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnSendAbortSel()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_SendCLEARCOMP</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnSendClearComp()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_SendCLEARCOMP2</sender>
+        <signal>clicked()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>pushBtnSendClearComp2()</slot>
+    </connection>
+    <connection>
+        <sender>CheckBox_IDC_SENDAUTOCLEAR</sender>
+        <signal>stateChanged(int)</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>chkBoxSendAutoClear(int)</slot>
+    </connection>
+    <connection>
+        <sender>ListView_IDC_RECVLIST</sender>
+        <signal>doubleClicked(QListViewItem*)</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>lstViewRecvDClicked()</slot>
+    </connection>
+    <connection>
+        <sender>ListView_IDC_RECVLIST</sender>
+        <signal>selectionChanged()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>lstViewRecvSelectChanged()</slot>
+    </connection>
+    <connection>
+        <sender>ListView_IDC_RECVLISTQ</sender>
+        <signal>doubleClicked(QListViewItem*)</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>lstViewRecvQDclicked()</slot>
+    </connection>
+    <connection>
+        <sender>ListView_IDC_RECVLISTQ</sender>
+        <signal>selectionChanged()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>lstViewRecvQSelectedChanged()</slot>
+    </connection>
+    <connection>
+        <sender>ListView_IDC_SENDLIST</sender>
+        <signal>doubleClicked(QListViewItem*)</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>lstViewSendDClicked()</slot>
+    </connection>
+    <connection>
+        <sender>ListView_IDC_SENDLIST</sender>
+        <signal>selectionChanged()</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>lstViewSendSelectChanged()</slot>
+    </connection>
+    <connection>
+        <sender>LineEdit_IDC_MAXSIMULDL</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>IDD_XFERS</receiver>
+        <slot>lnEditMaxSimulDLTextChanged(const QString&amp;)</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>pushBtnIDCResume()</slot>
+    <slot>pushBtnIDCDndAbortSel()</slot>
+    <slot>pushBtnIDCDndClearComp()</slot>
+    <slot>pushBtnIDCDndClearComp3()</slot>
+    <slot>pushBtnIDCDndClearAll()</slot>
+    <slot>pushBtnMoveToBottom( )</slot>
+    <slot>chkBoxIDCDndAutoResume(int)</slot>
+    <slot>pushBtnDlNow()</slot>
+    <slot>pushBtnMoveToTop()</slot>
+    <slot>chkBoxIDCDndAutoClear(int)</slot>
+    <slot>pushBtnRemoveQueue()</slot>
+    <slot>pushBtnClearQueue()</slot>
+    <slot>pushBtnSendAbortSel()</slot>
+    <slot>pushBtnSendClearComp()</slot>
+    <slot>pushBtnSendClearComp2()</slot>
+    <slot>chkBoxSendAutoClear(int)</slot>
+    <slot>lstViewRecvDClicked()</slot>
+    <slot>lstViewRecvSelectChanged()</slot>
+    <slot>lstViewRecvQDclicked()</slot>
+    <slot>lstViewRecvQSelectedChanged()</slot>
+    <slot>lstViewSendDClicked()</slot>
+    <slot>lstViewSendSelectChanged()</slot>
+    <slot>lnEditMaxSimulDLTextChanged(const QString &amp;)</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

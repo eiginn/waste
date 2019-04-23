@@ -1,0 +1,135 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>IDD_SEND</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>IDD_SEND</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>370</width>
+            <height>237</height>
+        </rect>
+    </property>
+    <property name="font">
+        <font>
+            <family>MS Sans Serif</family>
+            <pointsize>8</pointsize>
+        </font>
+    </property>
+    <property name="caption">
+        <string>IDD_SEND</string>
+    </property>
+    <widget class="QListView">
+        <property name="name">
+            <cstring>ListView_IDC_SENDLIST</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>1</y>
+                <width>370</width>
+                <height>204</height>
+            </rect>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>PushButton_IDC_ABORTSEL</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>2</x>
+                <y>209</y>
+                <width>28</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="focusPolicy">
+            <enum>NoFocus</enum>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image0</pixmap>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>PushButton_IDC_CLEARCOMP</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>33</x>
+                <y>209</y>
+                <width>28</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="focusPolicy">
+            <enum>NoFocus</enum>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image1</pixmap>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>PushButton_IDC_CLEARCOMP2</cstring>
+        </property>
+        <property name="enabled">
+            <bool>false</bool>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>66</x>
+                <y>209</y>
+                <width>28</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="focusPolicy">
+            <enum>NoFocus</enum>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image1</pixmap>
+        </property>
+    </widget>
+    <widget class="QCheckBox">
+        <property name="name">
+            <cstring>CheckBox_IDC_AUTOCLEAR</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>102</x>
+                <y>214</y>
+                <width>126</width>
+                <height>16</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Clear when complete</string>
+        </property>
+    </widget>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="605">789c5590c14ec4201086ef7d0ad2b935a6ab9b6ea3313e82c6a389f10003054ac144d78331bebb0c30557f1ac2f7314c2887413c3dde8be1d0bd9fe5d9a34027dfc4a03f62fc7c7eb9fbeafaab59b4afbfe8fa51a078784d86d629afe174bccc21f4843713a329888c40a834a324c413a323d486112b4ed7152da1997977a9c8bbba21565484cbc2c5a1a23aaa89706b38575c77d484b122a5fc2c05002440593607a04a8aad4e2a859a8652a639500b5a476341f0ec700da4b620c11497950d31cb3c39f0a93aed486e7175164ce23a92b9ca729da43ab7453afeaf2e9f2d3dfff42bbd48b63aba5fa05e3684acf6fbc972650b92dde8a1c5f8b4bf816949e9f75dc63195d4b7fabeed7e008aa99b34</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="515">789c55cebd0ac23010c0f1bd4f119aad486a954a417c04c55110872477310e55f06310f1ddcd35b99a1e1df2fff55a5257e2b0df8aaa2e1e4ffdbc5861bdbe8b0a5e7dff3e9e369fa26c56829eb968ca59512a61c5ee76453a9fc359ce87a1749cdd92d253764b7e6b63764d4ce08ccb86d2b676615b4aa4748ebf9531092835a773c395c691524b692616c9e6962837a6cc0012fd0d8c8148a38101a36120952c6c850142950c316c057210281a2221d15925c36146fa9b47a6d13c7a9f88ff47e4556e6a427cbf9c54f95d173f73457a55</data>
+    </image>
+</images>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

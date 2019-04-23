@@ -1,0 +1,602 @@
+<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
+<class>QVaste</class>
+<widget class="QMainWindow">
+    <property name="name">
+        <cstring>QVaste</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>243</width>
+            <height>431</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>5</hsizetype>
+            <vsizetype>5</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="baseSize">
+        <size>
+            <width>0</width>
+            <height>0</height>
+        </size>
+    </property>
+    <property name="paletteBackgroundColor">
+        <color>
+            <red>212</red>
+            <green>208</green>
+            <blue>200</blue>
+        </color>
+    </property>
+    <property name="caption">
+        <string>PadLock SL</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>5</number>
+        </property>
+        <property name="spacing">
+            <number>6</number>
+        </property>
+        <widget class="QFrame" row="0" column="0">
+            <property name="name">
+                <cstring>Main_Pane</cstring>
+            </property>
+            <property name="frameShape">
+                <enum>StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Raised</enum>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <property name="margin">
+                    <number>11</number>
+                </property>
+                <property name="spacing">
+                    <number>6</number>
+                </property>
+                <widget class="QLayoutWidget" row="0" column="0">
+                    <property name="name">
+                        <cstring>Layout61</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <property name="margin">
+                            <number>0</number>
+                        </property>
+                        <property name="spacing">
+                            <number>6</number>
+                        </property>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>PushButton_IDC_NETSETTINGS</cstring>
+                            </property>
+                            <property name="focusPolicy">
+                                <enum>NoFocus</enum>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="flat">
+                                <bool>true</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>net status</string>
+                            </property>
+                        </widget>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>PushButton_IDC_SEARCH</cstring>
+                            </property>
+                            <property name="focusPolicy">
+                                <enum>NoFocus</enum>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="flat">
+                                <bool>true</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>browse</string>
+                            </property>
+                        </widget>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>PushButton_IDC_CREATECHATROOM</cstring>
+                            </property>
+                            <property name="paletteForegroundColor">
+                                <color>
+                                    <red>0</red>
+                                    <green>0</green>
+                                    <blue>0</blue>
+                                </color>
+                            </property>
+                            <property name="focusPolicy">
+                                <enum>NoFocus</enum>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="flat">
+                                <bool>true</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>chat</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name" stdset="0">
+                                <cstring>Spacer1</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>PushButton_IDC_PREF</cstring>
+                            </property>
+                            <property name="focusPolicy">
+                                <enum>NoFocus</enum>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="flat">
+                                <bool>true</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>preference</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QListView" row="1" column="0">
+                    <property name="name">
+                        <cstring>ListView_IDC_USERS</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>7</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="backgroundOrigin">
+                        <enum>WidgetOrigin</enum>
+                    </property>
+                    <property name="focusPolicy">
+                        <enum>ClickFocus</enum>
+                    </property>
+                    <property name="frameShape">
+                        <enum>NoFrame</enum>
+                    </property>
+                    <property name="margin">
+                        <number>0</number>
+                    </property>
+                    <property name="selectionMode">
+                        <enum>Extended</enum>
+                    </property>
+                    <property name="itemMargin">
+                        <number>2</number>
+                    </property>
+                </widget>
+                <widget class="QListView" row="2" column="0">
+                    <property name="name">
+                        <cstring>ListView_IDC_CHATROOMS</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>7</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="frameShape">
+                        <enum>NoFrame</enum>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget" row="3" column="0">
+                    <property name="name">
+                        <cstring>Layout23</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <property name="margin">
+                            <number>0</number>
+                        </property>
+                        <property name="spacing">
+                            <number>6</number>
+                        </property>
+                        <spacer>
+                            <property name="name" stdset="0">
+                                <cstring>Spacer8</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>TextLabel2</cstring>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                            <property name="pixmap">
+                                <pixmap>image1</pixmap>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name" stdset="0">
+                                <cstring>Spacer7</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+            </grid>
+        </widget>
+    </grid>
+</widget>
+<menubar>
+    <property name="name">
+        <cstring>MenuBar</cstring>
+    </property>
+    <property name="frameShape">
+        <enum>NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+        <enum>Plain</enum>
+    </property>
+    <item text="&amp;Login" name="fileMenu">
+        <action name="filePreferenceAction"/>
+        <action name="fileQuitAction"/>
+    </item>
+    <item text="&amp;View" name="EditMenu">
+        <action name="netStatusAction"/>
+        <action name="browserAction"/>
+        <action name="transferAction"/>
+        <separator/>
+        <action name="cjChatAction"/>
+    </item>
+    <item text="&amp;Help" name="PopupMenu">
+        <action name="helpVIAsecIM_HelpAction"/>
+        <separator/>
+        <action name="helpAboutAction"/>
+    </item>
+</menubar>
+<toolbars>
+</toolbars>
+<actions>
+    <action>
+        <property name="name">
+            <cstring>filePreferenceAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Settings...</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Settings...</string>
+        </property>
+        <property name="accel">
+            <number>4194387</number>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fileQuitAction</cstring>
+        </property>
+        <property name="text">
+            <string>Exit</string>
+        </property>
+        <property name="menuText">
+            <string>Quit</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fileExitAction</cstring>
+        </property>
+        <property name="text">
+            <string>Exit</string>
+        </property>
+        <property name="menuText">
+            <string>E&amp;xit</string>
+        </property>
+        <property name="accel">
+            <number>0</number>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>netStatusAction</cstring>
+        </property>
+        <property name="text">
+            <string>Connections...</string>
+        </property>
+        <property name="menuText">
+            <string>Connections...</string>
+        </property>
+        <property name="accel">
+            <number>8388686</number>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>browserAction</cstring>
+        </property>
+        <property name="text">
+            <string>Browse Shared Files...</string>
+        </property>
+        <property name="menuText">
+            <string>Browse Shared Files...</string>
+        </property>
+        <property name="accel">
+            <number>8388674</number>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>transferAction</cstring>
+        </property>
+        <property name="text">
+            <string>Transfer Status...</string>
+        </property>
+        <property name="menuText">
+            <string>Transfer Status...</string>
+        </property>
+        <property name="accel">
+            <number>8388692</number>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>cjChatAction</cstring>
+        </property>
+        <property name="text">
+            <string>Create/Join chat...</string>
+        </property>
+        <property name="menuText">
+            <string>Create/Join chat...</string>
+        </property>
+        <property name="accel">
+            <number>8388682</number>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>chatWindowAction</cstring>
+        </property>
+        <property name="text">
+            <string>Chat Windows</string>
+        </property>
+        <property name="menuText">
+            <string>Chat Windows</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>alwaysOnTopAction</cstring>
+        </property>
+        <property name="text">
+            <string>Always on top</string>
+        </property>
+        <property name="menuText">
+            <string>Always on top</string>
+        </property>
+        <property name="accel">
+            <number>4194369</number>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>chatWindownew_itemAction</cstring>
+        </property>
+        <property name="text">
+            <string>new item</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>helpVIAsecIM_HelpAction</cstring>
+        </property>
+        <property name="text">
+            <string>PadLock SL Help</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>helpAboutAction</cstring>
+        </property>
+        <property name="text">
+            <string>About...</string>
+        </property>
+    </action>
+</actions>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="6766">789cadd75973dbc81107f0777f0a95fbcd959a254102242a9507dd877551b794ca43f78014a983ba4889542adf3d83e97f8f25dbd2a62abb58aef76710ffe91e0c0efef16de16c7f67e1db1f5f9e263c19f9053fe4c7856fd5f4f676fecf7ffde3df5fbeb6b285f06fd66d2f645ffff6e56b6fb2e01776efc6fd1ab21c408df84f6d1ec36db5bf86bb8d6efcfebdbad96846fb39dc86a7eaacdb2ae3f79760df8e837b1cdfeab639fa4add2e8b566db7a2ce9b52455f98fb9dda2470ee8bb87fd95ca91793637f7e06571d89c73fa88b5cf3780257c83b89eea67e0b75e837ce073dc26db57c57678d56338ee7d57989f1bae6d2471f9b398fe32d99b57eff5cbb9edd2ce6490e7bf8449d35b238bfb4a5b63cba5517983f69c379b71d7d0c975dad87e16a10e74390d7696abdae13ddadb7385f07ea30bef6fb0ab7b51e9ec35d78a82e9aa58e7fa7eea05effa2eef639d64bbdda5933f33a9fe4d52dcc2f57c931df09dc86d9aceb8d6e609fab17d579857ae06ea6e3f3082eb09e74bc32ac575dbf13b5d5eba876abd9ce359f57d565e6e3fa73b1fe56d9aef2b8def9495d607cba53778bc120fa1e66b5c7feb2afe7932fd49ce9fa758ddaed2c2cffb8dedcaaba6876e2f5442bea3243fe198c7c2ae1be5e2f3c5587fcb89faf61d4e71fd5c2fa7dd2fd5c34317e01e718bfa9b6f9a055d8fadd85ad9e0bb8af665233ea6786ad9e11dcd77c3e37e3fade30ebfae6e764cddb514b86fe4fcc387edf8ceba30f173a3f82f105e3d166ed3c2bec7e53a93b4dbddedc18cee1268ceb91efcc581fa44ee76f0746fd74aeb6f9f1a216cc37bf98b1bfaff62dadd7dfc282fae3faccd9eaa1ccacf5b8aebac47cd2ba9a311f2c30ea93963ad57365c6f9409e308e6fc376fe3a6adf421ebeef3bba5f1aea6a80fee2fdbd6875707db95b75b81d45f3215ce0fe76ae4ef3b9a6b6f52547eab03ee2fd801d6cfb77d5367ffe091ea03e6fc6f7afd595f5f30c77e01e2c6a17efff8558fd740417701f66f47367c6f3e506eee3f9b0a40ee74bef1fa7669ccf7d18f32f976abbde85d569fe2bd8fac378a9bf196cfdadc1e88fe3f3a3d3eaf6517fdf8cfad7d4a5dd9f6fd576bdd21e6ce76313663d5f7462d6f545a7b0adcf27b5f5c3bbc95a5fa14efdbcc0d6cf3a8c7e641fb6f548ea3e8e67ed4fca02fd5d27ebf3e41866f4db548bdd9fb55f09d7afe6adc0567f0bc67ae48619d7db66b2d67b06db7a3d575782fbdb016ce717f5583f14afe7f03287f3e39245fbcbe042cd5bead4cf9a19e3bfaa7d07fb6fcc984fb52fed7da1a34ee38f608ce786c9fafdef6a9b3f6ac0361f040fd0ff401dceb75edf701fe6d85f99fa730398f1fe7a09dbf3fb585d617dc92d6ce34f601bbf5487f9d6f959856d3ec6b01d1fd777e92543bf4e6df74ff630d6036d27ebfe757880fe7a6aeb9f67c93ade18b6f57596acfbe3fd9873c1fcbb5798f13e00fb163c31e37e5baa2d5f7660cc8f1faad3fccc9375bf530facff783eb8f21dbc9f6dc2a2ebcd6dc1763d1caa53fe46b2e6338cf9912c59fbbf82311f1ee3a77ae27a941ffdb760c1fbe786bac2f3dae1fb69fd88daf239be3f4aa81fc7cf93b5bf75b5e5d100469edb8671fdbb1d18f3cdd8dfb7fbcf296cfdc7ebd187d71f8c770fdbfbc5068cf975bbc93ade9edaf25d0bb6faf6cd18ef423db0f98ee7dbf76d7c9aaaed783a30ebf1ae0d5bbf3d33ae8f51b21e7f09dbf591abed7c0ac64bf5c4fb7395fa773318fdf3a3ba6fe7f70cc6f1ee00b67a9693b59e398c7a68a81e60bdd2338c7ea948d6faf660dcdf5d7cbe5569bef808c6fcf8ca8cf93b8431be3b4ad6fa9097ea1927ebfe196cf5b5617bff89f5d7d520ff496d79ee3159f30e613bbfd364ed6719b6fbd562b2ee7f806d3ed483949fc3963f49d6f9dc862d7f90acfb8730f239be8f0dd2f8ae84ed791bfb1ba4eff726ffdff6d766387afbf78ec326ceffef19ae0a9fbe1bb8cbb00ddcd08ddc95bb7637eed68d532ad5dffa24e3ceddbb07f7e89ec2e7c14de2360d7a762f6ee6e6ee35a4f6df54b9e896dcb25bf991e156dd9a5b771b6ed36db9ef6edbedb85db7e7f65dcf1d84edd01d85e4c7f0e77138fa24669cba3377ee2ede64345cd365e1e88d98501fdf72ed90506fedf0ffadf0377566ee0ad709095d5792232226b10cf254519f06e1f8ed787c8f2e69f866bb0c592d1ad1155dd30dddd23824dc858c7b7a48198fbd093dd1248cb447531cff4c2f340b9f97a879c89dd36bc858a4255aa6155a0ddb1aadbf3db7a19b118ddc7e4c780e47bfdfb49e0ddaa42dfa4edb21638776698ff67f6450af3eb774801aeaa30ed3368bf5c46ae8888ee9844ee98ccee9821ad47cbfc628a316b5df25e4ef7286545087ba5486e5471c5ebcd8bf5fa75cb931f7438625e43ca8b79093232564f0250f79c45721e19a6ff8f6a78cb01ef98eeff921662001299631e3477ee2094ff9995f78f6ebf5c2f3f07975535e44c612364d99f1320d798557798dd779833779ebf7d76de8e77b583f876f1242869bf0b22b799b7778d74d69cc7bbccfbddf5ffb7c103e877c14beff2e23a4947ccc277c1afe3ce373bee006373fbe7f8439c97eca580a6e713b749973c19d90117e9c7e7c0f8a2b3613f72625d420241cfe2be1874a55ff1891815c7e9c91565b2e433d2bae74fb32e2815cc9b5dcc4ed56c67227f71f67683ff2208f7a5e79499e64225379961799856d2eafb2284bb22ccb1f67a09f153d3f349751f8b9bb2a6b615b970dd9942df95e277c96a1fd849532e145d9961dd9953dd9979e1cc8a11cc9b19cbc4ff8f8beeec6722ac3907126e772210d69865f062d694bfe73c2471952d47714e98494ae94de79f2ec25fc60287e4df8b80e0ef7703af295effb81bff4433ff257fefa77099f3fa3a8f237fed68fe5d0dff97b3dfed784cf32ea7efc837ff44f7ee2a71f277c5e877f0e9f173ff3f3cf12feec79eb5f433d9f1effe71975827e3edbfe92e7fe7ffefee5bf2234ea52</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="21935">789cdd5cdb721acb927ddf5fe1d8f5b663a20e347443c7c43c08212181ae58d66d621e32fba2bb400209a413f3efb332b31a49963cc73347b67cec8a062dbae9ae5ab572651634fedb5f9f0e77363ffdf5b73f26539a9e659fb253bafdf4577e7775f5f09ffff51f7fffe3cf7a33fa94449fa218db9ffff6c79fbbd34fd9a7add17521c05f03b85ab3ddcc74a7bf5ce04cf16ec0699e28be0a380bfbbb86d366de14ec9616d8f6af045c84fdd305b6fd63c5713be752f1d070ca855d6fd930b50a7bff6ec059a1ef773b86392e52c507152ef5fdee42719210b5f47c23c32dca743fd70d1387e3cf15b7f042aec7f70cb752d6f3fb1bc5ed569b0caf1a4ee38c14af2be6a491b260aa29ce28cdecfa9f151731b5753cdefa5bb46b794db18da74823e3cb5bff4bcc87ed3f348cfdca97bb0c38cbb5bfeec430b572ed1f3704d76b5c96d65f1d5f3d6ae759438fbf0eb8c8ecfd13c531e5a55ecf9d2a4e93d4f87357865b516ae369065cf1bba6384bdadc569c196ee5c61f958629294c6f76fe3ce53c567ca6b8488bccdedf111cd5984c0f1c29aeb7dba61fa7e78b9a4933b5e353c5ada4deb6f3e586db7166e3d7f946e753b2fddb8a734a73ed3fab3ea2a211d50c770d37eb91cea753bd366ad0abcdcf9ee2a815b56dfcda9f460cfd9b9e743c8d0cfcdaf54e0c73ddf44c6dc579a3acdb7cec2b2e332e8def5bc1cd28a9c7d6ff81e2b45590ce0fc78ab91dfaef0bc394e7da5fde525ca44998df99e21227a8ebf11a8f7123aba57a7d527dc5ad38ad9bfe550f719a266cfa63c5cced42c7e39ce0a496d74d5fee4e719472a6fa24d543d24a8a86f1716f98e2d03fdbcf49d9343f50ff48f2ac55983f291fad06a785f68f95ff56b395273adfb4a9386e7164fc6e19a6bac5afd3f9c46c27361facd76f519b9a16affafe7694a7d67fd2f96937a96dfa74ea3fed985bb91d9f18ce5aa55d4fe7a79d644df31f527edaadbc343db3c67b9bd3b8aee3713dc35464a627d5773babf44d478af3346ea83e58e7bb5da4f596f1a5f1db2e534e74fe58e327ada7edd8e627364c71aae3679d8f344af3a6c5dba3e2569194ca37a97fa5edac1dc67764384f6c3cbe1170c58ff291a6d48cf4787763380bc73b3b3f716afee3d60c67647c91c653ca14376cfe349ed38c9a4d8b37e53fcd294ecc3f75fed322cd628b979e616ac5369fd6ff926ae6a7a4f986ea94dbf96843719352bb9e7b30cc5c987faade29c9a8d0f1301b2eb2d4e64fe3855a8c94a27c687fa18ea4b4fea99f50ca8dc8e2c5ce8f680cf1abf14d8478b678b1e3290ff98ad52f88396ad9feaee1acd2abfa0bd7999ada7f26c51102dae657fd9f1bdc4a4d0f9a6fb899970dd38bea9b13a6c4ce9f1aceb2d2fcf28be256c685f13357dce6826d7eed7aeda26de321c3189ff1e5e701a7363eb6f3219d06fd6a3c33e2d9f449aa572ef386f937a97f645119593e278daf2cceeb6df38f22e046c8cf3abf924eec78bf61b86cdb7c38cdbf507316e2f3ce70115bff59fd2e83e01a1a8f6cc753de327f258de78cf324f0bd1c304248f70f2b6c7a62eb3f17cdc8f869051c37edfc9a5f502c15966fe8b8c299e935355c34433c68fc66791127e6c73aff599923a4156b7ce5b51c158a9effc070d96c583ed478c8eb79f01397192e328b77d67c9f378a2cb2f9f1156edafca87ef326c663fd9b2eb0cdcf5d856d7e69bec076fd7e854babd7b617d8ae5fedcfec7c7c58613b9ffb1270519adf6bbd91c77916f8cf2a1cfc44fd3c47c208fd992cb0f577a9c2b1cdbff1971449e0736cb86c58fd445a7fe5adbc11e6b31f30073dec1a2e5012e97e1b5fbb08fe45cd0adbf5280f380ef162e7836105ff557fc56c452dcbe75aef41dd35abcf58f59d6728486c7c9d80abf91854388c7fb6c0161fc7150ed7fb1c70c577b3c2365ffe7e816d3eedfc79359fb41b70357f5adfe445d1248bd72f01e791e61b327d96b89ee5e33dc36566f34b9aaf0b14c4e6dfdc09380df94df555d4d123f3b315c34594db7c68bc16cd82ac7e206fb86cdaf9fd6c818d0f0ab88a07f59722cea961fa9804cc16bfbe66187cd8fe9b808b86cd8fe6cb02ab93c8ea37c36d69baffd87019dbf849fd06e56d6e7e4d76beb4acb52c1fa85e0a2ad8d6439c192ed3902f343e0b2e72527e79c77059e55bd50b7adb08f397045cc523071ce6dbf905367ed4bfca7ac1763ed2faa98cca38533e48e311674f329b1fcdc772f6c2d60b8d05367e9b150ed78b17d8e6eb3ce0ccea611e2eb0f5ffb8c2e1fd8bfde1fd9affca569992e94bf31dd8e290df34ff9654cd07a95e4b2e335b5fd1f502dbf574bee56aa13ffb0b6cfb3f5738f4275a60ebcf45c059a8f75d85c3fab558603b5f5ee170bead05b6fd361ffa4ff0eef4fd9a779e3cfbcce768852fd14efc291ecffcb9bff097fe0adb85bfd636f2637fe36fdff3faefddde9b1f3034f1533073e7effd0c8f777eee1ffca3bff54b688c3d1dbfecbb7ec5afa2f5c0e49a5ff7f4d13cfc1c7e7cdf0ffc0678e983914db0b1858da1a013bf0d159dfa1d3023db2eb62b3c8a9a86d83efbfe4733f153f8d9f31b78fce2f7c1c539da291890e74b7f8066d13546645d68645d031dea730fed97d4d07bf203e739f2c7be0676ead8a26fb6c6e22fc691b96faa176d7d34173f9c9fd82788ae088eb2e15bdff58e363651d7082a4a9dff68367e303f7b70e107e71c22c5f1ebfd2e7bf677ee0a577887776d829b9144d84773f163f9f1e44ac4cbbe3b79cb6bfd9e3bf5757726fee48a054bf80b7abb71e7e2411fcdc58fe6075eb20347ee1a3f150b787de03377e147ee122ab9f00347cfbd38f033fafdf971c855ee1a396aa11fdf7723bf0e6e243f8d4256bff24d37161d2df8e9fdcef185da25459db3815687938c31d6087f4ff0ea1a62ea06233f0cf5f215f891aaf0d48dc1500e558d510b34708c1dd9f791bb71b738e3e4a379792f7e5c86ba66176397d5c301d8196ba5238e7ba58c801337410da8ca7153fc35043ef1eceedc3ddc6ae4eedd0cdbc8176eee13f7e01ef17afad1bcbc173f98ff11f2730925acc27d96b16ed8855e76dd925b023353b4257b04435855c8df58619c88934b731db78cedd1755dd77f712b6e150c21263f9a97f7e2c7f5a09813c4058515055657ee52591882add080bac60ffe96b5c689ae3b849d1bb7e6e76eddf5ddc0cfdc86db04471d77f53ccbfdcbf3c32e735bfede6d6bf5b3a38cecb85de566a8ec0c03432bda849f42f5730b761eb08295d5ecbdf36e88b6fa3bf1031fbe547e3ebb3d07af053ffbeec0ed5a0337bb413f2b126d4ffc88f704fd1c423f2b60e708ea19ba63f073a3fcd43e9a9b77e167cfef38873c3e44f6d9d018eb083faa9bdda7f80a0ef48c1f30740bfddcb8bae807dcd6949f08fc3cba53f924e9a3b979177e52e4a5253847031c65aeee6ea0a69d1063a6a16188b19517fe5c183ffec81de25d2bf09f26f889d1c4a1c7bf4d7ca5c85b0c6e64cb50230e9d8792485b3f6c55db079389b606da03dc8ae41334f0fa05fe5303cb09f859073f671fcdcb3bf2037f96cf0a31c63bf0b38595e7966be9f6d4b6b42d239e961151c859d04c5d7de70eca8176fc4ccf9180a53934987f342fefc8cf15f8b9d3e832fde48191aff91922d73df1d376a9f01318fae2ec93a31a79bc7af8bbf08358327ee6f0e6bba09f2de5267fc18f71b4ac394bd85953579eab33f7b5f6a9b93eb6232869ee1e7df9d1bcbc0f3f413fa80fc991c358fd37f89157443ffbaa1fe1475cb9be50cf00cc4894d55c93c83dfc2efa517ebac8d7e0075e3bd70a2f7f931f34e290d16f90b5c47deae062c5fcc70d28131d514e05f4f33bf133a4d23f829d08ab8c4a3fe6d2f298a3a229d47d86ee814e5c071b6a667073aafeb3aefc486c699c81a5f4493fdf9be3e98cce7f1c3fded185b6cbf07c169eed952bbafe56ada69f198eb1a2da24e1e751d563cc14aaa09caeb15dea994634d676ea3a5091f2b36068e08f29033703b78e55eaa3d43fcacf3fd4913148573faa9ab4efdbe996266853bac3e3bdfe3da3393da0dde3f9961ee9fa55cf72fdfcab44f577880a5a2a9a86c6d753760f0aa225eae0dc135aa62eb61537a7d52abf6b13fd1cbb75f0b30a74088ffaeefad018a41eadfd6305fd7f2a4ebb3f81facac903b818602c1db0d2519e068a07f8ebf1ad19827e4e511fae60cde550f51d819f864613b8f14e19ca5d81b3ca9966b4a16dc57565d525ee53f90fe5e63fd856dc0d2270fc7f1b05f8d9fc310ab2fb55681b2cecd02e9e273a967bdd86f499f6e80bf6cdd056dee21ffa39c08a6119fc6c12831f534d14da964418ce3b8732e7a21d28681ffca0fe411c9982fae63c6e854ea94094c9da35c49577df336a5c6385d6be971ff9d6c44622dfa03cbdfa1cbde2477473004636e970d1e4ef23c486cd7d870eabb34ba373712968e31879bda09a2848f919828f3375b06bd9d0975cd91e80fb3ad8013fc41a5f872e253286c04a2e5a0243a76eee63ac7a5bf20d5a3592e7a308d77fe18914d1daab235f79177a74450d6a624c8f684b140335e832ec4bf4d5eb37f859a796ba4c93da5f738d7d4b98fb0194b4a9e739039b72748a36a5216339cac48c55fbbe67ce58dc66aefba678dc461f2ea8cf05171a5f11f8896855d6a5d04f8afac714b402879e93b07ecc259ff8299fd23e9f50c2f9f3def0195ec17e3ec763c9170bff817e9ef7dbb7b0f7d2cdbfe2e712e387abf215ddf1b5fa48073d5c924f52c0cfa3f6fbec0d7e443f1dbcabcfa3579c5f067e76199e108ebcc12b43dae65b9cfd1e8f13702477217494e919d898e0284773be419be2cc33bc633bf84f84fc7423eb0b7120fdecd03c7a957a7cc7f778d4f1e3f91e589a717006ce56e41830dcc3f30cea5ee113ddd77df21fef94bb136abb1abf60085a99c02d2670db25f4a689e739c675458faa846d8d938b6fc6d78c6ebfe60733f680f33c60b48f7c0fb40486e73cc5b9fac87a4bbcc41d5ea603ec25bf8db86981875d9ceb16ac4df99697b1f79e1f959f89c697f0d37de247b809ce0c17012f5dee22ba525ee14b5e05bac7aba7b8720f8c1dd11a8f780daf4b3b41fcf7e066c5737ec0e29d9de7b597b030d3c788420c2116d631cf0f94283f2dcdb16ff323fe32044b9bfcc067d8b4e1dd5bbc0e3efa18f1940ed1cb4beb190faa6847ae4ea1a71d1acabd1b7cc51bb8de36cf7844877c891859e34dbc32507e427c819f47f8f3c32283ad487e47fc777984da70c25bf6fd857e3befa09365dea6116ff2e957e3eda18f11af293f1a5fb8d632f839e48bd7ecec4e55211dccabd5797030714aa9fed4e3e79a87aedee467a0fbb68543eef38634bcf28051dd417f53c4ccb27813ceba059522b6e056d2fad48082267097d4ddfa3e8e955ae0d6dda20e0a990c7d48959fca9fbbca8fb8f3a9f18315c50af8d9a7c8c774c25b6eec9f7d7f8fa8ea62c4dbf2f84a113b88a25be5a70b1ebbc2160fc2ccbdf667d431dac339dc74aaf9792a2e200e0dfd48fd37a0d16b7e78571c8625b3df699ccd341e665ad5cd701ef1e18e5c17b136c5ab9fd57da5aa41b491455b0afdf471ec0caf2ef17655fbb818fcdce175c9efc68fe8a7037edaae1bf839150589bbc80ac44fdc18a970582954c68da85ae5cf5f678f672347ddc97bb4018dad7eeb189c2987071f482e45c477b4a703f035a1583362f35bfea3fcc828c5bf67aa00aba045514b12b3504a1b0c5fc06996e12c4b88ba2369fc99a536de86ba443f1b981161b6c9678b55d81057bed51a41ea678baf47f7007e0e8d9f1063ab708d3bd753fdbcd0385edf83d32460f7957e16c7d4e10cab88ae155ce1ec5b95908ec062eb4abc03da3786e6580515e067f6cdf89a29ab53f8c51e7fc1b6a7cf53f44c581859cf10ed5020b2d38c17d9147e38418e727cabfcf4c1e035f829553bca107a64fe25fe2cf9ab07fd801fd4406dd483d688c00f6da0f2917b3af75e8c3d822ebac8ec9155182f14b1cf332fd97919ceddd358dc40cf77f9cdeff2a19e06c6aa11c443eb3d32c935b20b90d6b07da9e9444d562fba22d43f1dad4f06aff3fb0bf62f43fcdda055ebd775f11e64aac2ef3987bf7770bd03286a028ddd626bcaba850fb5161276bac83b057257d71dfa2f153f50d423f2c2298ffdc4af3d7dfbee5b1881b8ca589fbb5f57b850befa226230cc1878ec49fe7aab16d65880bad1fb756d5b6c2ba994f7951ff19fa1448bf41d6d89968c1fb8f1802527bf11e13c44d5761ee2772e9500f8968c2535f1bdb8167bf07b04ff596664783e02375344785f6b2a51e5bdbe6f5bd5bf417564989eae34bae1b1a7558e646cac4090f546b81236de46c4f4c0ce89e69704fb06a86cceb0c75aa9de7429eb2f7e563fe34c580d41595fc599d4ce7cadf58738e59d645b8c7c26f58ffacf443db7a3fdb655e8ccee7f07337d8ca3f9bfe947fa08b769e2d83d59d7c3898e358f3dca2fb9543f13aaf929ddc0cba7a8c36652a7622e967496a4d5317ead10a5be0337c2572423c1787ad04ecce788e7baee91b6a17befad96a16bddab1a0cad67910e65a3967cb1de48c06c848ae945350cce77c32715139db3097c738219be547e64c5b1a4b56378c4383af67b0c5ac36a6b137370fb928faf73a4cc29b5e1966bd8dac82a5d8c2947f695bf6edc84eb6ee2aee0576d5bc3c95fbc83f95cd3d675b7cf9bbcf684fcc08dfcc00fb88b77a3c9d1f09db18ddb1de9f5b7792cd792bd781e59f58cd7c7fc6ac50fad8de14a2f2a68ad78ae6d85281ef3b48ab335dd570d477defe7876f7ffe6367c6de138edc0e37dcae6c7edb6fb8cfee58bf2dde72897e26249f20daf73b1d926f481ff5330ec9f223b46577e7ee24734995f0b5ef5557f9a6ae8fde78ed3b3feb319ffe767baffbc7fc39dca7e10ee4bb5337f1fbdc84fa7cf88ce338d48a3dbd9be501cc283bfe08ec3c283fd2ee7de94eddf27bf4e6fdda7bf1c3b1ef82a1badcb9e1975541c68c701355df7fa1fadb0ff7fb3c6a0dddf15ba21c7787e7339ffd7af740bfdffd87eedaedaa031d28431d6188873cd44fcb5afaa9f47268c68fac52ef8d1d6508eaf9f57e65f07efc6055b9aafe738047b0845c465a25562b31fbfe6b14f8916fc146811bb0a4ab8abb8f66e347f2030f1ab813b06377ff1c70035146fa59343fc517d8516ff609789971882e709bbbab7fbe07bf2e3facf7c6fb9e6847ef6d39808676fca6efab865a5ff1d371f7e0a4147ef4f38c12def34bfe0eec9d7fbff3e07782ff0c2d97c9bd2f9c856f7d7a6e5918f289e845d881ab4f841f77466ffc1ee15768effdfb2f3716ed488405a73e71756547fcf951f8410d7426ecb833696027867a3e7f340f3f871f696ecc7570a31ee40e90c736fddc6d84fb3712543999bf70d7f2cb4be187635496bf60defa51fcf0d0935fd53b0e8d21b93b51ee5e88e1d5633023bf44b976d71cc92f5411673d77e17ec95fc6fd187ea4413163c415aaa18a1fbf2177dab9b1fe76f05a7f3f986bab434d8f1fcdc1cfe647391afb15e10759fe04ae2d770679b071ed0ff4d728175e7e9730721758631cc97d561fcdc34fe7670657b9a21a1c1a0ee4483f696deaef74543f60e6c29f72f6cf5fe95f931f30b481ec34942a081136c71aa3e2a7e72ffdae3b0743d1478ffe23f991cfa6fc1a78903b9f0bbd8ff72aa8477e6fbafeebe6ac9fc38f7c0203cf1920970f9dfccf004bf0a44bfd955c0f6bad5f3eb27e343ff61b5c3c76a095b1bff2871a5d237fee1f7e95bbe33f969faaa1f259064707f22bee5fe7cef8ef6b3f831f697eee27ae7cfad5e9bf4afbf3bffffd8fff01f5751e42</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>filePreferenceAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>filePreference()</slot>
+    </connection>
+    <connection>
+        <sender>fileQuitAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>fileExit()</slot>
+    </connection>
+    <connection>
+        <sender>fileExitAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>fileExit()</slot>
+    </connection>
+    <connection>
+        <sender>netStatusAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>editStatus()</slot>
+    </connection>
+    <connection>
+        <sender>browserAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>editBrowse()</slot>
+    </connection>
+    <connection>
+        <sender>transferAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>editTransfer()</slot>
+    </connection>
+    <connection>
+        <sender>chatWindowAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>editChatWin()</slot>
+    </connection>
+    <connection>
+        <sender>alwaysOnTopAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>editAlwaysOnTop()</slot>
+    </connection>
+    <connection>
+        <sender>cjChatAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>editCreateChatWin()</slot>
+    </connection>
+    <connection>
+        <sender>ListView_IDC_CHATROOMS</sender>
+        <signal>doubleClicked(QListViewItem*)</signal>
+        <receiver>QVaste</receiver>
+        <slot>onChatRoomListClicked(QListViewItem*)</slot>
+    </connection>
+    <connection>
+        <sender>ListView_IDC_USERS</sender>
+        <signal>doubleClicked(QListViewItem*)</signal>
+        <receiver>QVaste</receiver>
+        <slot>onUserListClicked(QListViewItem*)</slot>
+    </connection>
+    <connection>
+        <sender>ListView_IDC_USERS</sender>
+        <signal>rightButtonClicked(QListViewItem*,const QPoint&amp;,int)</signal>
+        <receiver>QVaste</receiver>
+        <slot>onUserListRMBClicked(QListViewItem*,const QPoint&amp;,int)</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_CREATECHATROOM</sender>
+        <signal>clicked()</signal>
+        <receiver>QVaste</receiver>
+        <slot>editCreateChatWin()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_NETSETTINGS</sender>
+        <signal>clicked()</signal>
+        <receiver>QVaste</receiver>
+        <slot>editStatus()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_SEARCH</sender>
+        <signal>clicked()</signal>
+        <receiver>QVaste</receiver>
+        <slot>editBrowse()</slot>
+    </connection>
+    <connection>
+        <sender>PushButton_IDC_PREF</sender>
+        <signal>clicked()</signal>
+        <receiver>QVaste</receiver>
+        <slot>filePreference()</slot>
+    </connection>
+    <connection>
+        <sender>helpAboutAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>onHelpAbout()</slot>
+    </connection>
+    <connection>
+        <sender>helpVIAsecIM_HelpAction</sender>
+        <signal>activated()</signal>
+        <receiver>QVaste</receiver>
+        <slot>onHelpHelp()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>filePreference()</slot>
+    <slot>fileExit()</slot>
+    <slot>editStatus()</slot>
+    <slot>editBrowse()</slot>
+    <slot>editTransfer()</slot>
+    <slot>editChatWin()</slot>
+    <slot>editAlwaysOnTop()</slot>
+    <slot>editCreateChatWin()</slot>
+    <slot>onUserListClicked(QListViewItem*)</slot>
+    <slot>onChatRoomListClicked(QListViewItem*)</slot>
+    <slot access="protected">onUserListRMBClicked(QListViewItem*,const QPoint&amp;,int)</slot>
+    <slot>makeChatSubMenu()</slot>
+    <slot access="protected">onHelpAbout()</slot>
+    <slot>onHelpHelp()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

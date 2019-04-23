@@ -1,0 +1,14 @@
+1. To build a debug version:
+#qmake
+#make
+2. To build a release version:
+#cp Makefile.release Makefile
+#make
+3. Notice:
+If PadLockSL.pro is modified, the Makefile.release need to be modified too.
+A new Makefile.release can be produced by the following steps:
+1) remove the debug option from the modified PadLockSL.pro,
+2) qmake to generate a new Makefile,
+3) modify the Makefile, remove all the -O2 options from the Makefile,
+4) rename the Makefile to Makefile.release,
+5) add the debug option back to the PadLockSL.pro.

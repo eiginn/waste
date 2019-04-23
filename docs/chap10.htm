@@ -1,0 +1,413 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./chap10.files/filelist.xml">
+<link rel=Edit-Time-Data href="./chap10.files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Chapter 10 File Transfer</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>LoraYin</o:Author>
+  <o:LastAuthor>LoraYin</o:LastAuthor>
+  <o:Revision>5</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2004-03-11T08:30:00Z</o:Created>
+  <o:LastSaved>2004-03-12T09:04:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>179</o:Words>
+  <o:Characters>1025</o:Characters>
+  <o:Company>VIA</o:Company>
+  <o:Lines>8</o:Lines>
+  <o:Paragraphs>2</o:Paragraphs>
+  <o:CharactersWithSpaces>1258</o:CharactersWithSpaces>
+  <o:Version>9.2812</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:PunctuationKerning/>
+  <w:DrawingGridVerticalSpacing>7.8 °õ</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:AdjustLineHeightInTable/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:ËÎÌå;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:·ÂËÎ_GB2312;
+	panose-1:2 1 6 9 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:modern;
+	mso-font-pitch:fixed;
+	mso-font-signature:1 135135232 16 0 262144 0;}
+@font-face
+	{font-family:FangSong_GB2312;
+	mso-font-alt:ËÎÌå;
+	mso-font-charset:134;
+	mso-generic-font-family:roman;
+	mso-font-pitch:auto;
+	mso-font-signature:1 135135232 16 0 262144 0;}
+@font-face
+	{font-family:"\@ËÎÌå";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"\@·ÂËÎ_GB2312";
+	panose-1:2 1 6 9 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:modern;
+	mso-font-pitch:fixed;
+	mso-font-signature:1 135135232 16 0 262144 0;}
+@font-face
+	{font-family:"\@FangSong_GB2312";
+	mso-font-charset:134;
+	mso-generic-font-family:roman;
+	mso-font-pitch:auto;
+	mso-font-signature:1 135135232 16 0 262144 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:ËÎÌå;
+	mso-font-kerning:1.0pt;}
+h1
+	{mso-style-next:ÕýÎÄ;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:12.0pt;
+	margin-left:21.25pt;
+	text-indent:-21.25pt;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	mso-list:l0 level1 lfo2;
+	tab-stops:21.55pt;
+	font-size:16.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:·ÂËÎ_GB2312;
+	mso-font-kerning:16.0pt;
+	mso-bidi-font-weight:normal;}
+h2
+	{mso-style-next:ÕýÎÄ;
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:49.6pt;
+	text-indent:-49.6pt;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	mso-list:l0 level2 lfo2;
+	tab-stops:list 49.6pt;
+	font-size:14.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:·ÂËÎ_GB2312;
+	font-weight:normal;
+	mso-bidi-font-weight:bold;
+	mso-bidi-font-style:italic;}
+h3
+	{mso-style-next:ÕýÎÄ;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:70.9pt;
+	text-indent:-1.0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:3;
+	mso-list:l0 level3 lfo2;
+	tab-stops:27.0pt list 96.55pt;
+	font-size:10.0pt;
+	mso-bidi-font-size:13.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:·ÂËÎ_GB2312;
+	mso-bidi-font-weight:normal;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-next:ÕýÎÄ;
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:FangSong_GB2312;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Text1, li.Text1, div.Text1
+	{mso-style-name:Text1;
+	mso-style-update:auto;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:18.45pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:·ÂËÎ_GB2312;
+	mso-bidi-font-weight:bold;}
+p.Text2, li.Text2, div.Text2
+	{mso-style-name:Text2;
+	mso-style-update:auto;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	mso-line-height-alt:6.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:18.0pt 72.0pt;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:·ÂËÎ_GB2312;}
+ /* Page Definitions */
+@page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:42.55pt;
+	mso-footer-margin:49.6pt;
+	mso-paper-source:0;
+	layout-grid:15.6pt;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:1101022914;
+	mso-list-template-ids:411438028;}
+@list l0:level1
+	{mso-level-start-at:10;
+	mso-level-style-link:"±êÌâ 1";
+	mso-level-suffix:space;
+	mso-level-text:"Chapter %1";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:21.25pt;
+	text-indent:-21.25pt;}
+@list l0:level2
+	{mso-level-style-link:"±êÌâ 2";
+	mso-level-text:"%1\.%2";
+	mso-level-tab-stop:49.6pt;
+	mso-level-number-position:left;
+	margin-left:49.6pt;
+	text-indent:-1.0cm;}
+@list l0:level3
+	{mso-level-style-link:"±êÌâ 3";
+	mso-level-text:"%1\.%2\.%3";
+	mso-level-tab-stop:96.55pt;
+	mso-level-number-position:left;
+	margin-left:70.9pt;
+	text-indent:-1.0cm;}
+@list l0:level4
+	{mso-level-text:"%4\)";
+	mso-level-tab-stop:81.8pt;
+	mso-level-number-position:left;
+	margin-left:81.8pt;
+	text-indent:-18.0pt;}
+@list l0:level5
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5";
+	mso-level-tab-stop:127.55pt;
+	mso-level-number-position:left;
+	margin-left:127.55pt;
+	text-indent:-42.5pt;}
+@list l0:level6
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6";
+	mso-level-tab-stop:163.0pt;
+	mso-level-number-position:left;
+	margin-left:163.0pt;
+	text-indent:-2.0cm;}
+@list l0:level7
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7";
+	mso-level-tab-stop:191.35pt;
+	mso-level-number-position:left;
+	margin-left:191.35pt;
+	text-indent:-63.8pt;}
+@list l0:level8
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.%8";
+	mso-level-tab-stop:219.7pt;
+	mso-level-number-position:left;
+	margin-left:219.7pt;
+	text-indent:-70.9pt;}
+@list l0:level9
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.%8\.%9";
+	mso-level-tab-stop:255.1pt;
+	mso-level-number-position:left;
+	margin-left:255.1pt;
+	text-indent:-85.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1029"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=ZH-CN style='tab-interval:21.0pt;text-justify-trim:punctuation'>
+
+<div class=Section1 style='layout-grid:15.6pt'>
+
+<h1><a name="_Toc61246208"></a><a name="_Toc66785305"><span style='mso-bookmark:
+_Toc61246208'><![if !supportLists]><span lang=EN-US>Chapter 10 </span><![endif]><span
+lang=EN-US>File Transfer</span></span></a></h1>
+
+<p class=Text1 style='margin-left:0cm'><span lang=EN-US style='font-family:
+Arial'>User can send files or download files from other users. Files can be
+found via the file browsing feature, or files can be sent to other users
+manually. <o:p></o:p></span></p>
+
+<h2><a name="_Toc61246209"></a><a name="_Toc66785306"><span style='mso-bookmark:
+_Toc61246209'><![if !supportLists]><span lang=EN-US>10.1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US>Invoke the dialog</span></span></a></h2>
+
+<p class=Text2><span lang=EN-US>The file transfer dialog can be invoked by the menu
+command item in the Main GUI dialog. Also users can use hot key &quot;Alt + T&quot;
+to show the dialog.</span></p>
+
+<h2><a name="_Toc61246210"></a><a name="_Toc66785307"><span style='mso-bookmark:
+_Toc61246210'><![if !supportLists]><span lang=EN-US>10.2<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US>Send files</span></span></a></h2>
+
+<p class=Text2><span lang=EN-US>Files can be sent to other users manually by
+clicking the right key of the mouse and use &quot;send files to user&quot; command
+of the pop menu in the Main GUI. The sending files' information will be added
+to the file transfer dialog and can be managed by the file transfer dialog. </span></p>
+
+<h2><a name="_Toc61246211"></a><a name="_Toc66785308"><span style='mso-bookmark:
+_Toc61246211'><![if !supportLists]><span lang=EN-US>10.3<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US>File transfer dialog</span></span></a></h2>
+
+<p class=MsoNormal style='mso-line-height-alt:6.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:Arial;mso-fareast-font-family:
+·ÂËÎ_GB2312;mso-hansi-font-family:"Times New Roman"'>The download/upload files
+can be managed with the PadLockSL File Transfer dialog as <span
+style='mso-field-code:"REF _Ref65034158 \\h  \\* MERGEFORMAT"'>Figure 10.3.1<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000D0000005F00520065006600360035003000330034003100350038000000</w:data>
+</xml><![endif]--></span> shows. File Transfer dialog shows the status of
+downloading or uploading including the information about filename, size,
+location and the transfer speed. Buttons are provided to</span><span
+lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:Arial;
+mso-hansi-font-family:"Times New Roman"'> enable users to abort, resume, remove
+or clear the downloads/uploads<o:p></o:p></span></p>
+
+<p class=Text2><span lang=EN-US style='font-size:11.0pt;mso-fareast-font-family:
+ËÎÌå;color:black'><!--[if gte vml 1]><v:shapetype id="_x0000_t75" coordsize="21600,21600"
+ o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f"
+ stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" style='width:15.75pt;
+ height:13.5pt' o:bullet="t">
+ <v:imagedata src="./chap10.files/image001.png" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img width=21 height=18
+src="./chap10.files/image002.jpg" alt="*" v:shapes="_x0000_i1025"><![endif]><span
+style="mso-spacerun: yes">&nbsp;</span></span><span lang=EN-US>If a sender
+aborts an upload of a file which is not in the sharing path, the receiver can
+not resume the related download.</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+style='font-family:Arial;mso-hansi-font-family:"Times New Roman"'><!--[if gte vml 1]><v:shape
+ id="_x0000_i1026" type="#_x0000_t75" style='width:365.25pt;height:261pt'>
+ <v:imagedata src="./chap10.files/image003.png" o:title="10.3"/>
+</v:shape><![endif]--><![if !vml]><img width=487 height=348
+src="./chap10.files/image004.jpg" v:shapes="_x0000_i1026"><![endif]><o:p></o:p></span></p>
+
+<p class=MsoCaption><a name="_Ref65034158"></a><a name="_Toc66784760"><span
+style='mso-bookmark:_Ref65034158'><span lang=EN-US style='font-family:Arial'>Figure
+</span></span></a><!--[if supportFields]><span style='mso-bookmark:_Toc66784760'><span
+style='mso-bookmark:_Ref65034158'></span></span><span style='mso-element:field-begin'></span><span
+style='mso-bookmark:_Toc66784760'><span style='mso-bookmark:_Ref65034158'><span
+lang=EN-US style='font-family:Arial'><span style="mso-spacerun:
+yes">&nbsp;</span>STYLEREF 2 \s </span><span lang=EN-US><span style='mso-element:
+field-separator'></span></span></span></span><![endif]--><span
+style='mso-bookmark:_Toc66784760'><span style='mso-bookmark:_Ref65034158'></span></span><span
+style='mso-bookmark:_Toc66784760'><span style='mso-bookmark:_Ref65034158'><span
+lang=EN-US style='font-family:Arial'>10.3</span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc66784760'><span style='mso-bookmark:_Ref65034158'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc66784760'><span style='mso-bookmark:_Ref65034158'></span></span><span
+style='mso-bookmark:_Toc66784760'><span style='mso-bookmark:_Ref65034158'><span
+lang=EN-US style='font-family:Arial'>.</span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc66784760'><span style='mso-bookmark:_Ref65034158'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc66784760'><span
+style='mso-bookmark:_Ref65034158'><span lang=EN-US style='font-family:Arial'>
+SEQ Figure \* ARABIC \s 2 </span><span lang=EN-US><span style='mso-element:
+field-separator'></span></span></span></span><![endif]--><span
+style='mso-bookmark:_Toc66784760'><span style='mso-bookmark:_Ref65034158'></span></span><span
+style='mso-bookmark:_Toc66784760'><span style='mso-bookmark:_Ref65034158'><span
+lang=EN-US style='font-family:Arial'>1</span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc66784760'><span style='mso-bookmark:_Ref65034158'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc66784760'><span style='mso-bookmark:_Ref65034158'></span></span><span
+style='mso-bookmark:_Ref65034158'></span><span style='mso-bookmark:_Toc66784760'><span
+lang=EN-US style='font-family:Arial'> PadLockSL File Transfer Dialog</span></span><span
+lang=EN-US style='font-family:Arial'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+</html>
